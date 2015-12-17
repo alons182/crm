@@ -31,7 +31,9 @@ class SellerRepo extends DbRepo{
 
         $role = (isset($data['role'])) ? $data['role'] : Role::whereName('seller')->firstOrFail();
         $seller->assignRole($role);
-        $seller->assignClient($data['clients']);
+        
+        if(isset($data['clients']))
+            $seller->assignClient($data['clients']);
 
         return $seller;
     	
@@ -97,8 +99,7 @@ class SellerRepo extends DbRepo{
 
         $data['password'] = bcrypt($data['password']);
 
-         if(! isset($data['clients']))
-            return $data = array_except($data, array('clients'));
+        
         
         return $data;
     }
