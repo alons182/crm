@@ -97,6 +97,9 @@ class SellerRepo extends DbRepo{
 
         $data['password'] = bcrypt($data['password']);
 
+         if(! isset($data['clients']))
+            return $data = array_except($data, array('clients'));
+        
         return $data;
     }
 
