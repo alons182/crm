@@ -1,0 +1,8 @@
+/vendor
+/node_modules
+/public/media
+Homestead.yaml
+Homestead.json
+.env
+crm1.0.sublime-project
+crm1.0.sublime-workspace
