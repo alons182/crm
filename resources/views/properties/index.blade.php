@@ -24,7 +24,7 @@
                         <th>Name</th>
                         <th>Owner</th>
                         <th>Owner Telephone</th>
-                        <th>Assigned Clients</th>
+                        
                         <th>status</th>
                         <th>Created</th>
 
@@ -41,7 +41,7 @@
                             <td>{!!$property->name!!}</td>
                             <td>{!! $property->owner !!}</td>
                              <td>{!! $property->owner_phone1 !!}</td>
-                               <td>
+                              <!-- <td>
                                @foreach($property->clients as $client)
                                     @can('edit_clients')
                                        <a class="btn btn-info btn-sm" href="{!! URL::route('clients.edit', [$client->id]) !!}">
@@ -55,7 +55,7 @@
                                         </span>
                                     @endcan
                                 @endforeach
-                               </td>
+                               </td>-->
                             <td class="center">
                                  @if ($property->status)
                                     @if($property->status == 1)

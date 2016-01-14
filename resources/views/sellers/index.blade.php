@@ -18,7 +18,7 @@
                                   <th>#</th>
                                   <th>name</th>
                                   <th>Email</th>
-                                  <th>Assigned Clients</th>
+                                 
                                   <th>Created</th>
                                   <th>Actions</th>
                               </tr>
@@ -29,7 +29,7 @@
                                     <td>{!! $seller->id !!}</td>
                                     <td>{!! $seller->name !!}
                                     <td>{!! $seller->email !!}</td>
-                                    <td>
+                                    <!--<td>
                                        @foreach($seller->clients as $client)
                                            <a class="btn btn-info btn-sm" href="{!! URL::route('clients.edit', [$client->id]) !!}">
                                              <i class="fa fa-briefcase mg-r-xs"></i>
@@ -37,7 +37,7 @@
                                             </a>
                                             
                                         @endforeach
-                                    </td>
+                                    </td>-->
                                     <td class="center">{!! $seller->created_at !!}</td>
                                    
                                     

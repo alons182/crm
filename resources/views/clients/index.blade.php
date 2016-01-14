@@ -25,7 +25,7 @@
                         <th>Full Name</th>
                         <th>Company</th>
                         <th>Email</th>
-                        <th>Assigned Sellers</th>
+                        
                         <th>Created</th>
 
                         
@@ -42,7 +42,7 @@
                             <td>{!!$client->fullname!!}</td>
                             <td>{!! $client->company !!}</td>
                              <td>{!! $client->email !!}</td>
-                               <td>
+                              <!-- <td>
                                @foreach($client->sellers as $seller)
                                     @can('edit_sellers')
                                        <a class="btn btn-info btn-sm" href="{!! URL::route('sellers.edit', [$seller->id]) !!}">
@@ -56,7 +56,7 @@
                                         </span>
                                     @endcan
                                 @endforeach
-                               </td>
+                               </td>-->
                             <td class="center">{!! $client->created_at !!}</td>
 
                             <td class="center">
