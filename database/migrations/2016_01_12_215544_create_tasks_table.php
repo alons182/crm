@@ -21,7 +21,6 @@ class CreateTasksTable extends Migration
                   ->onDelete('cascade');
             $table->string('title');
             $table->text('description');
-            $table->dateTime('notification');
             $table->tinyInteger('status')->default(0);
             $table->timestamps();
         });
