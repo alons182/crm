@@ -23,8 +23,9 @@ class ClientRequest extends Request
      */
     public function rules()
     {
+       
         return [
-            'ide' => 'required|numeric|unique:clients',
+            'ide' => 'required|unique:clients|integer',
             'fullname' => 'required',
             'company' => 'required',
             'email' => 'required|email',

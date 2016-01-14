@@ -23,8 +23,10 @@ class ClientEditRequest extends Request
      */
     public function rules()
     {
+        $client_id = $this->input('client_id');
+        
         return [
-            'ide' => 'required|numeric',
+            'ide' => 'required|unique:clients,ide,'.$client_id.'|integer',
             'fullname' => 'required',
             'company' => 'required',
             'email' => 'required|email',

@@ -90,7 +90,7 @@
             <div class="form-group">
                 {!! Form::label('owner_phone2','Owner Phone 2:',['class'=>'col-sm-2 control-label']) !!}
                 <div class="col-sm-10">
-                    {!! Form::text('owner_phone2', null,['class'=>'form-control','required'=>'required']) !!}
+                    {!! Form::text('owner_phone2', null,['class'=>'form-control']) !!}
                     {!! errors_for('owner_phone2',$errors) !!}
                 </div>
 

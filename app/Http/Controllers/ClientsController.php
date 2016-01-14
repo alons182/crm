@@ -56,6 +56,7 @@ class ClientsController extends Controller
      */
     public function store(ClientRequest $request)
     {
+       
         $input = $request->all();
 
         $this->clientRepo->store($input);

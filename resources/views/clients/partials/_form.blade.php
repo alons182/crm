@@ -11,6 +11,7 @@
             @if(isset($client))
                 {!! Form::hidden('client_id',  $client->id) !!}
             @endif
+            
             <div class="form-group">
                 {!! Form::label('ide','IDE:',['class'=>'col-sm-2 control-label']) !!}
                 <div class="col-sm-10">
@@ -152,11 +153,11 @@
                 </div>
            </div>
            @else 
-              {!! Form::hidden('sellers[]', $currentUser->id ) !!}
+              {!! Form::hidden('sellers', $currentUser->id ) !!}
               
            @endcan
 
-               <div class="form-group">
+           <div class="form-group">
                     {!! Form::label('properties','Properties:',['class'=>'col-sm-2 control-label'])!!}
                     <div class="col-sm-10">
                         {!! Form::select('properties[]',$properties, (isset($selectedProperties)) ? $selectedProperties: null,['class'=>'form-control','multiple'])!!}
@@ -164,9 +165,7 @@
                     </div>
                 </div>
            
-           
-
-            <div class="form-group">
+             <div class="form-group">
                 {!! Form::label('image','Image:',['class'=>'col-sm-2 control-label'])!!}
 
                 <div class="col-sm-10">
@@ -175,7 +174,8 @@
                 </div>
             </div>
 
-        </div>
+           
+            
     </section>
 
 </div>

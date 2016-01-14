@@ -13,7 +13,7 @@ class Client extends Model
     {
         return $query->where(function ($query) use ($search)
         {
-            $query->where('fullname', 'like', '%' . $search . '%');
+            $query->where('name', 'like', '%' . $search . '%');
                 //->orWhere('description', 'like', '%' . $search . '%');
         });
     }
@@ -36,6 +36,10 @@ class Client extends Model
      */
     public function assignSeller($sellers)
     {
+        if (is_string($sellers)) {
+            return $this->sellers()->sync([$sellers]);
+        }
+
         return $this->sellers()->sync($sellers);
         
     }
