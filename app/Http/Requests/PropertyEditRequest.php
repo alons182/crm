@@ -23,8 +23,10 @@ class PropertyEditRequest extends Request
      */
     public function rules()
     {
+        $property_id = $this->input('property_id');
+
         return [
-            'name' => 'required',
+            'name' => 'required|unique:properties,name,'.$property_id,
             'price' =>'required',
             'province' =>'required',
             'address' =>'required',

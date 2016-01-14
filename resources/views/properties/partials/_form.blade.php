@@ -7,7 +7,9 @@
                 
         </header>
         <div class="panel-body">
-
+            @if(isset($property))
+                {!! Form::hidden('property_id',  $property->id) !!}
+            @endif
 
             <div class="form-group">
                 {!! Form::label('name','Name:',['class'=>'col-sm-2 control-label']) !!}
