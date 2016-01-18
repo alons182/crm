@@ -46,7 +46,68 @@
 </div>
 <div class="col-lg-6">
 
-   
+   <section class="panel">
+        <header class="panel-heading">
+            {!! Form::label('notification','Notification:',['class'=>'control-label'])!!}
+        </header>
+        <div class="panel-body">
+            <div class="form-group">
+                {!! Form::label('notification_date','Date:',['class'=>'col-sm-2 control-label']) !!}
+                <div class="col-sm-10">
+                    <div class="row">
+                        <div class="col-xs-5">
+                           {!! Form::text('notification_date', null,['class'=>'form-control datepicker','required'=>'required']) !!}
+                            
+                            {!! errors_for('notification_date',$errors) !!}
+                        </div>
+                        <div class="col-xs-2">
+
+                            {!! Form::text('notification_time', null,['class'=>'form-control timepicker'])!!}
+                            {!! errors_for('notification_time',$errors) !!}
+                        
+                        
+                            
+                        </div>
+                        
+                    </div>
+                </div>
+
+
+
+            </div>
+            <div class="form-group">
+               {!! Form::label('notification_reminder','Remaind Time:',['class'=>'col-sm-2 control-label']) !!}
+
+                <div class="col-sm-10">
+                    <div class="row">
+                        <div class="col-xs-2">
+                           
+                            {!! Form::select('notification_reminder',['30'=>'30','1'=>'60'], null,['class'=>'form-control'])!!}
+                            {!! errors_for('notification_reminder',$errors) !!}
+                        </div>
+                        <div class="col-xs-3">
+
+                            {!! Form::select('notification_choices_time',['mins'=>'Minutes'], null,['class'=>'form-control'])!!}
+                            {!! errors_for('notification_choices_time',$errors) !!}
+                        
+                        
+                            
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+             {!! Form::label('notification_to','Notification To:',['class'=>'col-sm-2 control-label']) !!}
+             <div class="col-sm-10">
+              {!! Form::text('notification_to', (isset($task)) ? $task->notification_to : $currentUser->email ,['class'=>'form-control','required'=>'required']) !!}
+              {!! errors_for('notification_to',$errors) !!}
+             </div>
+            
+                
+        </div>
+
+    </section>
 </div>
 
 

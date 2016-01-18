@@ -20,6 +20,9 @@ class ViewComposerServiceProvider extends ServiceProvider
         view()->composer('clients/partials._form', function($view) {
             $view->with('currentUser', Auth::user());
         });
+        view()->composer('tasks/partials._form', function($view) {
+            $view->with('currentUser', Auth::user());
+        });
         view()->composer('layouts/partials._navbar', function($view) {
             $view->with('currentUser', Auth::user());
         });

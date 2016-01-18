@@ -18,6 +18,7 @@ class ClientRepo extends DbRepo{
 
     public function store($data)
     {
+       // $data = $this->prepareData($data);
 
         $data['image'] = (isset($data['image'])) ? $this->storeImage($data['image'], $data['fullname'].'-'.getUniqueNumber(), 'clients', null, null, 640, null, false) : '';
 
@@ -32,6 +33,12 @@ class ClientRepo extends DbRepo{
         return $client;
     	
     }
+    private function prepareData($data)
+    {
+        $data['ide'] = str_replace(' ', '', $data['ide']);
+
+        return $data;
+    }
 
     /**
      * Update a client
@@ -41,6 +48,8 @@ class ClientRepo extends DbRepo{
      */
     public function update($id, $data)
     {
+        //$data = $this->prepareData($data);
+
         $client = $this->model->findOrFail($id);
         
         

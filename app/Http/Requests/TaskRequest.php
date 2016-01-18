@@ -25,7 +25,10 @@ class TaskRequest extends Request
     {
         return [
             'title' => 'required',
-            'description' => 'required'
+            'description' => 'required',
+            'notification_date' => 'required',
+            'notification_time' => 'required',
+            'notification_choices_time' => 'required'
            
         ];
     }

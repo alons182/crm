@@ -19,5 +19,12 @@
 @endsection
 @section('scripts')
     <script src="/vendor/bootstrap-select/bootstrap-select.js"></script>
-
+	<script src="/vendor/jquery.maskedinput.min.js"></script>
+	<script type="text/javascript">
+		$("#ide").mask("999999999");
+		$("#phone1").mask("9999-9999");
+		$("#phone2").mask("9999-9999");
+		$("#phone3").mask("9999-9999");
+		$("#phone4").mask("9999-9999");
+	</script>
 @stop

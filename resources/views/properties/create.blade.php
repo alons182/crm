@@ -14,4 +14,12 @@
 
 
 @endsection
-
+@section('scripts')
+<script src="/vendor/jquery.maskedinput.min.js"></script>
+	<script type="text/javascript">
+		
+		$("#owner_phone1").mask("9999-9999");
+		$("#owner_phone2").mask("9999-9999");
+		
+	</script>
+@stop

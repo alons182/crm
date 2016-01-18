@@ -23,7 +23,7 @@ class TasksController extends Controller
     public function store(TaskRequest $request)
     {
         $input = $request->all();
-
+       
         $this->taskRepo->store($input);
 
         Flash('Task Created');
@@ -54,7 +54,8 @@ class TasksController extends Controller
      */
     public function update(TaskRequest $request, $id)
     {
-         $task = $this->taskRepo->update($id, $request->all());
+        
+        $task = $this->taskRepo->update($id, $request->all());
 
         Flash('Updated Task');
 

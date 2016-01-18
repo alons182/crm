@@ -21,10 +21,15 @@ class CreateTasksTable extends Migration
                   ->onDelete('cascade');
             $table->string('title');
             $table->text('description');
+            $table->dateTime('notification_date');
+            $table->string('notification_time');       
+            $table->integer('notification_reminder');
+            $table->enum('notification_choices_time', ['mins', 'hours','days','weeks']);
+            $table->string('notification_to');   
             $table->tinyInteger('status')->default(0);
             $table->timestamps();
         });
-        Schema::create('notifications', function (Blueprint $table) {
+        /*Schema::create('notifications', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('task_id')->unsigned();
             $table->foreign('task_id')
@@ -35,7 +40,7 @@ class CreateTasksTable extends Migration
             $table->integer('time');
             $table->enum('choices_time', ['mins', 'hours','days','weeks']);
             $table->timestamps();
-        });
+        });*/
 
          /*Schema::create('task_user', function (Blueprint $table) {
             $table->integer('task_id')->unsigned();
@@ -81,7 +86,7 @@ class CreateTasksTable extends Migration
     {
          /*Schema::drop('task_user');
          Schema::drop('client_task');*/
-         Schema::drop('notifications');
+         //Schema::drop('notifications');
          Schema::drop('tasks');
     }
 }
