@@ -35,6 +35,10 @@
 	        format: 'yyyy-mm-dd',
 	        formatSubmit: 'yyyy-mm-dd'
 	    });
+	     $('.timepicker').pickatime({
+	    	format: 'HH:i',
+		 	formatSubmit: 'HH:i'
+		});
 	</script>
 	
 @stop
