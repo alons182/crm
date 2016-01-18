@@ -6,6 +6,7 @@ use App\Task;
 use Carbon\Carbon;
 use App\Mailers\ContactMailer;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 
 class tasksNotification extends Command
 {
@@ -50,9 +51,10 @@ class tasksNotification extends Command
            
            $dtTask = Carbon::createFromFormat('Y-m-d H:i:s', $task->notification_date);
            $dtTask->setTime($timeArray[0], $timeArray[1], 0);
-           
+            
+            //dd(Carbon::now()->diffInMinutes($dtTask)); 
           
-            if(Carbon::now()->diffInMinutes($dtTask) <= $task->notification_reminder + 3)
+            if(Carbon::now()->diffInMinutes($dtTask) < $task->notification_reminder)
             {
                 
                 try {
@@ -66,14 +68,14 @@ class tasksNotification extends Command
                 
                 
             }
-
+            Log::info(Carbon::now()->diffInMinutes($dtTask));
 
     
 
 
         }
 
-        $this->info('Hecho, ' . $countNotification.' notificaciones enviadas ');
+        $this->info('Hecho, ' . $countNotification.' notificaciones enviadas');
        
         
     }
