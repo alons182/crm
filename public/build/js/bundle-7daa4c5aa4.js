@@ -4359,7 +4359,7 @@ return /******/ (function(modules) { // webpackBootstrap
         //var allVals = [];
         $('[name=chkUsers]:checked').each(function() {
             // allVals.push($(this).val());
-            $('ul.users').empty();
+            //$('ul.users').empty();
             for (var i = 0 ; i < users.length; i++) {
 
                 if($(this).val() == users[i].id)
