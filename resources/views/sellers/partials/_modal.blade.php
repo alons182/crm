@@ -20,6 +20,7 @@
                         <th>=</th>
                         <th>#</th>
                         <th>Nombre</th>
+                        <th>Asignado</th>
 
                     </tr>
                     </thead>
@@ -42,7 +43,13 @@
                         <td class="@{{ class }}"> <input type="radio" name="chkUsers" value="@{{ id }}" /></td>
                         <td>@{{ id }}</td>
                         <td>@{{ name }}</td>
-
+                        <td>
+                            @{{#if assigned}}
+                                Si
+                            @{{else}}
+                                No
+                            @{{/if}}
+                        </td>
                     </tr>
                     @{{/each}}
 

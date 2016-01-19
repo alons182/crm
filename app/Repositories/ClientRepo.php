@@ -126,11 +126,11 @@ class ClientRepo extends DbRepo{
     {
 
         if ($search && $value != "")
-            $clients = ($value) ? $this->model->where('id', '<>', $value)->search($search)->paginate(8) : $this->model->paginate(8);
+            $clients = ($value) ? $this->model->with('sellers')->where('id', '<>', $value)->search($search)->paginate(8) : $this->model->paginate(8);
         else if ($value != "")
-            $clients = ($value) ? $this->model->where('id', '<>', $value)->paginate(8) : $this->model->paginate(8);
+            $clients = ($value) ? $this->model->with('sellers')->where('id', '<>', $value)->paginate(8) : $this->model->paginate(8);
         else
-            $clients = $this->model->search($search)->paginate(8);
+            $clients = $this->model->with('sellers')->search($search)->paginate(8);
 
         return $clients;
     }

@@ -332,13 +332,13 @@
         users = $.map(jsonData.data ,function(obj, index){
             return {
                 id : obj.id,
-                name : (obj.name) ? obj.name : obj.fullname
-
+                name : (obj.name) ? obj.name : obj.fullname,
+                assigned: (obj.sellers) ? obj.sellers.length : 0
 
             }
 
         });
-
+        
         var html = UserTemplate(users);
 
         $('.modal').find('.tbody').html( html );
