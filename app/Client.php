@@ -13,7 +13,7 @@ class Client extends Model
     {
         return $query->where(function ($query) use ($search)
         {
-            $query->where('name', 'like', '%' . $search . '%');
+            $query->where('fullname', 'like', '%' . $search . '%');
                 //->orWhere('description', 'like', '%' . $search . '%');
         });
     }
