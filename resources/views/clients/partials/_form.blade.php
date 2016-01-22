@@ -126,6 +126,24 @@
                 </div>
 
             </div>
+            <div class="form-group">
+                {!! Form::label('referred','Referred:',['class'=>'col-sm-2 control-label'])!!}
+                <div class="col-sm-10">
+                     <div class="row">
+                        <div class="col-xs-3">
+                            {!! Form::select('referred', ['mail' => 'Mail','facebook' => 'Facebook','website' => 'Website','vallas' => 'Vallas','others' => 'Others'], null,['class'=>'form-control','required'=>'required'])!!}
+                            {!! errors_for('referred',$errors) !!}
+                        </div>
+                        <div class="col-xs-9">
+                             {!! Form::text('referred_others',null,['class'=>'form-control','placeholder'=>'Others', (isset($client)) ? ($client->referred != 'others') ? 'disabled' : '' : 'disabled']) !!}
+                        </div>
+                        
+                    </div>
+
+
+
+                </div>
+            </div>
             @can('assign_sellers')
             <div class="form-group">
                 {!! Form::label('Sellers','Sellers:',['class'=>'col-sm-2 control-label'])!!}

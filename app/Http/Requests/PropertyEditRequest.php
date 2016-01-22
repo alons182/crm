@@ -30,7 +30,6 @@ class PropertyEditRequest extends Request
             'price' =>'required',
             'province' =>'required',
             'address' =>'required',
-            'size' =>'required',
             'rooms' =>'required',
             'owner' =>'required',
             'owner_phone1' =>'required',

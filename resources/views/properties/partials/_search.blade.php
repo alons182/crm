@@ -17,6 +17,11 @@
                                 {!! Form::select('status', ['' => '-- Select Status --','0' => 'Pending','1' => 'Free','2' => 'Sold'], $selectedStatus, ['id'=>'status','class'=>'form-control'] ) !!}
 
                              </div>
+                             <div class=" form-group">
+
+                                {!! Form::select('province', ['' => '-- Select Location --','Guanacaste' => 'Guanacaste','San Jose' => 'San Jose','Alajuela' => 'Alajuela','Cartago' => 'Cartago','Heredia' => 'Heredia','Puntarenas' => 'Puntarenas','Limón' => 'Limón'], $selectedLocation, ['id'=>'province','class'=>'form-control'] ) !!}
+
+                             </div>
 
                 {!! Form::close() !!}
 

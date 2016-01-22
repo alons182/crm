@@ -7,14 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class Property extends Model
 {
 	
-    protected $fillable = ['name','price', 'province','address','size','rooms','owner','owner_phone1','owner_phone2','owner_email','project','status','image','user_id'];
+    protected $fillable = ['name','price', 'province','address','size','construction','rooms','owner','owner_phone1','owner_phone2','owner_email','project','status','image','user_id'];
     
     public function scopeSearch($query, $search)
     {
         return $query->where(function ($query) use ($search)
         {
-            $query->where('name', 'like', '%' . $search . '%');
-                //->orWhere('description', 'like', '%' . $search . '%');
+            $query->where('name', 'like', '%' . $search . '%')
+                ->orWhere('province', 'like', '%' . $search . '%');
         });
     }
 
@@ -45,6 +45,6 @@ class Property extends Model
      */
        public function seller()
        {
-            return $this->belongsTo(User::class);
+            return $this->belongsTo(User::class, 'user_id');
        }
 }

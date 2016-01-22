@@ -24,10 +24,11 @@
                         <th>Name</th>
                         <th>Owner</th>
                         <th>Owner Telephone</th>
-                        
+                        <th>Location</th>
                         <th>status</th>
+                        <th>Created by</th>
                         <th>Created</th>
-
+                       
                         
                         <th>Actions</th>
                     </tr>
@@ -41,6 +42,7 @@
                             <td>{!!$property->name!!}</td>
                             <td>{!! $property->owner !!}</td>
                              <td>{!! $property->owner_phone1 !!}</td>
+                            <td>{!! $property->province !!}</td> 
                               <!-- <td>
                                @foreach($property->clients as $client)
                                     @can('edit_clients')
@@ -74,8 +76,21 @@
                                 @endif
 
                                 
-                            </td>   
-                            <td class="center">{!! $property->created_at !!}</td>
+                            </td>
+                            <td class="center">
+                                @can('edit_sellers')
+                                       <a class="btn btn-info btn-sm" href="{!! URL::route('sellers.edit', [$property->seller->id]) !!}">
+                                         <i class="fa fa-user mg-r-xs"></i>
+                                         {!! $property->seller->name !!}
+                                        </a>
+                                    @else
+                                        <span class="btn btn-info btn-sm">
+                                         <i class="fa fa-user mg-r-xs"></i>
+                                         {!! $property->seller->name !!}
+                                        </span>
+                                    @endcan
+                            </td>
+                            <td class="center">{!! $property->created_at !!}</td>   
 
                             <td class="center">
                                

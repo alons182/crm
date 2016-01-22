@@ -79,7 +79,7 @@ class PropertyRepo extends DbRepo{
             $properties = $this->model;
         else
             $properties = auth()->user()->properties();
-        
+       
 
         if (isset($search['q']) && ! empty($search['q']))
         {
@@ -89,11 +89,15 @@ class PropertyRepo extends DbRepo{
         {
             $properties = $properties->where('status', '=', $search['status']);
         }
+        if (isset($search['province']) && $search['province'] != "")
+        {
+            $properties = $properties->where('province', '=', $search['province']);
+        }
 
  
 
 
-        return $properties->with('clients')->orderBy('created_at', 'desc')->paginate($this->limit);
+        return $properties->with('seller')->orderBy('created_at', 'desc')->paginate($this->limit);
     }
 
     /**

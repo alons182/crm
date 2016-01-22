@@ -28,13 +28,15 @@ class ClientsController extends Controller
     {
         $search = $request->all();
         $search['q'] = (isset($search['q'])) ? trim($search['q']) : '';
+        $search['referred'] = (isset($search['referred'])) ? $search['referred'] : '';
        
        
         $clients = $this->clientRepo->getAll($search);
 
         return View('clients.index')->with([
             'clients'         => $clients,
-            'search'           => $search['q'] 
+            'search'           => $search['q'],
+            'selectedReference' =>  $search['referred']
         ]);
     }
 
@@ -101,6 +103,7 @@ class ClientsController extends Controller
      */
     public function update(ClientEditRequest $request, $id)
     {
+         
          $this->clientRepo->update($id, $request->all());
 
         Flash('Updated Client');

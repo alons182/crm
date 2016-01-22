@@ -29,7 +29,8 @@ class ClientRequest extends Request
             'fullname' => 'required',
             'company' => 'required',
             'email' => 'required|email',
-            'phone1' => 'required'
+            'phone1' => 'required',
+            'referred' => 'required'
         
         ];
     }

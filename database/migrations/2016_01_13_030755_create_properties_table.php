@@ -23,7 +23,8 @@ class CreatePropertiesTable extends Migration
             $table->double('price');
             $table->string('province');
             $table->string('address');
-            $table->string('size');
+            $table->string('size')->nullable();
+            $table->string('construction')->nullable();
             $table->integer('rooms');
             $table->string('owner');
             $table->string('owner_phone1');

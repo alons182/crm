@@ -23,9 +23,14 @@
             <div class="form-group">
                 {!! Form::label('price','Price:',['class'=>'col-sm-2 control-label']) !!}
                 <div class="col-sm-10">
-                   
-                    {!! Form::text('price', null,['class'=>'form-control','required'=>'required']) !!}
-                    {!! errors_for('price',$errors) !!}
+                  
+                    <div class="input-group mg-b-md">
+                        <span class="input-group-addon">$</span>                                              
+                        {!! Form::text('price', isset($property) ? money($property->price, false) : null,['class'=>'form-control','required'=>'required']) !!}
+                        {!! errors_for('price',$errors) !!}
+
+                        
+                    </div> 
 
                 </div>
 
@@ -50,11 +55,22 @@
 
             </div>
             <div class="form-group">
-                {!! Form::label('size','Size:',['class'=>'col-sm-2 control-label']) !!}
+                {!! Form::label('size','Size land M2:',['class'=>'col-sm-2 control-label']) !!}
                 <div class="col-sm-10">
                    
                     {!! Form::text('size', null,['class'=>'form-control']) !!}
                     {!! errors_for('size',$errors) !!}
+
+                </div>
+
+
+            </div>
+            <div class="form-group">
+                {!! Form::label('construction','Size Construction M2:',['class'=>'col-sm-2 control-label']) !!}
+                <div class="col-sm-10">
+                   
+                    {!! Form::text('construction', null,['class'=>'form-control']) !!}
+                    {!! errors_for('construction',$errors) !!}
 
                 </div>
 

@@ -24,6 +24,8 @@ class CreateClientsTable extends Migration
             $table->string('phone2')->nullable();
             $table->string('phone3')->nullable();
             $table->string('phone4')->nullable();
+            $table->string('referred');
+            $table->string('referred_others')->nullable();
             $table->text('address')->nullable();
             $table->string('image')->nullable();
             $table->timestamps();

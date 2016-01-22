@@ -1,11 +1,26 @@
 (function($){
 
     console.log('msg');
+    
+
     $("form[data-confirm]").submit(function() {
         if ( ! confirm($(this).attr("data-confirm"))) {
             return false;
         }
     });
+
+     $("select[name='referred']").change(function() {
+
+      
+            if ($(this).val() === 'others') {
+                $("input[name='referred_others']").attr('disabled', false).focus();
+                
+
+            } else {
+                  $("input[name='referred_others']").attr('disabled', true);
+                  $("input[name='referred_others']").val('');
+            }
+        });
 
     var chkItem = $('.chk-item');
     var chkSelectAll = $('#select-all');
@@ -43,6 +58,8 @@
         return state;
     }
      var status = $('#status'),
+        province = $('#province'),
+        referred = $('#referred'),
         filters = $(".filtros");
         
     function submitForm(){
@@ -50,7 +67,8 @@
     }
 
     status.change(submitForm);
-   
+    province.change(submitForm);
+    referred.change(submitForm);
     
 
     $('.btn-edit-slug').on('click',function(){

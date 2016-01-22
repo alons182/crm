@@ -28,13 +28,15 @@ class PropertiesController extends Controller
         $search = $request->all();
         $search['q'] = (isset($search['q'])) ? trim($search['q']) : '';
         $search['status'] = (isset($search['status'])) ? $search['status'] : '';
+        $search['province'] = (isset($search['province'])) ? $search['province'] : '';
        
         $properties = $this->propertyRepo->getAll($search);
 
         return View('properties.index')->with([
             'properties'         => $properties,
             'search'           => $search['q'],
-            'selectedStatus'   => $search['status'] 
+            'selectedStatus'   => $search['status'], 
+            'selectedLocation'   => $search['province'] 
         ]);
     }
 

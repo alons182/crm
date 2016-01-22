@@ -35,7 +35,10 @@ class ClientRepo extends DbRepo{
     }
     private function prepareData($data)
     {
-        $data['ide'] = str_replace(' ', '', $data['ide']);
+        //$data['ide'] = str_replace(' ', '', $data['ide']);
+        
+       $data['referred_others'] = (isset($data['referred_others'])) ? $data['referred_others'] : '';
+   
 
         return $data;
     }
@@ -48,7 +51,7 @@ class ClientRepo extends DbRepo{
      */
     public function update($id, $data)
     {
-        //$data = $this->prepareData($data);
+        $data = $this->prepareData($data);
 
         $client = $this->model->findOrFail($id);
         
@@ -63,6 +66,7 @@ class ClientRepo extends DbRepo{
        
         return $client;
     }
+
 
     /**
      * Delete a client by ID
@@ -97,6 +101,10 @@ class ClientRepo extends DbRepo{
         if (isset($search['q']) && ! empty($search['q']))
         {
             $clients = $clients->Search($search['q']);
+        }
+         if (isset($search['referred']) && $search['referred'] != "")
+        {
+            $clients = $clients->where('referred', '=', $search['referred']);
         }
 
  
