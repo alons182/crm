@@ -18,6 +18,8 @@ class SellersController extends Controller
 
         $this->sellerRepo = $sellerRepo;
         View::share('roles', Role::pluck('label', 'id')->all());
+
+
     }
     /**
      * Display a listing of the resource.
@@ -26,6 +28,9 @@ class SellersController extends Controller
      */
     public function index(Request $request)
     {
+        if(! auth()->user()->can('create_sellers'))
+            return Redirect()->route('dashboard');
+
         $search = $request->all();
         $search['q'] = (isset($search['q'])) ? trim($search['q']) : '';
        
