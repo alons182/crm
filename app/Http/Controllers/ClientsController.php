@@ -17,7 +17,13 @@ class ClientsController extends Controller
         $this->middleware('auth');
         
         $this->clientRepo = $clientRepo;
-        View::share('properties', Property::where('status',1)->pluck('name', 'id')->all());
+        
+        if(!auth()->user()->hasRole('admin'))
+            $properties = auth()->user()->properties()->where('status',1);
+         else
+            $properties = Property::where('status',1);
+
+        View::share('properties', $properties->pluck('name', 'id')->all());
     }
     /**
      * Display a listing of the resource.
