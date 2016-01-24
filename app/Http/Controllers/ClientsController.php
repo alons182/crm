@@ -18,19 +18,27 @@ class ClientsController extends Controller
         
         $this->clientRepo = $clientRepo;
         
+        $properties = $this->groupedSelect();
+ 
+      
+        View::share('properties', $properties);
+    }
+
+    private function groupedSelect()
+    {
         if(!auth()->user()->hasRole('admin'))
             $properties = auth()->user()->properties()->where('status',1);
          else
             $properties = Property::where('status',1);
 
         $select_optgroup_arr_properties = [];
+
         foreach ($properties->get() as $item)
         {
             $select_optgroup_arr_properties[$item->province][$item->id] = $item->name;
         }
- 
-      
-        View::share('properties', $select_optgroup_arr_properties/*->pluck('name', 'id')->all()*/);
+        
+        return $select_optgroup_arr_properties;
     }
     /**
      * Display a listing of the resource.
