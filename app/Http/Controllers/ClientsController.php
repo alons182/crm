@@ -23,7 +23,14 @@ class ClientsController extends Controller
          else
             $properties = Property::where('status',1);
 
-        View::share('properties', $properties->pluck('name', 'id')->all());
+        $select_optgroup_arr_properties = [];
+        foreach ($properties->get() as $item)
+        {
+            $select_optgroup_arr_properties[$item->province][$item->id] = $item->name;
+        }
+ 
+      
+        View::share('properties', $select_optgroup_arr_properties/*->pluck('name', 'id')->all()*/);
     }
     /**
      * Display a listing of the resource.
@@ -66,7 +73,7 @@ class ClientsController extends Controller
     {
        
         $input = $request->all();
-
+        
         $this->clientRepo->store($input);
 
         Flash('Client Created');

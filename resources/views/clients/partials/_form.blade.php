@@ -178,7 +178,7 @@
            <div class="form-group">
                     {!! Form::label('properties','Properties:',['class'=>'col-sm-2 control-label'])!!}
                     <div class="col-sm-10">
-                        {!! Form::select('properties[]',$properties, (isset($selectedProperties)) ? $selectedProperties: null,['class'=>'form-control','multiple'])!!}
+                        {!! Form::select('properties[]',$properties, (isset($selectedProperties)) ? $selectedProperties: null,['class'=>'form-control chosen-select','multiple'])!!}
                         {!! errors_for('properties',$errors) !!}
                     </div>
                 </div>

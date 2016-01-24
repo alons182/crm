@@ -1,7 +1,8 @@
 @extends('layouts.template')
 
 @section('css')
-    <link rel="stylesheet" href="/vendor/bootstrap-select/bootstrap-select.css">
+    <link rel="stylesheet" href="/vendor/chosen.min.css">
+    <!--<link rel="stylesheet" href="/vendor/bootstrap-select/bootstrap-select.css">-->
 
 @stop
 @section('content')
@@ -18,9 +19,11 @@
 
 @endsection
 @section('scripts')
-    <script src="/vendor/bootstrap-select/bootstrap-select.js"></script>
+    <!--<script src="/vendor/bootstrap-select/bootstrap-select.js"></script>-->
+    <script src="/vendor/chosen.jquery.min.js"></script>
 	<script src="/vendor/jquery.maskedinput.min.js"></script>
 	<script type="text/javascript">
+		$(".chosen-select").chosen({no_results_text: "Oops, nothing found!"}); 
 		$("#ide").mask("999999999");
 		$("#phone1").mask("9999-9999");
 		$("#phone2").mask("9999-9999");

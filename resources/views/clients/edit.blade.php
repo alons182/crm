@@ -1,7 +1,7 @@
 @extends('layouts.template')
 @section('css')
-    <link rel="stylesheet" href="/vendor/bootstrap-select/bootstrap-select.css">
-
+    <!--<link rel="stylesheet" href="/vendor/bootstrap-select/bootstrap-select.css">-->
+	<link rel="stylesheet" href="/vendor/chosen.min.css">
 @stop
 @section('content')
  @include('layouts/partials/_breadcumbs', ['page' => 'Clients'])
@@ -17,11 +17,13 @@
 
 @section('scripts')
 
-    <script src="/vendor/bootstrap-select/bootstrap-select.js"></script>
+    <!--<script src="/vendor/bootstrap-select/bootstrap-select.js"></script>-->
+    <script src="/vendor/chosen.jquery.min.js"></script>
     <script src="/vendor/jquery.sortable.js"></script>
     <script src="/vendor/fuelux/checkbox.js"></script>
 	<script src="/vendor/jquery.maskedinput.min.js"></script>
 	<script type="text/javascript">
+		$(".chosen-select").chosen({no_results_text: "Oops, nothing found!"}); 
 		$(".handles").sortable({
 	        handle: "span"
 	    });
