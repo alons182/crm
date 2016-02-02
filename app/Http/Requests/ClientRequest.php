@@ -25,12 +25,12 @@ class ClientRequest extends Request
     {
        
         return [
-            'ide' => 'required|unique:clients|numeric',
-            'fullname' => 'required',
-            'company' => 'required',
+            'ide' => 'numeric',
+            'fullname' => 'required'
+            /*'company' => 'required',
             'email' => 'required|email',
             'phone1' => 'required',
-            'referred' => 'required'
+            'referred' => 'required'*/
         
         ];
     }

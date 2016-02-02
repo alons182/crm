@@ -15,7 +15,7 @@
             <div class="form-group">
                 {!! Form::label('ide','IDE:',['class'=>'col-sm-2 control-label']) !!}
                 <div class="col-sm-10">
-                    {!! Form::text('ide', null,['class'=>'form-control','required'=>'required','placeholder'=>'Ej: 101110111']) !!}
+                    {!! Form::text('ide', null,['class'=>'form-control','placeholder'=>'Ej: 101110111']) !!}
                     {!! errors_for('ide',$errors) !!}
                 </div>
 
@@ -34,7 +34,7 @@
                 {!! Form::label('company','Company:',['class'=>'col-sm-2 control-label']) !!}
                 <div class="col-sm-10">
                    
-                    {!! Form::text('company', null,['class'=>'form-control','required'=>'required']) !!}
+                    {!! Form::text('company', null,['class'=>'form-control']) !!}
                     {!! errors_for('company',$errors) !!}
 
                 </div>
@@ -56,7 +56,7 @@
                 {!! Form::label('email','Email:',['class'=>'col-sm-2 control-label']) !!}
                 <div class="col-sm-10">
                    
-                    {!! Form::email('email', null,['class'=>'form-control','required'=>'required']) !!}
+                    {!! Form::email('email', null,['class'=>'form-control']) !!}
                     {!! errors_for('email',$errors) !!}
 
                 </div>
@@ -78,7 +78,7 @@
                 {!! Form::label('phone1','Phone 1:',['class'=>'col-sm-2 control-label']) !!}
                 <div class="col-sm-10">
                    
-                    {!! Form::text('phone1', null,['class'=>'form-control','required'=>'required']) !!}
+                    {!! Form::text('phone1', null,['class'=>'form-control']) !!}
                     {!! errors_for('phone1',$errors) !!}
 
                 </div>
@@ -131,7 +131,7 @@
                 <div class="col-sm-10">
                      <div class="row">
                         <div class="col-xs-3">
-                            {!! Form::select('referred', ['mail' => 'Mail','facebook' => 'Facebook','website' => 'Website','vallas' => 'Vallas','others' => 'Others'], null,['class'=>'form-control','required'=>'required'])!!}
+                            {!! Form::select('referred', ['mail' => 'Mail','facebook' => 'Facebook','website' => 'Website','vallas' => 'Vallas','others' => 'Others'], null,['class'=>'form-control'])!!}
                             {!! errors_for('referred',$errors) !!}
                         </div>
                         <div class="col-xs-9">
