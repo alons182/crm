@@ -97,27 +97,17 @@
 
             </div>
             <div class="form-group">
-                {!! Form::label('phone3','Phone 3:',['class'=>'col-sm-2 control-label']) !!}
+                {!! Form::label('comments','Comments:',['class'=>'col-sm-2 control-label']) !!}
                 <div class="col-sm-10">
                    
-                    {!! Form::text('phone3', null,['class'=>'form-control']) !!}
-                    {!! errors_for('phone3',$errors) !!}
+                    {!! Form::textarea('comments', null,['class'=>'form-control']) !!}
+                    {!! errors_for('comments',$errors) !!}
 
                 </div>
 
 
             </div>
-            <div class="form-group">
-                {!! Form::label('phone4','Phone 4:',['class'=>'col-sm-2 control-label']) !!}
-                <div class="col-sm-10">
-                   
-                    {!! Form::text('phone4', null,['class'=>'form-control']) !!}
-                    {!! errors_for('phone4',$errors) !!}
-
-                </div>
-
-
-            </div>
+          
             <div class="form-group">
                 {!! Form::label('address','Address:',['class'=>'col-sm-2 control-label'])!!}
                 <div class="col-sm-10">
