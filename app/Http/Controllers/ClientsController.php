@@ -2,21 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Property;
-use App\Http\Requests;
-use Illuminate\Http\Request;
-use App\Repositories\ClientRepo;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ClientRequest;
-use Illuminate\Support\Facades\View;
+use App\Http\Requests;
 use App\Http\Requests\ClientEditRequest;
+use App\Http\Requests\ClientRequest;
+use App\Property;
+use App\Repositories\ClientRepo;
+use App\Repositories\SellerRepo;
+use App\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\View;
 
 class ClientsController extends Controller
 {
-    function __construct(ClientRepo $clientRepo) {
+    function __construct(ClientRepo $clientRepo, SellerRepo $sellerRepo) {
         $this->middleware('auth');
         
         $this->clientRepo = $clientRepo;
+         $this->sellerRepo = $sellerRepo;
         
         $properties = $this->groupedSelect();
  
@@ -50,14 +53,18 @@ class ClientsController extends Controller
         $search = $request->all();
         $search['q'] = (isset($search['q'])) ? trim($search['q']) : '';
         $search['referred'] = (isset($search['referred'])) ? $search['referred'] : '';
-       
+        $search['seller'] = (isset($search['seller'])) ? $search['seller'] : '';
+        
        
         $clients = $this->clientRepo->getAll($search);
-
+        $sellers = User::lists('name','id')->all();
+        
         return View('clients.index')->with([
             'clients'         => $clients,
             'search'           => $search['q'],
-            'selectedReference' =>  $search['referred']
+            'selectedReference' =>  $search['referred'],
+            'selectedSeller' =>  $search['seller'],
+            'sellers'           => $sellers
         ]);
     }
 

@@ -21,6 +21,7 @@
                   $("input[name='referred_others']").val('');
             }
         });
+   
 
     var chkItem = $('.chk-item');
     var chkSelectAll = $('#select-all');
@@ -60,6 +61,7 @@
      var status = $('#status'),
         province = $('#province'),
         referred = $('#referred'),
+        sellers = $('#seller'),
         filters = $(".filtros");
         
     function submitForm(){
@@ -69,6 +71,7 @@
     status.change(submitForm);
     province.change(submitForm);
     referred.change(submitForm);
+    sellers.change(submitForm);
     
 
     $('.btn-edit-slug').on('click',function(){

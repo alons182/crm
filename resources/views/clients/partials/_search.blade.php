@@ -17,6 +17,11 @@
                                 {!! Form::select('referred', ['' => '-- Select reference --','mail' => 'Mail','facebook' => 'Facebook','website' => 'Website','vallas' => 'Vallas','others' => 'Others'], $selectedReference, ['id'=>'referred','class'=>'form-control'] ) !!}
 
                              </div>
+                             <div class=" form-group">
+
+                                {!! Form::select('seller', ['' => '-- Filter by seller --'] + $sellers , $selectedSeller, ['id'=>'seller','class'=>'form-control'] ) !!}
+
+                             </div>
 
                 {!! Form::close() !!}
 

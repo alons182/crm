@@ -1,6 +1,7 @@
 <?php namespace App\Repositories;
 
 use App\Client;
+use App\User;
 use Illuminate\Support\Facades\File;
 
 class ClientRepo extends DbRepo{
@@ -97,7 +98,13 @@ class ClientRepo extends DbRepo{
         else
             $clients = auth()->user()->clients();
         
-
+        if (isset($search['seller']) && $search['seller'] != "")
+        {
+            $seller = User::find($search['seller']);
+            
+            $clients = $seller->clients();
+            //dd($clients);
+        }
         if (isset($search['q']) && ! empty($search['q']))
         {
             $clients = $clients->Search($search['q']);
@@ -106,6 +113,7 @@ class ClientRepo extends DbRepo{
         {
             $clients = $clients->where('referred', '=', $search['referred']);
         }
+
 
  
 
