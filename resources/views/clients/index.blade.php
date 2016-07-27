@@ -4,9 +4,20 @@
     @include('layouts/partials/_breadcumbs', ['page' => 'Clients'])
 
     <section class="panel">
+
         <div class="panel-heading" style="overflow: hidden;">
+            <div class="import pull-right" >
+                 <h4>Importar Excel (CVS, XLS)</h4>
+                 {!! Form::open(['route' =>['import_clients'],'method' => 'post','files'=> true, 'id' =>'form-import']) !!}
+                    {!! Form::file('excel', null, ['id' => 'excel', 'required'=>'required']) !!}
+                    {!! errors_for('excel',$errors) !!} 
+                    {!! Form::submit('Import',['class'=>'btn btn-primary'])!!}
+                {!! Form::close() !!}
+            </div>
             {!! link_to_route('clients.create','New Client',null,['class'=>'btn btn-success']) !!}
+        
             @include('clients/partials/_search')
+
         </div>
         <div class="panel-body no-padding">
             {!! Form::open(['route' =>['option_multiple'],'method' => 'post', 'id' =>'form-option-chk','data-confirm' => 'You are sure?']) !!}

@@ -21,7 +21,7 @@ class ClientRepo extends DbRepo{
     {
        // $data = $this->prepareData($data);
 
-        $data['image'] = (isset($data['image'])) ? $this->storeImage($data['image'], $data['fullname'].'-'.getUniqueNumber(), 'clients', null, null, 640, null, false) : '';
+        $data['image'] = (isset($data['image']) && $data['image']) ? $this->storeImage($data['image'], $data['fullname'].'-'.getUniqueNumber(), 'clients', null, null, 640, null, false) : '';
 
         $client = $this->model->create($data);
         

@@ -64,6 +64,10 @@ Route::group(['middleware' => ['web']], function () {
         'as' => 'create_task_to_client',
         'uses' => 'ClientsController@create_task'
     ]);
+    Route::post('clients/import', [
+        'as' => 'import_clients',
+        'uses' => 'ClientsController@import'
+    ]);
     Route::resource('clients', 'ClientsController');
 
     Route::get('clients', [

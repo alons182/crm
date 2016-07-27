@@ -6,12 +6,15 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Http\Requests\ClientEditRequest;
 use App\Http\Requests\ClientRequest;
+use App\Http\Requests\ImportRequest;
 use App\Property;
 use App\Repositories\ClientRepo;
 use App\Repositories\SellerRepo;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\View;
+use Maatwebsite\Excel\Excel;
 
 class ClientsController extends Controller
 {
@@ -20,6 +23,7 @@ class ClientsController extends Controller
         
         $this->clientRepo = $clientRepo;
          $this->sellerRepo = $sellerRepo;
+        
         
         $properties = $this->groupedSelect();
  
@@ -96,17 +100,7 @@ class ClientsController extends Controller
         return Redirect()->route('clients');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
+    
     /**
      * Show the form for editing the specified resource.
      *
@@ -192,6 +186,36 @@ class ClientsController extends Controller
     {
         
         return View('tasks.create')->with(compact('client_id'));
+    }
+
+    public function import(Excel $excel, ImportRequest $request)
+    {
+        $file = $request->file('excel');//Input::file('excel');
+        //dd($file);
+
+        if(!$file) {Flash('Seleccione un archivo!!'); return Redirect()->route('clients');}
+
+        $excel->load($file, function($reader) {
+           
+            foreach ($reader->get() as $client) {
+
+                // para evitar en los campos que no se permiten null poner en blanco
+                $data = array_map(function($v){
+                    return (is_null($v)) ? "" : $v;
+                },$client->toArray());
+               
+               /* $data = [
+                    'name' => $client->title,
+                    'author' =>$client->author,
+                    'year' =>$client->publication_year
+                ];*/
+                 $this->clientRepo->store($data);
+            }
+        });
+        //return Book::all();
+         Flash('Imported !!');
+
+         return Redirect()->route('clients');
     }
 
 
