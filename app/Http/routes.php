@@ -34,6 +34,11 @@ Route::group(['middleware' => ['web']], function () {
      'uses' => 'DashboardController@index',
      
     ]);
+    Route::get('/home',  [
+     'as' => 'dashboard-home',
+     'uses' => 'DashboardController@index',
+     
+    ]);
 
    Route::get('sellers/list', [
         'as' => 'sellers_list',
@@ -67,6 +72,10 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('clients/import', [
         'as' => 'import_clients',
         'uses' => 'ClientsController@import'
+    ]);
+    Route::post('clients/export', [
+        'as' => 'export_clients',
+        'uses' => 'ClientsController@export'
     ]);
     Route::resource('clients', 'ClientsController');
 
