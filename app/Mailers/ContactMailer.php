@@ -26,7 +26,7 @@ class ContactMailer extends Mailer{
         }
         //dd($this->listProductionEmail);
         //dd($result);
-        $emailTo = 'alonso@avotz.com';//$data['task']->notification_to;//$emailArray;
+        $emailTo = 'alons182@hotmail.com';//$data['task']->notification_to;//$emailArray;
 
         return $this->sendTo($emailTo, $subject, $view, $data);
     }
