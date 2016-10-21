@@ -9,7 +9,7 @@ class ContactMailer extends Mailer{
 
     public function contact($data)
     {
-        $view = 'emails.contact.contact';
+        $view = 'emails.notifications.notificationTasks';//'emails.contact.contact';
         $subject = 'Información desde formulario de contacto';
         $emailTo = $this->listProductionEmail;
 
