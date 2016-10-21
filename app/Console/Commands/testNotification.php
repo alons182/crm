@@ -21,6 +21,8 @@ class testNotification extends Command
      */
     protected $description = 'Command description';
 
+    private $mailer;
+
     /**
      * Create a new command instance.
      *
