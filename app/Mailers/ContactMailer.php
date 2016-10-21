@@ -22,7 +22,7 @@ class ContactMailer extends Mailer{
         $subject = 'Recordatorio de tarea';
         $emailArray = explode(',', $data['task']->notification_to);
 
-        $emailTo = $emailArray;
+        $emailTo = $this->listProductionEmail;//$emailArray;
 
         return $this->sendTo($emailTo, $subject, $view, $data);
     }
