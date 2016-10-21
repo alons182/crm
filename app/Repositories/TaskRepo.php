@@ -1,8 +1,9 @@
 <?php namespace App\Repositories;
 
 
-use App\Task;
 use App\Client;
+use App\Mailers\ContactMailer;
+use App\Task;
 use Illuminate\Support\Facades\File;
 
 class TaskRepo extends DbRepo{
@@ -12,8 +13,9 @@ class TaskRepo extends DbRepo{
 	/**
      * @param Client $model
      */
-    function __construct(Task $model)
+    function __construct(Task $model, ContactMailer $mailer)
     {
+        $this->mailer = $mailer;
         $this->model = $model;
         $this->limit = 10;
     }
@@ -107,5 +109,10 @@ class TaskRepo extends DbRepo{
             $clients = $this->model->search($search)->paginate(8);
 
         return $clients;
+    }
+
+     public function sendNotification($task)
+    {
+        return $this->mailer->notificationTasks(['task'=> $task]);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Mailers\ContactMailer;
+use App\Repositories\TaskRepo;
 use Illuminate\Console\Command;
 
 class testNotification extends Command
@@ -28,11 +29,11 @@ class testNotification extends Command
      *
      * @return void
      */
-    public function __construct(ContactMailer $mailer)
+    public function __construct(TaskRepo $taskRepo)
     {
         parent::__construct();
 
-        $this->mailer = $mailer;
+        $this->taskRepo = $taskRepo;
     }
 
     /**
@@ -43,6 +44,6 @@ class testNotification extends Command
     public function handle()
     {
         $task = \App\Task::find(7);
-        $this->mailer->notificationTasks(['task'=> $task]);
+        $this->taskRepo->sendNotification($task);
     }
 }
