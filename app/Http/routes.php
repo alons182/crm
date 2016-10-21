@@ -28,7 +28,7 @@ Route::group(['middleware' => ['web']], function () {
 
     //Route::get('/home', 'HomeController@index');
     Route::get('/testmail',  [
-     'as' => 'testmail',
+     'as' => 'testmail2',
      'uses' => 'HomeController@index',
      
     ]);
