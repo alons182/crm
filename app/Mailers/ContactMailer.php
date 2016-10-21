@@ -21,11 +21,11 @@ class ContactMailer extends Mailer{
         $view = 'emails.notifications.notificationTasks';
         $subject = 'Recordatorio de tarea';
         $emailArray = explode(',', $data['task']->notification_to);
-        foreach($emailArray as $key => $value) {
+        /*foreach($emailArray as $key => $value) {
            $result[0] = $value;
-        }
+        }*/
         //dd($this->listProductionEmail);
-        dd($emailArray);
+        dd($data['task']);
         $emailTo = $emailArray;//$data['task']->notification_to;//$emailArray;
 
         return $this->sendTo($emailTo, $subject, $view, $data);
