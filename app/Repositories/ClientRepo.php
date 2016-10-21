@@ -2,6 +2,7 @@
 
 use App\Client;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
 
 class ClientRepo extends DbRepo{
@@ -113,6 +114,26 @@ class ClientRepo extends DbRepo{
         {
             $clients = $clients->where('referred', '=', $search['referred']);
         }
+         if (isset($search['status']) && $search['status'] != "")
+        {
+            $clients = $clients->where('status', $search['status']);
+        }
+
+        if (isset($search['date1']) && $search['date1'] != "")
+        {
+           
+            
+            
+            $date1 = new Carbon($search['date1']);
+            $date2 = (isset($search['date2']) && $search['date2'] != "") ? $search['date2'] : $search['date1'];
+            $date2 = new Carbon($date2);
+            
+           // dd($date2->endOfDay());
+            $clients = $clients->where([['created_at', '>=', $date1],
+                    ['created_at', '<=', $date2->endOfDay()]]);
+            
+        }
+        
 
 
  
@@ -120,7 +141,60 @@ class ClientRepo extends DbRepo{
 
         return $clients->with('sellers')->orderBy('created_at', 'desc')->paginate($this->limit);
     }
+    public function getColumnsName()
+    {
+        $fields = $this->model->getFillable(); ///\Schema::getColumnListing('clients');
+        
+        $fields = array_except($fields, ['12']); // remove image field
+       
+       return $fields;
+    }
+    public function reportClients($fields, $filters)
+    {
+        if(auth()->user()->hasRole('admin'))       
+            $clients = $this->model;
+        else
+            $clients = auth()->user()->clients();
 
+        if (isset($filters['fil-seller']) && $filters['fil-seller'] != "")
+        {
+            $seller = User::find($filters['fil-seller']);
+            
+            $clients = $seller->clients();
+            //dd($clients);
+        }
+        if (isset($filters['fil-q']) && ! empty($filters['fil-q']))
+        {
+            $clients = $clients->Search($filters['fil-q']);
+        }
+         if (isset($filters['fil-referred']) && $filters['fil-referred'] != "")
+        {
+            $clients = $clients->where('referred', '=', $filters['fil-referred']);
+        }
+         if (isset($filters['fil-status']) && $filters['fil-status'] != "")
+        {
+            $clients = $clients->where('status', $filters['fil-status']);
+        }
+
+        if (isset($filters['fil-date1']) && $filters['fil-date1'] != "")
+        {
+           
+            
+            
+            $date1 = new Carbon($filters['fil-date1']);
+            $date2 = (isset($filters['fil-date2']) && $filters['fil-date2'] != "") ? $filters['fil-date2'] : $filters['fil-date1'];
+            $date2 = new Carbon($date2);
+            
+           // dd($date2->endOfDay());
+            $clients = $clients->where([['created_at', '>=', $date1],
+                    ['created_at', '<=', $date2->endOfDay()]]);
+            
+        }
+
+        $clients = ($fields) ? $clients->select($fields)->orderBy('created_at', 'desc')->get() : $clients->orderBy('created_at', 'desc')->get();
+       
+       return $clients;
+    }
     /**
      * Find a client by ID
      * @param $id

@@ -47,31 +47,34 @@ class tasksNotification extends Command
 
         foreach($tasks as $task)
         {
-           $timeArray = explode(':', $task->notification_time);
-           
-           $dtTask = Carbon::createFromFormat('Y-m-d H:i:s', $task->notification_date);
-           $dtTask->setTime($timeArray[0], $timeArray[1], 0);
-            
-            //dd(Carbon::now()->diffInMinutes($dtTask)); 
-          
-            if(Carbon::now()->diffInMinutes($dtTask) < $task->notification_reminder)
-            {
-                
-                try {
-                    $this->mailer->notificationTasks(['task'=> $task]);
-                }catch (Swift_RfcComplianceException $e)
+           if($task->notification_time && $task->notification_reminder_time)
+           {
+               
+               $timeArray = explode(':', $task->notification_reminder_time);
+
+               
+               $dtTask = Carbon::createFromFormat('Y-m-d H:i:s', $task->notification_reminder_date);
+               $dtTask->setTime($timeArray[0], $timeArray[1], 0);
+              
+              
+                if(Carbon::now()->diffInMinutes($dtTask) == 0)
                 {
-                    Log::error($e->getMessage());
+                    
+                    try {
+                        $this->mailer->notificationTasks(['task'=> $task]);
+                    }catch (Swift_RfcComplianceException $e)
+                    {
+                        Log::error($e->getMessage());
+                    }
+
+                    $countNotification++;
+                    
+                    
                 }
+                Log::info(Carbon::now()->diffInMinutes($dtTask));
 
-                $countNotification++;
-                
-                
+        
             }
-            Log::info(Carbon::now()->diffInMinutes($dtTask));
-
-    
-
 
         }
 

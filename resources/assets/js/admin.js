@@ -27,7 +27,13 @@
     var chkSelectAll = $('#select-all');
     var btnDeleteMultiple = $('.delete-multiple');
 
-   
+   chkSelectAll.on('click',function(e) {
+
+        var c = this.checked;
+        $(':checkbox').prop('checked',c);
+
+
+    });
     $('.btn-multiple').on('click',function(e) {
 
         var action = $(this).data('action');
@@ -67,6 +73,12 @@
     function submitForm(){
         filters.find('form').submit();
     }
+
+    filters.find('input[name="q"]').on('keydown', function(e){
+       if(e.keyCode == 13){
+         submitForm();
+       }
+    });
 
     status.change(submitForm);
     province.change(submitForm);

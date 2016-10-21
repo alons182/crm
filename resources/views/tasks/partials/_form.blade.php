@@ -76,6 +76,30 @@
 
             </div>
             <div class="form-group">
+                {!! Form::label('notification_reminder_date','Remaind Time:',['class'=>'col-sm-2 control-label']) !!}
+                <div class="col-sm-10">
+                    <div class="row">
+                        <div class="col-xs-5">
+                           {!! Form::text('notification_reminder_date', null,['class'=>'form-control datepicker','required'=>'required']) !!}
+                            
+                            {!! errors_for('notification_reminder_date',$errors) !!}
+                        </div>
+                        <div class="col-xs-2">
+
+                            {!! Form::text('notification_reminder_time', null,['class'=>'form-control timepicker'])!!}
+                            {!! errors_for('notification_reminder_time',$errors) !!}
+                        
+                        
+                            
+                        </div>
+                        
+                    </div>
+                </div>
+
+
+
+            </div>
+            <!--<div class="form-group">
                {!! Form::label('notification_reminder','Remaind Time:',['class'=>'col-sm-2 control-label']) !!}
 
                 <div class="col-sm-10">
@@ -96,7 +120,7 @@
                         
                     </div>
                 </div>
-            </div>
+            </div>-->
             <div class="form-group">
              {!! Form::label('notification_to','Notification To:',['class'=>'col-sm-2 control-label']) !!}
              <div class="col-sm-10">

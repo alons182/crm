@@ -7,14 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 class Client extends Model
 {
    
-	 protected $fillable = ['ide','fullname', 'company', 'job', 'email', 'web', 'phone1','phone2','comments', 'address','referred','referred_others','image'];
+	 protected $fillable = ['ide','fullname', 'company', 'job', 'email', 'web', 'phone1','phone2','comments', 'address','referred','referred_others','image','status'];
 
  	public function scopeSearch($query, $search)
     {
         return $query->where(function ($query) use ($search)
         {
-            $query->where('fullname', 'like', '%' . $search . '%');
-                //->orWhere('description', 'like', '%' . $search . '%');
+            $query->where('fullname', 'like', '%' . $search . '%')
+                  ->orWhere('company', 'like', '%' . $search . '%')
+                  ->orWhere('email', 'like', '%' . $search . '%')
+                  ->orWhere('phone1', 'like', '%' . $search . '%')
+                  ->orWhere('phone2', 'like', '%' . $search . '%')
+                  ->orWhere('comments', 'like', '%' . $search . '%');
+                  
         });
     }
 

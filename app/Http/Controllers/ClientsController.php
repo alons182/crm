@@ -58,17 +58,25 @@ class ClientsController extends Controller
         $search['q'] = (isset($search['q'])) ? trim($search['q']) : '';
         $search['referred'] = (isset($search['referred'])) ? $search['referred'] : '';
         $search['seller'] = (isset($search['seller'])) ? $search['seller'] : '';
+        $search['status'] = (isset($search['status'])) ? $search['status'] : '';
+        $search['date1'] = (isset($search['date1'])) ? $search['date1'] : '';
+        $search['date2'] = (isset($search['date2'])) ? $search['date2'] : '';
         
        
         $clients = $this->clientRepo->getAll($search);
         $sellers = User::lists('name','id')->all();
+        $fieldsToExport = $this->clientRepo->getColumnsName();
         
         return View('clients.index')->with([
             'clients'         => $clients,
             'search'           => $search['q'],
             'selectedReference' =>  $search['referred'],
             'selectedSeller' =>  $search['seller'],
-            'sellers'           => $sellers
+            'sellers'           => $sellers,
+            'selectedStatus' =>  $search['status'],
+            'date1'           => $search['date1'],
+            'date2'           => $search['date2'],
+            'fieldsToExport'   => $fieldsToExport
         ]);
     }
 
@@ -216,6 +224,40 @@ class ClientsController extends Controller
          Flash('Imported !!');
 
          return Redirect()->route('clients');
+    }
+    public function export(Excel $excel, Request $request)
+    {
+        $data = $request->all();
+        $fields = array_where($data, function ($key, $value) {
+            return starts_with($key,'exp-');
+        });
+        $filters = array_where($data, function ($key, $value) {
+            return starts_with($key,'fil-');
+        });
+        
+
+        \Excel::create('Clients', function ($excel) use ($fields,$filters)
+        {
+
+            $excel->sheet('Clientes', function ($sheet) use ($fields, $filters)
+            {
+                //dd($this->clientRepo->reportClients($fields, $filters)->toArray());
+                $clients = $this->clientRepo->reportClients($fields, $filters);
+                
+                $data = array_map(function($data){
+                    
+                      $data['status'] = \Lang::get('utils.status_client.'. $data['status']);
+
+                    return $data;
+                },$clients->toArray());
+                
+            
+                $sheet->fromArray($data, null, 'A1', true);
+
+            });
+
+
+        })->export('xls');
     }
 
 

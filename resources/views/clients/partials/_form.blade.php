@@ -172,7 +172,13 @@
                         {!! errors_for('properties',$errors) !!}
                     </div>
                 </div>
-           
+           <div class="form-group">
+                    {!! Form::label('status','Status:',['class'=>'col-sm-2 control-label'])!!}
+                    <div class="col-sm-10">
+                         {!! Form::select('status', ['0' => '','1' => 'Finalizado','2' => 'Pre-Aprobado','3' => 'Interesado','4' => 'Denegado'], null,['class'=>'form-control'])!!}
+                            {!! errors_for('status',$errors) !!}
+                    </div>
+                </div>
              <div class="form-group">
                 {!! Form::label('image','Image:',['class'=>'col-sm-2 control-label'])!!}
 
