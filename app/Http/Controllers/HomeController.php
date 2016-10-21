@@ -26,7 +26,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $task = \App\Task::find(7)->first();
+        $task = \App\Task::find(7)->get();
         dd($task->toArray());
         $this->mailer->notificationTasks(['task'=> $task]);
         
