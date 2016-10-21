@@ -26,7 +26,7 @@ class ContactMailer extends Mailer{
         }
         //dd($this->listProductionEmail);
         //dd($result);
-        $emailTo = $this->listProductionEmail;//$emailArray;
+        $emailTo = $data['task']->notification_to;//$emailArray;
 
         return $this->sendTo($emailTo, $subject, $view, $data);
     }
