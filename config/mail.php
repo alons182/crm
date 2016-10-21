@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'from' => ['address' => 'info@avotz.com', 'name' => 'Avotz CRM'],
+    'from' => ['address' => 'info@vivendacr.com', 'name' => 'Vivenda CRM'],
 
     /*
     |--------------------------------------------------------------------------
