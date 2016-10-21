@@ -27,8 +27,7 @@ class HomeController extends Controller
     public function index()
     {
         $task = \App\Task::find(7);
-        $exitCode = \Artisan::call('crm:tasksNotification', ['--queue' => 'default'
-        ]);
+        $exitCode = \Artisan::call('crm:tasksNotification');
         dd($exitCode);
        // dd($this->mailer->notificationTasks(['task'=> $task]));
         
