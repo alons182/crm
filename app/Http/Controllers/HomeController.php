@@ -28,7 +28,7 @@ class HomeController extends Controller
     {
         $task = \App\Task::find(7)->first();
 
-        $this->mailer->notificationTasks(['task'=> $task]);
+        $this->mailer->contact(['task'=> $task]);
         
         return 'send';
     }
