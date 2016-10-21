@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Routes File
@@ -28,7 +27,11 @@ Route::group(['middleware' => ['web']], function () {
     Route::auth();
 
     //Route::get('/home', 'HomeController@index');
-
+    Route::get('/testmail',  [
+     'as' => 'testmail',
+     'uses' => 'HomeController@index',
+     
+    ]);
     Route::get('/',  [
      'as' => 'dashboard',
      'uses' => 'DashboardController@index',

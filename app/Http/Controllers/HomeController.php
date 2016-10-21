@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests;
 use Illuminate\Http\Request;
+use App\Mailers\ContactMailer;
 
 class HomeController extends Controller
 {
@@ -12,9 +13,10 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(ContactMailer $mailer)
     {
         $this->middleware('auth');
+        $this->mailer = $mailer;
     }
 
     /**
@@ -24,6 +26,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $task = \App\Task::find(7)->first();
+
+        $this->mailer->notificationTasks(['task'=> $task]);
+        
+        return 'send';
     }
 }
