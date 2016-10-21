@@ -18,13 +18,15 @@
                     {!! Form::file('excel', null, ['id' => 'excel', 'required'=>'required']) !!}
                     {!! errors_for('excel',$errors) !!} 
                     {!! Form::submit('Import',['class'=>'btn btn-primary'])!!}
+
+                    <a href="#" class="btn btn-success" data-toggle="modal" data-target=".bs-modal-sm">Exportar</a>
                 {!! Form::close() !!}
-                 <button class="btn btn-success" data-toggle="modal" data-target=".bs-modal-sm">Exportar</button>
+                 
             </div>
             {!! link_to_route('clients.create','New Client',null,['class'=>'btn btn-success']) !!}
         
             @include('clients/partials/_search')
-
+            
         </div>
         <div class="panel-body no-padding">
             {!! Form::open(['route' =>['option_multiple'],'method' => 'post', 'id' =>'form-option-chk','data-confirm' => 'You are sure?']) !!}

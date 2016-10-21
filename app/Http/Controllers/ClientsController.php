@@ -245,8 +245,8 @@ class ClientsController extends Controller
                 $clients = $this->clientRepo->reportClients($fields, $filters);
                 
                 $data = array_map(function($data){
-                    
-                      $data['status'] = \Lang::get('utils.status_client.'. $data['status']);
+                        if(isset($data['status']))
+                            $data['status'] = \Lang::get('utils.status_client.'. $data['status']);
 
                     return $data;
                 },$clients->toArray());
