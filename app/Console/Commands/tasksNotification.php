@@ -2,11 +2,12 @@
 
 namespace App\Console\Commands;
 
+use App\Mailers\ContactMailer;
 use App\Task;
 use Carbon\Carbon;
-use App\Mailers\ContactMailer;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class tasksNotification extends Command
 {
@@ -61,7 +62,12 @@ class tasksNotification extends Command
                 {
                     
                     try {
-                        $this->mailer->notificationTasks(['task'=> $task]);
+                        //$this->mailer->notificationTasks(['task'=> $task]);
+                         Mail::send('emails.notifications.notificationTasks', ['task' => $task], function ($m) use ($user) {
+                            $m->from('info@vivendacr.com', 'CRM Vivenda');
+
+                            $m->to($task->notification_to, 'vivenda')->subject('Recordatorio de tarea!');
+                        });
                     }catch (Swift_RfcComplianceException $e)
                     {
                         Log::error($e->getMessage());
