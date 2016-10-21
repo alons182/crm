@@ -9,7 +9,7 @@ class ContactMailer extends Mailer{
 
     public function contact($data)
     {
-        $view = 'emails.notifications.notificationTasks';//'emails.contact.contact';
+        $view = 'emails.contact.contact';
         $subject = 'Información desde formulario de contacto';
         $emailTo = $this->listProductionEmail;
 
@@ -21,7 +21,7 @@ class ContactMailer extends Mailer{
         $view = 'emails.notifications.notificationTasks';
         $subject = 'Recordatorio de tarea';
         $emailArray = explode(',', $data['task']->notification_to);
-        $emailTo = $emailArray;
+        $emailTo = $this->listProductionEmail;//$emailArray;
 
         return $this->sendTo($emailTo, $subject, $view, $data);
     }
