@@ -28,8 +28,6 @@ class HomeController extends Controller
     {
         $task = \App\Task::find(7);
         $exitCode = \Artisan::call('crm:testNotification');
-        //dd($exitCode);
-       // dd($this->mailer->notificationTasks(['task'=> $task]));
         
         return 'send';
     }

@@ -62,12 +62,12 @@ class tasksNotification extends Command
                 {
                     
                     try {
-                        //$this->mailer->notificationTasks(['task'=> $task]);
-                         Mail::send('emails.notifications.notificationTasks', ['task' => $task], function ($m) use ($task) {
+                        $this->mailer->notificationTasks(['task'=> $task]);
+                        /* Mail::send('emails.notifications.notificationTasks', ['task' => $task], function ($m) use ($task) {
                             $m->from('info@vivendacr.com', 'CRM Vivenda');
 
                             $m->to($task->notification_to, 'vivenda')->subject('Recordatorio de tarea!');
-                        });
+                        });*/
                     }catch (Swift_RfcComplianceException $e)
                     {
                         Log::error($e->getMessage());

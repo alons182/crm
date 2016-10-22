@@ -111,9 +111,5 @@ class TaskRepo extends DbRepo{
         return $clients;
     }
 
-     public function sendNotification($task)
-    {
-        
-        return $this->mailer->notificationTasks(['task'=> $task]);
-    }
+
 }

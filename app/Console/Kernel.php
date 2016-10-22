@@ -14,8 +14,8 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         Commands\Inspire::class,
-        Commands\tasksNotification::class,
-        Commands\testNotification::class
+        Commands\tasksNotification::class
+
     ];
 
     /**
