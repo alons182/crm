@@ -63,7 +63,7 @@ Route::group(['middleware' => ['web']], function () {
         ));
     }
 
-     
+   
     Route::get('clients/list', [
         'as' => 'clients_list',
         'uses' => 'ClientsController@list_clients'
@@ -93,9 +93,13 @@ Route::group(['middleware' => ['web']], function () {
     ]);
 
 
-    Route::get('task/list', [
+    Route::get('tasks/list', [
         'as' => 'tasks_list',
         'uses' => 'TasksController@list_tasks'
+    ]);
+     Route::get('tasks/notification', [
+        'as' => 'tasks_notification',
+        'uses' => 'TasksController@notification'
     ]);
     Route::resource('tasks', 'TasksController');
 

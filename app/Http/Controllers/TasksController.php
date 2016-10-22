@@ -122,5 +122,11 @@ class TasksController extends Controller
         return Redirect()->route('clients');
 
     }
+     public function notification(Request $request)
+    {
+        $exitCode = \Artisan::call('crm:tasksNotification');
+
+        return $exitCode;
+    }
 
 }
