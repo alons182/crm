@@ -79,7 +79,7 @@ class tasksNotification extends Command
             }
 
         }
-
+        Log::info($countNotification.' notificaciones enviadas' );
         $this->info('Hecho, ' . $countNotification.' notificaciones enviadas');
        
         
