@@ -37,8 +37,8 @@ class executeRoute extends Command
      */
     public function handle()
     {
-        $exitCode = \Artisan::call('crm:tasksNotification');
+       return redirect('/testmail');
 
-        return $exitCode;
+        
     }
 }

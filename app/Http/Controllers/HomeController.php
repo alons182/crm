@@ -26,8 +26,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $task = \App\Task::find(7);
-        $exitCode = \Artisan::call('crm:testNotification');
+        //$task = \App\Task::find(7);
+        $exitCode = \Artisan::call('crm:tasksNotification');
         
         return 'send';
     }
