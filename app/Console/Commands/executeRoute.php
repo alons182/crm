@@ -37,7 +37,7 @@ class executeRoute extends Command
      */
     public function handle()
     {
-       return redirect('/testmail');
+      dd(redirect('/testmail'));
 
         
     }
