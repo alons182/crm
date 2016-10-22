@@ -71,9 +71,9 @@ class tasksNotification extends Command
 
                     $countNotification++;
                     
-                    
+                    Log::info(Carbon::now()->diffInMinutes($dtTask));
                 }
-                Log::info(Carbon::now()->diffInMinutes($dtTask));
+                
 
         
             }
