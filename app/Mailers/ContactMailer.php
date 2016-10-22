@@ -21,7 +21,8 @@ class ContactMailer extends Mailer{
         $view = 'emails.notifications.notificationTasks';
         $subject = 'Recordatorio de tarea';
         $emailArray = explode(',', $data['task']->notification_to);
-
+        array_walk($emailArray,'trim_value'); // quitar espacios en blanco con la funcion trim_value de helpers.php
+       
         $emailTo = $emailArray;
 
         return $this->sendTo($emailTo, $subject, $view, $data);

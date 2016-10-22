@@ -77,6 +77,10 @@ function getUniqueNumber()
         $sort = substr($mdun, 21);
         return $sort;
 }
+function trim_value(&$value) 
+{ 
+    $value = trim($value); 
+}
 
 
 
