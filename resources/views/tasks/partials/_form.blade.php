@@ -56,7 +56,7 @@
                 <div class="col-sm-10">
                     <div class="row">
                         <div class="col-xs-5">
-                           {!! Form::text('notification_date', null,['class'=>'form-control datepicker','required'=>'required']) !!}
+                        <input type="text" class="form-control datepicker" name="notification_date" value="{{ isset($task) && ($task->notification_date != '0000-00-00 00:00:00') ? $task->notification_date : '' }}">
                             
                             {!! errors_for('notification_date',$errors) !!}
                         </div>
@@ -80,8 +80,8 @@
                 <div class="col-sm-10">
                     <div class="row">
                         <div class="col-xs-5">
-                           {!! Form::text('notification_reminder_date', null,['class'=>'form-control datepicker','required'=>'required']) !!}
-                            
+                            <input type="text" class="form-control datepicker" name="notification_reminder_date" value="{{ isset($task) && ($task->notification_reminder_date != '0000-00-00 00:00:00') ? $task->notification_reminder_date : '' }}">
+
                             {!! errors_for('notification_reminder_date',$errors) !!}
                         </div>
                         <div class="col-xs-2">

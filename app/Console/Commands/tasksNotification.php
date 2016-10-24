@@ -48,7 +48,7 @@ class tasksNotification extends Command
 
         foreach($tasks as $task)
         {
-           if($task->notification_time && $task->notification_reminder_time)
+           if($task->notification_time && $task->notification_reminder_time && $task->notification_to)
            {
                
                $timeArray = explode(':', $task->notification_reminder_time);
