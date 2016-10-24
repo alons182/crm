@@ -45,6 +45,7 @@
                         <th>Full Name</th>
                         <th>Company</th>
                         <th>Email</th>
+                        <th>Telephone</th>
                         <th>Status</th>
                         <th>Created</th>
 
@@ -62,6 +63,7 @@
                             <td>{!!$client->fullname!!}</td>
                             <td>{!! $client->company !!}</td>
                              <td>{!! $client->email !!}</td>
+                              <td>{!! $client->phone1 !!}</td>
                              <td><span class="btn btn-{!! \Lang::get('utils.status_color.'. $client->status)  !!} btn-sm">
                                          
                                          {!! \Lang::get('utils.status_client.'. $client->status)  !!}
