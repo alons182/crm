@@ -29,6 +29,28 @@ return [
         '3' => 'Bajo',
         
     ],
+    'export_fields'  => [
+        'ide'=> 'Ide',
+        'fullname'=> 'Nombre completo',
+        'company'=> 'Compañia',
+        'job'=> 'Trabajo',
+        'email'=> 'Email',
+        'web'=> 'Web',
+        'phone1'=> 'Teléfono 1',
+        'phone2'=> 'Teléfono 1',
+        'comments'=> 'Comentarios',
+        'address'=> 'Dirección',
+        'referred'=> 'Referido',
+        'referred_others'=> 'Referido Otros',
+        'image'=> 'Imagen',
+        'status'=> 'Estatus',
+        'income'=> 'Ingresos',
+        'debts'=> 'Deudas',
+        'debts_amount'=> 'Monto específico deudas',
+        'potencial'=> 'Potencial',
+        'prima' => 'Prima',
+        
+    ],
     
 
 ];

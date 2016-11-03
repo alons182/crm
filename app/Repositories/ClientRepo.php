@@ -154,7 +154,7 @@ class ClientRepo extends DbRepo{
     {
         $fields = $this->model->getFillable(); ///\Schema::getColumnListing('clients');
         
-        $fields = array_except($fields, ['12']); // remove image field
+        $fields = array_except($fields, ['5','12','16']); // remove web,image,debts_amount field
        
        return $fields;
     }

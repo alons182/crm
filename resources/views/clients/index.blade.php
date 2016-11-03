@@ -168,7 +168,8 @@
                                 @foreach ($fieldsToExport as $field)
                                 <div class='col-xs-4'>
                                     <label>
-                                            <input type="checkbox" name="exp-{{ $field }}" value="{{ $field}}" checked="checked">{{ $field}}</label>
+                                            <input type="checkbox" name="exp-{{ $field }}" value="{{ $field}}" checked="checked">
+                                            {{  \Lang::get('utils.export_fields.'.$field) }}</label>
                                 </div>
                                 @endforeach
                                 
