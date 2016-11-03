@@ -141,7 +141,7 @@
                             </div>
                             <div class="row">
                                 <div class='col-xs-4'>
-                                    {!! Form::select('fil-status', ['0' => '-- Filter by status --'] + ['1' => 'Finalizado','2' => 'Pre-Aprobado','3' => 'Interesado','4' => 'Denegado'] , null, ['id'=>'fil-status','class'=>'form-control'] ) !!}
+                                    {!! Form::select('fil-status', ['' => '-- Filter by status --'] + ['1' => 'Finalizado','2' => 'Pre-Aprobado','3' => 'Interesado','4' => 'Denegado'] , null, ['id'=>'fil-status','class'=>'form-control'] ) !!}
                                 </div>
                                 <div class='col-xs-4'>
                                    {!! Form::text('fil-date1', null,['class'=>'form-control fil-datepicker','placeholder'=>'Filter by date']) !!}
