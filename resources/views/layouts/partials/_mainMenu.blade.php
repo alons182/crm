@@ -5,14 +5,14 @@
                         <li>
                             <a href="{!! URL::route('dashboard') !!}">
                                 <i class="fa fa-dashboard"></i>
-                                <span>Dashboard</span>
+                                <span>Panel de Control</span>
                             </a>
                         </li>
                         
                         <li>
                             <a href="{!! URL::route('clients') !!}">
                                 <i class="fa fa-folder"></i>
-                                <span>Clients</span>
+                                <span>Clientes</span>
                             </a>
                         </li>
                         
@@ -20,14 +20,14 @@
                         <li>
                             <a href="{!! URL::route('sellers') !!}">
                                 <i class="fa fa-coffee"></i>
-                                <span>Sellers</span>
+                                <span>Vendedores</span>
                             </a>
                         </li>
                         @endcan
                         <li>
                             <a href="{!! URL::route('properties') !!}">
                                 <i class="fa fa-home"></i>
-                                <span>Properties</span>
+                                <span>Propiedades</span>
                             </a>
                         </li>
                        

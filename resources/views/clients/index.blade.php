@@ -7,7 +7,7 @@
 
 @stop
 @section('content')
-    @include('layouts/partials/_breadcumbs', ['page' => 'Clients'])
+    @include('layouts/partials/_breadcumbs', ['page' => 'Clientes'])
 
     <section class="panel">
 
@@ -23,13 +23,13 @@
                 {!! Form::close() !!}
                  
             </div>
-            {!! link_to_route('clients.create','New Client',null,['class'=>'btn btn-success']) !!}
+            {!! link_to_route('clients.create','Nuevo Cliente',null,['class'=>'btn btn-success']) !!}
         
             @include('clients/partials/_search')
             
         </div>
         <div class="panel-body no-padding">
-            {!! Form::open(['route' =>['option_multiple'],'method' => 'post', 'id' =>'form-option-chk','data-confirm' => 'You are sure?']) !!}
+            {!! Form::open(['route' =>['option_multiple'],'method' => 'post', 'id' =>'form-option-chk','data-confirm' => 'Estas seguro?']) !!}
              @can('delete_clients')
             <button type="submit" class="btn-multiple btn btn-danger btn-sm " data-action="delete" title="Delete"><i class="fa fa-trash-o"></i></button>
             @endcan
@@ -42,15 +42,15 @@
                          </th>
                         <th>#</th>
                         <th>IDE</th>
-                        <th>Full Name</th>
-                        <th>Company</th>
+                        <th>Nombre completo</th>
+                        <th>Compañia</th>
                         <th>Email</th>
-                        <th>Telephone</th>
-                        <th>Status</th>
-                        <th>Created</th>
+                        <th>Teléfono</th>
+                        <th>Estatus</th>
+                        <th>Creado</th>
 
                         
-                        <th>Actions</th>
+                        <th>Acciones</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -104,7 +104,7 @@
                     <tfoot>
 
                     @if ($clients)
-                        <td  colspan="10" class="pagination-container">{!!$clients->appends(['q' => $search,'referred'=> $selectedReference,'seller'=> $selectedSeller, 'status'=> $selectedStatus, 'date1' => $date1,'date2' =>$date2 ])->render()!!}</td>
+                        <td  colspan="10" class="pagination-container">{!!$clients->appends(['q' => $search,'referred'=> $selectedReference,'seller'=> $selectedSeller, 'status'=> $selectedStatus,'debts'=> $selectedDebts,'potencial'=> $selectedPotencial, 'date1' => $date1,'date2' =>$date2 ])->render()!!}</td>
                     @endif
 
 
@@ -121,40 +121,50 @@
                     {!! Form::open(['route' =>['export_clients'],'method' => 'post', 'id' =>'form-export']) !!}
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h5 class="modal-title text-center" id="myModalLabel">Export</h5>
+                        <h5 class="modal-title text-center" id="myModalLabel">Exportar</h5>
                     </div>
                     <div class="modal-body">
                         
                         
-                             <h3>Filters</h3>
+                             <h3>Filtros</h3>
                             <div class="row">
                                 <div class="col-xs-4">
-                                    {!! Form::text('fil-q',null, ['class'=>'form-control','placeholder'=>'Search'] ) !!}
+                                    {!! Form::text('fil-q',null, ['class'=>'form-control','placeholder'=>'Buscar'] ) !!}
                                 </div>
                                 <div class='col-xs-4'>
-                                    {!! Form::select('fil-referred', ['' => '-- Select reference --','mail' => 'Mail','facebook' => 'Facebook','website' => 'Website','vallas' => 'Vallas','others' => 'Others'], null, ['id'=>'fil-referred','class'=>'form-control'] ) !!}
+                                    {!! Form::select('fil-referred', ['' => '-- Filtrar por referencia --','mail' => 'Correo','facebook' => 'Facebook','website' => 'Sitio Web','vallas' => 'Vallas','others' => 'Otros'], null, ['id'=>'fil-referred','class'=>'form-control'] ) !!}
                                 </div>
                                 <div class='col-xs-4'>
-                                    {!! Form::select('fil-seller', ['' => '-- Filter by seller --'] + $sellers , null, ['id'=>'fil-seller','class'=>'form-control'] ) !!}
+                                    {!! Form::select('fil-seller', ['' => '-- Filtrar por vendedor --'] + $sellers , null, ['id'=>'fil-seller','class'=>'form-control'] ) !!}
                                 </div>
 
                             </div>
                             <div class="row">
                                 <div class='col-xs-4'>
-                                    {!! Form::select('fil-status', ['' => '-- Filter by status --'] + ['1' => 'Finalizado','2' => 'Pre-Aprobado','3' => 'Interesado','4' => 'Denegado'] , null, ['id'=>'fil-status','class'=>'form-control'] ) !!}
+                                    {!! Form::select('fil-status', ['' => '-- Filtrar por estatus --'] + ['1' => 'Finalizado','2' => 'Pre-Aprobado','3' => 'Interesado','4' => 'Denegado'] , null, ['id'=>'fil-status','class'=>'form-control'] ) !!}
                                 </div>
+                                <div class=" col-xs-4">
+
+                                    {!! Form::select('fil-debts', ['' => '-- Filtrar por deudas --'] + ['1' => 'No Deudas','2' => 'Si Deudas','3' => 'Por Consultar','4' => 'Monto especifico'] , null, ['id'=>'fil-debts','class'=>'form-control'] ) !!}
+
+                                 </div>
+                                 <div class=" col-xs-4">
+
+                                    {!! Form::select('fil-potencial', ['' => '-- Filtrar por potencial --'] + ['1' => 'Alto','2' => 'Medio','3' => 'Bajo'] , null, ['id'=>'fil-potencial','class'=>'form-control'] ) !!}
+
+                                 </div>
                                 <div class='col-xs-4'>
-                                   {!! Form::text('fil-date1', null,['class'=>'form-control fil-datepicker','placeholder'=>'Filter by date']) !!}
+                                   {!! Form::text('fil-date1', null,['class'=>'form-control fil-datepicker','placeholder'=>'Filtrar por fecha']) !!}
                                     {!! errors_for('fil-date1',$errors) !!}
                                     
                                 </div>
                                 <div class="col-xs-4">
-                                    {!! Form::text('fil-date2', null,['class'=>'form-control fil-datepicker','placeholder'=>'Filter by date']) !!}
+                                    {!! Form::text('fil-date2', null,['class'=>'form-control fil-datepicker','placeholder'=>'Filtrar por fecha']) !!}
                                     {!! errors_for('fil-date2',$errors) !!}
                                 </div>
                             </div>
                             <div class="row">
-                                <h3>Field to Export</h3>
+                                <h3>Campos a exportar</h3>
                                 @foreach ($fieldsToExport as $field)
                                 <div class='col-xs-4'>
                                     <label>
@@ -167,8 +177,8 @@
                         
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn bg-default btn-sm" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary btn-sm">Export »</button>
+                        <button type="button" class="btn bg-default btn-sm" data-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary btn-sm">Exportar »</button>
                     </div>
                     {!! Form::close() !!}
                 </div>
@@ -184,7 +194,7 @@
 
     {!! Form::open(array('method' => 'post', 'id' => 'form-pub-unpub')) !!}{!! Form::close() !!}
     {!! Form::open(['method' => 'post', 'id' => 'form-feat-unfeat']) !!}{!! Form::close() !!}
-    {!! Form::open(['method' => 'delete', 'id' =>'form-delete','data-confirm' => 'You are sure?']) !!}{!! Form::close() !!}
+    {!! Form::open(['method' => 'delete', 'id' =>'form-delete','data-confirm' => 'Estas seguro?']) !!}{!! Form::close() !!}
 @stop
 @section('scripts')
     <script src="/vendor/picker.js"></script>

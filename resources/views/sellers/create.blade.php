@@ -5,7 +5,7 @@
 
 @stop
 @section('content')
-    @include('layouts/partials/_breadcumbs', ['page' => 'Sellers'])
+    @include('layouts/partials/_breadcumbs', ['page' => 'Vendedores'])
 
         {!! Form::open(['route'=>'sellers.store','files'=> true, 'class'=>'form-horizontal']) !!}
 

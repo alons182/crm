@@ -8,7 +8,7 @@
                             <div class="form-group">
 
 
-                                {!! Form::text('q',$search, ['class'=>'form-control','placeholder'=>'Search'] ) !!}
+                                {!! Form::text('q',$search, ['class'=>'form-control','placeholder'=>'Buscar'] ) !!}
 
 
                             </div>

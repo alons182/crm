@@ -40,7 +40,7 @@
 
                         <li class="divider"></li>
                         <li>
-                           {!! link_to('/logout','Logout') !!}
+                           {!! link_to('/logout','Cerrar Sesion') !!}
 
                         </li>
                     </ul>

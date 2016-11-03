@@ -59,6 +59,8 @@ class ClientsController extends Controller
         $search['referred'] = (isset($search['referred'])) ? $search['referred'] : '';
         $search['seller'] = (isset($search['seller'])) ? $search['seller'] : '';
         $search['status'] = (isset($search['status'])) ? $search['status'] : '';
+        $search['debts'] = (isset($search['debts'])) ? $search['debts'] : '';
+        $search['potencial'] = (isset($search['potencial'])) ? $search['potencial'] : '';
         $search['date1'] = (isset($search['date1'])) ? $search['date1'] : '';
         $search['date2'] = (isset($search['date2'])) ? $search['date2'] : '';
         
@@ -74,6 +76,8 @@ class ClientsController extends Controller
             'selectedSeller' =>  $search['seller'],
             'sellers'           => $sellers,
             'selectedStatus' =>  $search['status'],
+            'selectedDebts' =>  $search['debts'],
+            'selectedPotencial' =>  $search['potencial'],
             'date1'           => $search['date1'],
             'date2'           => $search['date2'],
             'fieldsToExport'   => $fieldsToExport
@@ -103,7 +107,7 @@ class ClientsController extends Controller
         
         $this->clientRepo->store($input);
 
-        Flash('Client Created');
+        Flash('Cliente creado');
 
         return Redirect()->route('clients');
     }
@@ -136,7 +140,7 @@ class ClientsController extends Controller
          
          $this->clientRepo->update($id, $request->all());
 
-        Flash('Updated Client');
+        Flash('Cliente actualizado');
 
         return Redirect()->route('clients');
     }
@@ -151,7 +155,7 @@ class ClientsController extends Controller
     {
         $this->clientRepo->destroy($id);
 
-        Flash('Client Deleted');
+        Flash('Cliente eliminado');
 
         return Redirect()->route('clients');
     }
@@ -221,7 +225,7 @@ class ClientsController extends Controller
             }
         });
         //return Book::all();
-         Flash('Imported !!');
+         Flash('Importado !!');
 
          return Redirect()->route('clients');
     }
@@ -247,6 +251,12 @@ class ClientsController extends Controller
                 $data = array_map(function($data){
                         if(isset($data['status']))
                             $data['status'] = \Lang::get('utils.status_client.'. $data['status']);
+
+                         if(isset($data['debts']))
+                            $data['debts'] = \Lang::get('utils.debts_client.'. $data['debts']);
+
+                        if(isset($data['potencial']))
+                            $data['potencial'] = \Lang::get('utils.potencial_client.'. $data['potencial']);
 
                     return $data;
                 },$clients->toArray());

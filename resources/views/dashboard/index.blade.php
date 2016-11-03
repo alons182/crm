@@ -4,8 +4,8 @@
 
 	 <div class="row mg-b">
         <div class="col-xs-6">
-            <h3 class="no-margin">Dashboard</h3>
-            <small>Welcome back, {{ $currentUser->name }}</small>
+            <h3 class="no-margin">Panel Control</h3>
+            <small>Bienvenido, {{ $currentUser->name }}</small>
         </div>
         <div class="col-xs-6 text-right">
             <a href="#" class="fa fa-flash pull-right pd-sm toggle-chat toggle-sidebar" data-toggle="off-canvas" data-move="rtl">
@@ -25,7 +25,7 @@
                     <div>
 
                          <a href="/sellers" style="display: block;">
-                             <h3 class="no-margin">Sellers</h3>
+                             <h3 class="no-margin">Vendedores</h3>
                              
                          </a>
                     </div>
@@ -42,7 +42,7 @@
                     <div>
 
                         <a href="/clients" style="display: block;">
-                            <h3 class="no-margin">Clients</h3>
+                            <h3 class="no-margin">Clientes</h3>
                             
                         </a>
                     </div>
@@ -58,7 +58,7 @@
                     <div>
 
                         <a href="/properties" style="display: block;">
-                            <h3 class="no-margin">Properties</h3>
+                            <h3 class="no-margin">Propiedades</h3>
                             
                         </a>
                     </div>

@@ -3,7 +3,7 @@
 
 @section('content')
 
- @include('layouts/partials/_breadcumbs', ['page' => 'Properties'])
+ @include('layouts/partials/_breadcumbs', ['page' => 'Propiedades'])
 
     {!! Form::open(['route'=>'properties.store','files'=> true, 'class'=>'form-horizontal']) !!}
 

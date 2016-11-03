@@ -8,11 +8,11 @@
 
 @stop
 @section('content')
- @include('layouts/partials/_breadcumbs', ['page' => 'Task'])
+ @include('layouts/partials/_breadcumbs', ['page' => 'Tareas'])
 	
 	{!! Form::model($task, ['method' => 'put', 'route' => ['tasks.update', $task->id],'files'=> true,'class'=>'form-horizontal' ]) !!}
 		
-		@include('tasks/partials/_form', ['buttonText' => 'Update Task'])
+		@include('tasks/partials/_form', ['buttonText' => 'Actualizar tarea'])
 	 
 	{!! Form::close() !!}
    

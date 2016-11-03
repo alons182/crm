@@ -1,15 +1,15 @@
 <div class="col-lg-6">
     <section class="panel">
         <header class="panel-heading">
-                    {!! Form::submit(isset($buttonText) ? $buttonText : 'Create Seller',['class'=>'btn btn-primary'])!!}
-                    {!! link_to_route('sellers',  'Cancel' , null, ['class'=>'btn btn-default'])!!}
+                    {!! Form::submit(isset($buttonText) ? $buttonText : 'Crear Vendedor',['class'=>'btn btn-primary'])!!}
+                    {!! link_to_route('sellers',  'Cancelar' , null, ['class'=>'btn btn-default'])!!}
          </header>
         <div class="panel-body">
 
 
 
                 <div class="form-group">
-                    {!! Form::label('name','Username:',['class'=>'col-sm-2 control-label'])!!}
+                    {!! Form::label('name','Usuario:',['class'=>'col-sm-2 control-label'])!!}
                     <div class="col-sm-10">
                         {!! Form::text('name',null,['class'=>'form-control','required'=>'required'])!!}
                         {!! errors_for('name',$errors) !!}
@@ -27,7 +27,7 @@
                 </div>
 
                 <div class="form-group">
-                    {!! Form::label('password','Password:',['class'=>'col-sm-2 control-label'])!!}
+                    {!! Form::label('password','Contraseña:',['class'=>'col-sm-2 control-label'])!!}
                     <div class="col-sm-10">
                          {!! Form::password('password',['class'=>'form-control'])!!}
                          {!! errors_for('password',$errors) !!}
@@ -36,7 +36,7 @@
 
                 </div>
                 <div class="form-group">
-                    {!! Form::label('password_confirmation','Password Confirmation:',['class'=>'col-sm-2 control-label'])!!}
+                    {!! Form::label('password_confirmation','Confirmación de Contraseña:',['class'=>'col-sm-2 control-label'])!!}
                      <div class="col-sm-10">
                         {!! Form::password('password_confirmation',['class'=>'form-control'])!!}
                       </div>
@@ -51,7 +51,7 @@
                 </div>
 
                 <div class="form-group">
-                {!! Form::label('clients','Clients:',['class'=>'col-sm-2 control-label'])!!}
+                {!! Form::label('clients','Clientes:',['class'=>'col-sm-2 control-label'])!!}
                 <div class="col-sm-10">
                     <span class="btn btn-white btn-sm" data-toggle="modal" data-target=".bs-modal-sm" id="btn-add-user">Buscar</span>
                     <ul class="users">
@@ -87,11 +87,11 @@
 
     <section class="panel">
         <header class="panel-heading">
-            Profile
+            Perfil
         </header>
         <div class="panel-body">
                <div class="form-group">
-                    {!! Form::label('fullname','Full Name:',['class'=>'col-sm-2 control-label'])!!}
+                    {!! Form::label('fullname','Nombre Completo:',['class'=>'col-sm-2 control-label'])!!}
                     <div class="col-sm-10">
                         {!! Form::text('fullname',(isset($seller)) ? $seller->profile->fullname : null,['class'=>'form-control','required'=>'required'])!!}
                         {!! errors_for('fullname',$errors) !!}
@@ -99,7 +99,7 @@
 
                 </div>
                 <div class="form-group">
-                    {!! Form::label('address','Address:',['class'=>'col-sm-2 control-label'])!!}
+                    {!! Form::label('address','Dirección:',['class'=>'col-sm-2 control-label'])!!}
                     <div class="col-sm-10">
                         {!! Form::textarea('address',(isset($seller)) ? $seller->profile->address : null,['class'=>'form-control'])!!}
                         {!! errors_for('address',$errors) !!}
@@ -107,7 +107,7 @@
 
                 </div>
                 <div class="form-group">
-                    {!! Form::label('phone1','Phone 1:',['class'=>'col-sm-2 control-label'])!!}
+                    {!! Form::label('phone1','Teléfono 1:',['class'=>'col-sm-2 control-label'])!!}
                     <div class="col-sm-10">
                         {!! Form::text('phone1',(isset($seller)) ? $seller->profile->phone1 : null,['class'=>'form-control','required'=>'required'])!!}
                         {!! errors_for('phone1',$errors) !!}
@@ -115,7 +115,7 @@
 
                 </div>
                 <div class="form-group">
-                    {!! Form::label('phone2','Phone 2:',['class'=>'col-sm-2 control-label'])!!}
+                    {!! Form::label('phone2','Teléfono 2:',['class'=>'col-sm-2 control-label'])!!}
                     <div class="col-sm-10">
                         {!! Form::text('phone2',(isset($seller)) ? $seller->profile->phone2 : null,['class'=>'form-control'])!!}
                         {!! errors_for('phone2',$errors) !!}
@@ -123,7 +123,7 @@
 
                 </div>
                  <div class="form-group">
-                    {!! Form::label('image','Image:',['class'=>'col-sm-2 control-label'])!!}
+                    {!! Form::label('image','Imagen:',['class'=>'col-sm-2 control-label'])!!}
 
                     <div class="col-sm-10">
                         {!! Form::file('image') !!}

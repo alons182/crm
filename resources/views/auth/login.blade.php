@@ -3,38 +3,38 @@
 @section('content')
 
 <section class="panel panel-default">
-        <header class="panel-heading">Sign in</header>
+        <header class="panel-heading">Inicio de Sesion</header>
         <div class="bg-white user pd-lg">
             <h6>
-                <strong>Welcome.</strong>Sign in to get started!</h6>
+                <strong>Bienvenido.</strong> Inicia sesion para comenzar!</h6>
 
             <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
                          {!! csrf_field() !!}
                     <!-- Email Form Input -->
                     <div class="form-group">
 
-                        {!! Form::email('email', null, ['class' => 'form-control','placeholder'=>'Username']) !!}
+                        {!! Form::email('email', null, ['class' => 'form-control','placeholder'=>'Email']) !!}
                         {!! errors_for('email',$errors) !!}
                     </div>
                     <!-- Password Form Input -->
                     <div class="form-group">
 
-                        {!! Form::password('password', ['class' => 'form-control','placeholder'=>'Password']) !!}
+                        {!! Form::password('password', ['class' => 'form-control','placeholder'=>'Contraseña']) !!}
                         {!! errors_for('password',$errors) !!}
                     </div>
                     <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" name="remember"> Remember Me
+                                        <input type="checkbox" name="remember"> Recuerdame
                                     </label>
                                 </div>
                             </div>
                         </div>
                     <!-- Log In Form Input -->
                     <div class="form-group">
-                        {!! Form::submit('Sign in', ['class' => 'btn btn-info btn-block']) !!}
-                        {!! link_to('/password/reset', 'Forgot password?') !!}
+                        {!! Form::submit('Entrar', ['class' => 'btn btn-info btn-block']) !!}
+                        {!! link_to('/password/reset', 'Olvidó la contraseña?') !!}
                     </div>
             </form>
 

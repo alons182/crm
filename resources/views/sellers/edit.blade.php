@@ -5,10 +5,10 @@
 
 @stop
 @section('content')
-    @include('layouts/partials/_breadcumbs', ['page' => 'Sellers'])
+    @include('layouts/partials/_breadcumbs', ['page' => 'Vendedores'])
 
         {!! Form::model($seller, ['method' => 'put', 'route' => ['sellers.update', $seller->id],'files'=> true, 'class'=>'form-horizontal' ]) !!}
-        		 @include('sellers/partials/_form',['buttonText' => 'Update Seller'])
+        		 @include('sellers/partials/_form',['buttonText' => 'Actualizar Vendedor'])
         {!! Form::close() !!}
 		@include('sellers/partials/_modal')
 

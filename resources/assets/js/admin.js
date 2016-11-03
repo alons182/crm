@@ -21,6 +21,19 @@
                   $("input[name='referred_others']").val('');
             }
         });
+
+     $("select[name='debts']").change(function() {
+
+      
+            if ($(this).val() === '4') {
+                $("input[name='debts_amount']").attr('disabled', false).focus();
+                
+
+            } else {
+                  $("input[name='debts_amount']").attr('disabled', true);
+                  $("input[name='debts_amount']").val('0');
+            }
+        });
    
 
     var chkItem = $('.chk-item');
@@ -68,6 +81,8 @@
         province = $('#province'),
         referred = $('#referred'),
         sellers = $('#seller'),
+        debts = $('#debts'),
+        potencial = $('#potencial'),
         filters = $(".filtros");
         
     function submitForm(){
@@ -84,6 +99,8 @@
     province.change(submitForm);
     referred.change(submitForm);
     sellers.change(submitForm);
+    debts.change(submitForm);
+    potencial.change(submitForm);
     
 
     $('.btn-edit-slug').on('click',function(){

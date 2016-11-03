@@ -1,11 +1,11 @@
 @extends('layouts.template')
 
 @section('content')
-	@include('layouts/partials/_breadcumbs', ['page' => 'Sellers'])
+	@include('layouts/partials/_breadcumbs', ['page' => 'Vendedores'])
 
 	 <section class="panel">
         <div class="panel-heading">
-            {!! link_to_route('sellers.create','New Seller',null,['class'=>'btn btn-success']) !!}
+            {!! link_to_route('sellers.create','Nuevo Vendedor',null,['class'=>'btn btn-success']) !!}
                @include('sellers/partials/_search')
         </div>
         <div class="panel-body no-padding">
@@ -16,11 +16,11 @@
                           <thead>
                               <tr>
                                   <th>#</th>
-                                  <th>name</th>
+                                  <th>Nombre</th>
                                   <th>Email</th>
                                  
-                                  <th>Created</th>
-                                  <th>Actions</th>
+                                  <th>Creado</th>
+                                  <th>Acciones</th>
                               </tr>
                           </thead>
                           <tbody>
@@ -77,6 +77,6 @@
 
 
 {!! Form::open(array('method' => 'post', 'id' => 'form-active-inactive')) !!}{!! Form::close() !!}
-{!! Form::open(['method' => 'delete', 'id' =>'form-delete','data-confirm' => 'You are sure?']) !!}{!! Form::close() !!}
+{!! Form::open(['method' => 'delete', 'id' =>'form-delete','data-confirm' => 'Estas seguro?']) !!}{!! Form::close() !!}
 
 @stop

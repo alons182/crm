@@ -64,7 +64,7 @@ class SellersController extends Controller
         
         $this->sellerRepo->store($input);
 
-        Flash('Seller created');
+        Flash('Vendedor creado');
 
         return Redirect()->route('sellers');
     }
@@ -110,7 +110,7 @@ class SellersController extends Controller
 
         $this->sellerRepo->update($id, $input);
 
-        Flash('Seller updated');
+        Flash('Vendedor actualizado');
 
         return Redirect()->route('sellers');
     }
@@ -125,7 +125,7 @@ class SellersController extends Controller
     {
        $this->sellerRepo->destroy($id);
 
-        Flash('Seller Deleted');
+        Flash('Vendedor eliminado');
 
         return Redirect()->route('sellers');
     }

@@ -4,11 +4,11 @@
 	<link rel="stylesheet" href="/vendor/chosen.min.css">
 @stop
 @section('content')
- @include('layouts/partials/_breadcumbs', ['page' => 'Clients'])
+ @include('layouts/partials/_breadcumbs', ['page' => 'Clientes'])
 	
 	{!! Form::model($client, ['method' => 'put', 'route' => ['clients.update', $client->id],'files'=> true,'class'=>'form-horizontal' ]) !!}
 		
-		@include('clients/partials/_form', ['buttonText' => 'Update Client'])
+		@include('clients/partials/_form', ['buttonText' => 'Actualizar Clientes'])
 	 
 	{!! Form::close() !!}
     @include('clients/partials/_modal')

@@ -8,18 +8,18 @@
                             <div class="form-group">
 
 
-                                {!! Form::text('q',$search, ['class'=>'form-control','placeholder'=>'Search'] ) !!}
+                                {!! Form::text('q',$search, ['class'=>'form-control','placeholder'=>'Buscar'] ) !!}
 
 
                             </div>
                              <div class=" form-group">
 
-                                {!! Form::select('status', ['' => '-- Select Status --','0' => 'Pending','1' => 'Free','2' => 'Sold'], $selectedStatus, ['id'=>'status','class'=>'form-control'] ) !!}
+                                {!! Form::select('status', ['' => '-- Selecciona Estatus --','0' => 'Pendiente','1' => 'Libre','2' => 'Vendida'], $selectedStatus, ['id'=>'status','class'=>'form-control'] ) !!}
 
                              </div>
                              <div class=" form-group">
 
-                                {!! Form::select('province', ['' => '-- Select Location --','Guanacaste' => 'Guanacaste','San Jose' => 'San Jose','Alajuela' => 'Alajuela','Cartago' => 'Cartago','Heredia' => 'Heredia','Puntarenas' => 'Puntarenas','Limón' => 'Limón'], $selectedLocation, ['id'=>'province','class'=>'form-control'] ) !!}
+                                {!! Form::select('province', ['' => '-- Selecciona Ubicació --','Guanacaste' => 'Guanacaste','San Jose' => 'San Jose','Alajuela' => 'Alajuela','Cartago' => 'Cartago','Heredia' => 'Heredia','Puntarenas' => 'Puntarenas','Limón' => 'Limón'], $selectedLocation, ['id'=>'province','class'=>'form-control'] ) !!}
 
                              </div>
 

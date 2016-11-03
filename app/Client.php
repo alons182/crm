@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Client extends Model
 {
    
-	 protected $fillable = ['ide','fullname', 'company', 'job', 'email', 'web', 'phone1','phone2','comments', 'address','referred','referred_others','image','status'];
+	 protected $fillable = ['ide','fullname', 'company', 'job', 'email', 'web', 'phone1','phone2','comments', 'address','referred','referred_others','image','status','income','debts','debts_amount','potencial','prima'];
 
  	public function scopeSearch($query, $search)
     {
@@ -21,6 +21,15 @@ class Client extends Model
                   ->orWhere('comments', 'like', '%' . $search . '%');
                   
         });
+    }
+
+    public function setIncomeAttribute($income)
+    {
+        $this->attributes['income'] = (number($income) == "") ? 0 : number($income);
+    }
+    public function setDebtsAmountAttribute($debts_amount)
+    {
+        $this->attributes['debts_amount'] = (number($debts_amount) == "") ? 0 : number($debts_amount);
     }
 
 

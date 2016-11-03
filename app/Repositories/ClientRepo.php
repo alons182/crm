@@ -40,6 +40,7 @@ class ClientRepo extends DbRepo{
         //$data['ide'] = str_replace(' ', '', $data['ide']);
         
        $data['referred_others'] = (isset($data['referred_others'])) ? $data['referred_others'] : '';
+       $data['debts_amount'] = (isset($data['debts_amount'])) ? $data['debts_amount'] : '0';
    
 
         return $data;
@@ -118,6 +119,14 @@ class ClientRepo extends DbRepo{
         {
             $clients = $clients->where('status', $search['status']);
         }
+         if (isset($search['debts']) && $search['debts'] != "")
+        {
+            $clients = $clients->where('debts', $search['debts']);
+        }
+         if (isset($search['potencial']) && $search['potencial'] != "")
+        {
+            $clients = $clients->where('potencial', $search['potencial']);
+        }
 
         if (isset($search['date1']) && $search['date1'] != "")
         {
@@ -174,6 +183,14 @@ class ClientRepo extends DbRepo{
          if (isset($filters['fil-status']) && $filters['fil-status'] != "")
         {
             $clients = $clients->where('status', $filters['fil-status']);
+        }
+        if (isset($filters['fil-debts']) && $filters['fil-debts'] != "")
+        {
+            $clients = $clients->where('debts', $filters['fil-debts']);
+        }
+         if (isset($filters['fil-potencial']) && $filters['fil-potencial'] != "")
+        {
+            $clients = $clients->where('potencial', $filters['fil-potencial']);
         }
 
         if (isset($filters['fil-date1']) && $filters['fil-date1'] != "")

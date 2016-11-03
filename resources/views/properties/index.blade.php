@@ -1,15 +1,15 @@
 @extends('layouts.template')
 
 @section('content')
-    @include('layouts/partials/_breadcumbs', ['page' => 'Properties'])
+    @include('layouts/partials/_breadcumbs', ['page' => 'Propiedades'])
 
     <section class="panel">
         <div class="panel-heading" style="overflow: hidden;">
-            {!! link_to_route('properties.create','New Property',null,['class'=>'btn btn-success']) !!}
+            {!! link_to_route('properties.create','Nueva Propiedad',null,['class'=>'btn btn-success']) !!}
             @include('properties/partials/_search')
         </div>
         <div class="panel-body no-padding">
-            {!! Form::open(['route' =>['properties_option_multiple'],'method' => 'post', 'id' =>'form-option-chk','data-confirm' => 'You are sure?']) !!}
+            {!! Form::open(['route' =>['properties_option_multiple'],'method' => 'post', 'id' =>'form-option-chk','data-confirm' => 'Estas seguro?']) !!}
             
             <button type="submit" class="btn-multiple btn btn-danger btn-sm " data-action="delete" title="Delete"><i class="fa fa-trash-o"></i></button>
             
@@ -21,16 +21,16 @@
                             {!! Form::hidden('select_action', null, ['id' => 'select-action']) !!} 
                          </th>
                         <th>#</th>
-                        <th>Name</th>
-                        <th>Owner</th>
-                        <th>Owner Telephone</th>
-                        <th>Location</th>
-                        <th>status</th>
-                        <th>Created by</th>
-                        <th>Created</th>
+                        <th>Nombre</th>
+                        <th>Dueño</th>
+                        <th>Teléfono del Dueño</th>
+                        <th>Ubicación</th>
+                        <th>Estatus</th>
+                        <th>Creado por</th>
+                        <th>Creado</th>
                        
                         
-                        <th>Actions</th>
+                        <th>Acciones</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -61,17 +61,17 @@
                             <td class="center">
                                  @if ($property->status)
                                     @if($property->status == 1)
-                                        <button type="submit"  class="btn btn-success btn-xs" form="form-free-sold" formaction="{!! URL::route('properties.sold', [$property->id]) !!}">Free</button>
+                                        <button type="submit"  class="btn btn-success btn-xs" form="form-free-sold" formaction="{!! URL::route('properties.sold', [$property->id]) !!}">Libre</button>
                                     @elseif($property->status == 2)
-                                        <button type="submit"  class="btn btn-warning btn-xs" form="form-free-sold" formaction="{!! URL::route('properties.free', [$property->id]) !!}">Sold</button>
+                                        <button type="submit"  class="btn btn-warning btn-xs" form="form-free-sold" formaction="{!! URL::route('properties.free', [$property->id]) !!}">Vendido</button>
                                    
                                     @endif
 
                                 @else
                                     @can('authorize_property')
-                                        <button type="submit"  class="btn btn-danger btn-xs  "form="form-free-sold" formaction="{!! URL::route('properties.free', [$property->id]) !!}" >Pending</button>
+                                        <button type="submit"  class="btn btn-danger btn-xs  "form="form-free-sold" formaction="{!! URL::route('properties.free', [$property->id]) !!}" >Pendiente</button>
                                     @else 
-                                        <a  class="btn btn-danger btn-xs"  href="#" >Pending</a>
+                                        <a  class="btn btn-danger btn-xs"  href="#" >Pendiente</a>
                                     @endcan
                                 @endif
 
@@ -127,5 +127,5 @@
 
 
     {!! Form::open(array('method' => 'post', 'id' => 'form-free-sold')) !!}{!! Form::close() !!}
-    {!! Form::open(['method' => 'delete', 'id' =>'form-delete','data-confirm' => 'You are sure?']) !!}{!! Form::close() !!}
+    {!! Form::open(['method' => 'delete', 'id' =>'form-delete','data-confirm' => 'Estas seguro?']) !!}{!! Form::close() !!}
 @stop

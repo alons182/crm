@@ -4,13 +4,13 @@
 
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h5 class="modal-title text-center" id="myModalLabel">Clients</h5>
+                <h5 class="modal-title text-center" id="myModalLabel">Clientes</h5>
             </div>
             <div class="modal-body">
                 <form class="navbar-form navbar-search navbar-left dropdown " role="search">
                     <div class="form-group">
 
-                        <input id="searchText" type="text" class="form-control search-query dropdown-toggle " data-toggle="dropdown" placeholder="Search" autocomplete="off">
+                        <input id="searchText" type="text" class="form-control search-query dropdown-toggle " data-toggle="dropdown" placeholder="Buscar" autocomplete="off">
                     </div>
 
                 </form>
@@ -58,7 +58,7 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn bg-default btn-sm" data-dismiss="modal">Close</button>
+                <button type="button" class="btn bg-default btn-sm" data-dismiss="modal">Cerrar</button>
                 <button type="button" class="btn btn-primary btn-sm">Agregar</button>
             </div>
         </div>

@@ -4,13 +4,13 @@
 
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h5 class="modal-title text-center" id="myModalLabel">Properties</h5>
+                <h5 class="modal-title text-center" id="myModalLabel">Propiedades</h5>
             </div>
             <div class="modal-body">
                 <form class="navbar-form navbar-search navbar-left dropdown " role="search">
                     <div class="form-group">
 
-                        <input id="searchText" type="text" class="form-control search-query dropdown-toggle " data-toggle="dropdown" placeholder="Search" autocomplete="off">
+                        <input id="searchText" type="text" class="form-control search-query dropdown-toggle " data-toggle="dropdown" placeholder="Buscar" autocomplete="off">
                     </div>
 
                 </form>

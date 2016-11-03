@@ -11,7 +11,7 @@
 
 @section('content')
 
- @include('layouts/partials/_breadcumbs', ['page' => 'Tasks'])
+ @include('layouts/partials/_breadcumbs', ['page' => 'Tareas'])
 
     {!! Form::open(['route'=>'tasks.store','files'=> true, 'class'=>'form-horizontal']) !!}
 

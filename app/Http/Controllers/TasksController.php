@@ -26,7 +26,7 @@ class TasksController extends Controller
        
         $this->taskRepo->store($input);
 
-        Flash('Task Created');
+        Flash('Tarea creada');
 
         return Redirect()->route('clients.edit',$input['client_id']);
     }
@@ -57,7 +57,7 @@ class TasksController extends Controller
         
         $task = $this->taskRepo->update($id, $request->all());
 
-        Flash('Updated Task');
+        Flash('Tarea actualizada');
 
         return Redirect()->route('clients.edit', $task->client->id);
     }
@@ -100,7 +100,7 @@ class TasksController extends Controller
     {
         $task = $this->taskRepo->destroy($id);
 
-        Flash('Task Deleted');
+        Flash('Tarea eliminada');
 
         return Redirect()->route('clients.edit', $task->client->id);
     }

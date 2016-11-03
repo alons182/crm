@@ -1,11 +1,11 @@
 @extends('layouts.template')
 
 @section('content')
- @include('layouts/partials/_breadcumbs', ['page' => 'Properties'])
+ @include('layouts/partials/_breadcumbs', ['page' => 'Propiedades'])
 	
 	{!! Form::model($property, ['method' => 'put', 'route' => ['properties.update', $property->id],'files'=> true,'class'=>'form-horizontal' ]) !!}
 		
-		@include('properties/partials/_form', ['buttonText' => 'Update Property'])
+		@include('properties/partials/_form', ['buttonText' => 'Actualizar Propiedad'])
 	 
 	{!! Form::close() !!}
     @include('sellers/partials/_modal')

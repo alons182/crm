@@ -63,7 +63,7 @@ class PropertiesController extends Controller
           
         $this->propertyRepo->store($input);
 
-        Flash('Property created');
+        Flash('Propiedad creada');
 
         return Redirect()->route('properties');
     }
@@ -101,7 +101,7 @@ class PropertiesController extends Controller
         
         $this->propertyRepo->update($id, $input);
 
-        Flash('Property updated');
+        Flash('Propiedad actualizada');
 
         return Redirect()->route('properties');
     }
@@ -158,7 +158,7 @@ class PropertiesController extends Controller
     {
        $this->propertyRepo->destroy($id);
 
-        Flash('Property Deleted');
+        Flash('Propiedad elimindad');
 
         return Redirect()->route('properties');
     }
