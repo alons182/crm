@@ -45,7 +45,7 @@
                 <div class="form-group">
                     {!! Form::label('role','Tipo:',['class'=>'col-sm-2 control-label'])!!}
                     <div class="col-sm-10">
-                        {!! Form::select('role[]',$roles, (isset($seller))? $selectedRoles : null,['class'=>'form-control','required'=>'required', 'multiple'])!!}
+                        {!! Form::select('role[]',$roles, (isset($seller))? $selectedRoles : null,['class'=>'form-control', 'multiple'])!!}
                         {!! errors_for('role',$errors) !!}
                     </div>
                 </div>

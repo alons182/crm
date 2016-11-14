@@ -28,6 +28,10 @@ trait HasRoles
                 Role::whereName($role)->firstOrFail()
             );
        */
+        if (is_object($role)) {
+            return $this->roles()->attach($role);
+       
+        }
         return $this->roles()->sync($role);
 
        
