@@ -26,7 +26,7 @@ class SellerEditRequest extends Request
         return [
             'name' => 'required',
             'email' => 'required|email',
-            'password' => 'confirmed|size:6',
+            'password' => 'confirmed|min:6',
             'role' => 'required',
             'fullname' => 'required',
             'phone1' =>'required'
