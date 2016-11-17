@@ -25,7 +25,7 @@ class SellerEditRequest extends Request
     {
         return [
             'name' => 'required',
-            'email' => 'required|email|unique:users,email,'.auth()->id(),
+            'email' => 'required|email',
             'password' => 'confirmed|size:6',
             'role' => 'required',
             'fullname' => 'required',
