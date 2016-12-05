@@ -107,7 +107,7 @@ class SellersController extends Controller
     public function update(SellerEditRequest $request, $id)
     {
         $input = $request->all();//only('name', 'email', 'password', 'password_confirmation','role');
-
+        
         $this->sellerRepo->update($id, $input);
 
         Flash('Vendedor actualizado');

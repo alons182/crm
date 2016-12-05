@@ -85,5 +85,27 @@ class User extends Authenticatable
          return $this->HasMany(Property::class);
     }
 
+     /**
+     * verify if the client is asigned.
+     *
+     * @param  string $role
+     * @return mixed
+     */
+    public function isAsigned($client)
+    {
+       
+        if (is_string($client) || is_numeric($client)) {
+            
+            $asigned = $this->clients()->find($client);
+
+            return $asigned ? true : false;
+        }
+
+        $asigned = $this->clients()->find($client->id);
+        
+        return $asigned ? true : false;
+        
+    }
+
      
 }

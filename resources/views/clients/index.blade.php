@@ -92,11 +92,13 @@
                                 <i class="fa fa-edit"></i>
                                 </a>
                               
-                                @can('delete_clients')
-                                <button type="submit" class="btn btn-danger" form="form-delete" formaction="{!! URL::route('clients.destroy', [$client->id]) !!}">
-                                <i class="fa fa-trash-o"></i>
-                                </button>
-                                 @endcan
+                                @if(auth()->user()->isAsigned($client) || auth()->user()->hasRole('admin'))
+                                    @can('delete_clients')
+                                    <button type="submit" class="btn btn-danger" form="form-delete" formaction="{!! URL::route('clients.destroy', [$client->id]) !!}">
+                                    <i class="fa fa-trash-o"></i>
+                                    </button>
+                                     @endcan
+                                @endif
                             </td>
                         </tr>
                     @endforeach

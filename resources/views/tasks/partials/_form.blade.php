@@ -1,8 +1,13 @@
 <div class="col-lg-6">
     <section class="panel">
         <header class="panel-heading">
-           
-                {!! Form::submit(isset($buttonText) ? $buttonText : 'Crear Tarea',['class'=>'btn btn-primary'])!!}
+                @if(isset($task))
+                    @if(auth()->user()->isAsigned($task->client_id) || auth()->user()->hasRole('admin'))
+                         {!! Form::submit(isset($buttonText) ? $buttonText : 'Crear Tarea',['class'=>'btn btn-primary'])!!}
+                    @endif
+                @else
+                    {!! Form::submit(isset($buttonText) ? $buttonText : 'Crear Tarea',['class'=>'btn btn-primary'])!!}
+                @endif
                 {!! link_to_route('clients.edit',  'Cancelar', (isset($client_id)) ? $client_id : $task->client_id, ['class'=>'btn btn-default'])!!}
                 
         </header>

@@ -1,8 +1,13 @@
 <div class="col-lg-6">
     <section class="panel">
         <header class="panel-heading">
-           
-                {!! Form::submit(isset($buttonText) ? $buttonText : 'Crear Cliente',['class'=>'btn btn-primary'])!!}
+                @if(isset($client))
+                    @if(auth()->user()->isAsigned($client) || auth()->user()->hasRole('admin'))
+                        {!! Form::submit(isset($buttonText) ? $buttonText : 'Crear Cliente',['class'=>'btn btn-primary'])!!}
+                    @endif
+                @else
+                    {!! Form::submit(isset($buttonText) ? $buttonText : 'Crear Cliente',['class'=>'btn btn-primary'])!!}
+                @endif
                 {!! link_to_route('clients',  'Cancelar', null, ['class'=>'btn btn-default'])!!}
                 
         </header>
@@ -257,7 +262,11 @@
     <section class="panel">
         <div class="panel-heading">
                 @if(isset($client))
-                    {!! link_to_route('create_task_to_client', 'Crear Tarea o Notificación',  $client->id, ['class'=>'btn btn-success'])!!}
+
+                    @if(auth()->user()->isAsigned($client) || auth()->user()->hasRole('admin'))
+                       {!! link_to_route('create_task_to_client', 'Crear Tarea o Notificación',  $client->id, ['class'=>'btn btn-success'])!!}
+                    @endif
+
                 @endif
         </div>
     </section>
@@ -285,20 +294,30 @@
 
                        
                        
-                            @if ($task->status)
-                                <button type="submit"  class="btn btn-success btn-xs" form="form-pend-comp" formaction="{!! URL::route('tasks.pend', [$task->id]) !!}" ><i class="fa fa-star"></i> Completada</button>
+                            @if(auth()->user()->isAsigned($client) || auth()->user()->hasRole('admin'))
+                                @if ($task->status)
+                                    <button type="submit"  class="btn btn-success btn-xs" form="form-pend-comp" formaction="{!! URL::route('tasks.pend', [$task->id]) !!}" ><i class="fa fa-star"></i> Completada</button>
+                                @else
+                                   
+                                    <button type="submit"  class="btn btn-warning btn-xs" form="form-pend-comp" formaction="{!! URL::route('tasks.comp', [$task->id]) !!}"><i class="fa fa-star-o"></i> Pendiente</button>
+                                @endif
                             @else
-                               
-                                <button type="submit"  class="btn btn-warning btn-xs" form="form-pend-comp" formaction="{!! URL::route('tasks.comp', [$task->id]) !!}"><i class="fa fa-star-o"></i> Pendiente</button>
+                                @if ($task->status)
+                                    <div  class="btn btn-success btn-xs"><i class="fa fa-star"></i> Completada</div>
+                                @else
+                                    <div class="btn btn-warning btn-xs"><i class="fa fa-star-o"></i> Pendiente</div>
+                                @endif
                             @endif
                             <a class="btn btn-info btn-xs" href="{!! URL::route('tasks.edit', [$task->id]) !!}">
                                 <i class="fa fa-edit"></i>
                             </a>
-                          @can('delete_tasks')
-                                <button type="submit" class="btn btn-danger btn-xs" form="form-delete" formaction="{!! URL::route('tasks.destroy', [$task->id]) !!}">
-                                    <i class="fa fa-trash-o"></i>
-                                </button>
-                            @endcan
+                            @if(auth()->user()->isAsigned($client) || auth()->user()->hasRole('admin'))
+                              @can('delete_tasks')
+                                    <button type="submit" class="btn btn-danger btn-xs" form="form-delete" formaction="{!! URL::route('tasks.destroy', [$task->id]) !!}">
+                                        <i class="fa fa-trash-o"></i>
+                                    </button>
+                                @endcan
+                            @endif
                     </div>
                 </div>
                 <div id="{!! $task->id !!}" class="panel-collapse collapse">

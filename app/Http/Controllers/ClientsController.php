@@ -196,7 +196,9 @@ class ClientsController extends Controller
      */
     public function create_task($client_id)
     {
-        
+        if(!auth()->user()->hasRole('admin') && !auth()->user()->isAsigned($client_id))
+            return back();
+
         return View('tasks.create')->with(compact('client_id'));
     }
 

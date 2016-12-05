@@ -65,6 +65,7 @@
 
                                 
                                 {!! Form::hidden('clients[]', $client->id , ['class' => 'form-control']) !!}
+                                
                             </li>
                             @endforeach
                         

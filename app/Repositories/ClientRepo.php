@@ -95,10 +95,11 @@ class ClientRepo extends DbRepo{
      */
     public function getAll($search)
     {
-        if(auth()->user()->hasRole('admin'))       
+        $clients = $this->model;
+        /*if(auth()->user()->hasRole('admin'))       
             $clients = $this->model;
         else
-            $clients = auth()->user()->clients();
+            $clients = auth()->user()->clients();*/
         
         if (isset($search['seller']) && $search['seller'] != "")
         {
@@ -219,10 +220,11 @@ class ClientRepo extends DbRepo{
      */
     public function findById($id)
     {
-         if(auth()->user()->hasRole('admin'))       
+         /*if(auth()->user()->hasRole('admin'))       
             $client = $this->model->with('sellers')->findOrFail($id);
         else
-            $client = auth()->user()->clients()->with('sellers')->findOrFail($id);
+            $client = auth()->user()->clients()->with('sellers')->findOrFail($id);*/
+        $client = $this->model->with('sellers')->findOrFail($id);    
         
         return $client;
     }

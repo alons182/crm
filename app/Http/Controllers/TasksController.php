@@ -12,6 +12,7 @@ class TasksController extends Controller
 {
     
     function __construct(TaskRepo $taskRepo) {
+        $this->middleware('auth');
     	$this->taskRepo = $taskRepo;
     }
     /**
@@ -39,8 +40,8 @@ class TasksController extends Controller
      */
     public function edit($id)
     {
-        $task = $this->taskRepo->findById($id);
         
+        $task = $this->taskRepo->findById($id);
 
         return View('tasks.edit')->with(compact('task'));
     }
