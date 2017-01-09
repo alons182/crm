@@ -30,7 +30,7 @@ class ClientsController extends Controller
         $properties = $this->groupedSelect();
  
       
-        View::share('properties', $properties);
+        View::share('properties', Property::where('status',1)->pluck('name','id')->all());
         View::share('projects', Project::where('status',1)->pluck('name','id')->all());
         View::share('banks', Bank::pluck('name','id')->all());
     }
