@@ -56,7 +56,7 @@
                     <tbody>
 
                     @foreach ($clients as $client)
-                        <tr>
+                        <tr class="bg-{!! \Lang::get('utils.status_color.'. $client->status)  !!}">
                             <td>{!! Form::checkbox('chk_client[]', $client->id, null, ['class' => 'chk-item']) !!}</td>
                             <td>{!!$client->id!!}</td>
                              <td>{!! $client->ide !!}</td>
@@ -86,13 +86,13 @@
                                </td>-->
                             <td class="center">{!! $client->created_at !!}</td>
 
-                            <td class="center">
+                            <td class="center" style="background-color: white;">
                                
                                 <a class="btn btn-info" href="{!! URL::route('clients.edit', [$client->id]) !!}">
                                 <i class="fa fa-edit"></i>
                                 </a>
                               
-                                @if(auth()->user()->isAsigned($client) || auth()->user()->hasRole('admin'))
+                                @if(auth()->user()->isAsigned($client) || auth()->user()->hasRole('admin') || auth()->user()->hasRole('manager'))
                                     @can('delete_clients')
                                     <button type="submit" class="btn btn-danger" form="form-delete" formaction="{!! URL::route('clients.destroy', [$client->id]) !!}">
                                     <i class="fa fa-trash-o"></i>
@@ -143,7 +143,7 @@
                             </div>
                             <div class="row">
                                 <div class='col-xs-4'>
-                                    {!! Form::select('fil-status', ['' => '-- Filtrar por estatus --'] + ['1' => 'Finalizado','2' => 'Pre-Aprobado','3' => 'Interesado','4' => 'Denegado'] , null, ['id'=>'fil-status','class'=>'form-control'] ) !!}
+                                    {!! Form::select('fil-status', ['' => '-- Filtrar por estatus --'] + ['1' => 'En Tramite','2' => 'Aprobado','3' => 'Interesado','4' => 'Denegado'] , null, ['id'=>'fil-status','class'=>'form-control'] ) !!}
                                 </div>
                                 <div class=" col-xs-4">
 

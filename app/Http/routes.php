@@ -124,6 +124,10 @@ Route::group(['middleware' => ['web']], function () {
         'as' => 'properties_list',
         'uses' => 'PropertiesController@list_properties'
     ]);
+    Route::get('project/properties/list', [
+        'as' => 'project_properties_list',
+        'uses' => 'PropertiesController@propertiesByProject'
+    ]);
     
     Route::resource('properties', 'PropertiesController');
 
@@ -143,4 +147,58 @@ Route::group(['middleware' => ['web']], function () {
             'uses' => 'PropertiesController@' . $key,
         ));
     }
+
+    Route::resource('projects', 'ProjectsController');
+
+    Route::get('projects', [
+        'as'   => 'projects',
+        'uses' => 'ProjectsController@index'
+
+    ]);
+    Route::post('projects/multiple', [
+        'as'   => 'projects_option_multiple',
+        'uses' => 'ProjectsController@option_multiple'
+    ]);
+
+    Route::get('projects/{project}/properties/create', [
+        'as' => 'create_property_to_project',
+        'uses' => 'ProjectsController@create_property'
+    ]);
+
+    Route::resource('banks', 'BanksController');
+
+    Route::get('banks', [
+        'as'   => 'banks',
+        'uses' => 'BanksController@index'
+
+    ]);
+    Route::post('banks/multiple', [
+        'as'   => 'banks_option_multiple',
+        'uses' => 'BanksController@option_multiple'
+    ]);
+
+    Route::get('banks/{bank}/requirement/create', [
+        'as' => 'create_requirement_to_bank',
+        'uses' => 'BanksController@create_requirement'
+    ]);
+
+     Route::get('bank/requirements/list', [
+        'as' => 'bank_requirements_list',
+        'uses' => 'RequirementsController@requirementsByBank'
+    ]);
+
+    Route::resource('requirements', 'RequirementsController');
+
+    Route::get('requirements', [
+        'as'   => 'requirements',
+        'uses' => 'RequirementsController@index'
+
+    ]);
+    Route::post('requirements/multiple', [
+        'as'   => 'requirements_option_multiple',
+        'uses' => 'RequirementsController@option_multiple'
+    ]);
+
+   
+
 });

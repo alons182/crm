@@ -27,13 +27,13 @@ class PropertyEditRequest extends Request
 
         return [
             'name' => 'required|unique:properties,name,'.$property_id,
-            'price' =>'required',
-            'province' =>'required',
+            'price' =>'required'
+            /*'province' =>'required',
             'address' =>'required',
             'rooms' =>'required',
             'owner' =>'required',
             'owner_phone1' =>'required',
-            'owner_email' => 'required|email'
+            'owner_email' => 'required|email'*/
         ];
     }
 }

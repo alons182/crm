@@ -1,14 +1,18 @@
-<div class="col-lg-6">
+<div class="col-lg-8">
     <section class="panel">
         <header class="panel-heading">
            
                 {!! Form::submit(isset($buttonText) ? $buttonText : 'Crear Propiedad',['class'=>'btn btn-primary'])!!}
-                {!! link_to_route('properties',  'Cancelar', null, ['class'=>'btn btn-default'])!!}
                 
+                <a href="/projects/{{ isset($property) ? $property->project_id : $project_id}}/edit" class="btn btn-default">Cancelar</a>
         </header>
         <div class="panel-body">
             @if(isset($property))
                 {!! Form::hidden('property_id',  $property->id) !!}
+                {!! Form::hidden('project_id',  $property->project_id) !!}
+            @endif
+            @if(isset($project_id))
+                {!! Form::hidden('project_id',  $project_id) !!}
             @endif
 
             <div class="form-group">
@@ -21,7 +25,7 @@
 
             </div>
             <div class="form-group">
-                {!! Form::label('price','Precio:',['class'=>'col-sm-2 control-label']) !!}
+                {!! Form::label('price','Precio de venta:',['class'=>'col-sm-2 control-label']) !!}
                 <div class="col-sm-10">
                   
                     <div class="input-group mg-b-md">
@@ -37,23 +41,39 @@
 
             </div>
             <div class="form-group">
-                {!! Form::label('province','Provincia:',['class'=>'col-sm-2 control-label'])!!}
+                {!! Form::label('percent','Porcentaje:',['class'=>'col-sm-2 control-label']) !!}
                 <div class="col-sm-10">
-                    {!! Form::select('province', ['Guanacaste' => 'Guanacaste','San Jose' => 'San Jose','Alajuela' => 'Alajuela','Cartago' => 'Cartago','Heredia' => 'Heredia','Puntarenas' => 'Puntarenas','Limón' => 'Limón'], null,['class'=>'form-control','required'=>'required'])!!}
-                    {!! errors_for('province',$errors) !!}
+                    <div class="input-group mg-b-md">
+                        <span class="input-group-addon">%</span>  
+                    {!! Form::text('percent', null,['class'=>'form-control']) !!}
+                    {!! errors_for('percent',$errors) !!}
+                    </div>
                 </div>
+
+
             </div>
             <div class="form-group">
-                {!! Form::label('address','Dirección:',['class'=>'col-sm-2 control-label']) !!}
+                {!! Form::label('seller_percent','Porcentaje del Vendedor:',['class'=>'col-sm-2 control-label']) !!}
                 <div class="col-sm-10">
-                   
-                    {!! Form::text('address', null,['class'=>'form-control','required'=>'required']) !!}
-                    {!! errors_for('address',$errors) !!}
-
+                    <div class="input-group mg-b-md">
+                        <span class="input-group-addon">%</span> 
+                    {!! Form::text('seller_percent', null,['class'=>'form-control']) !!}
+                    {!! errors_for('seller_percent',$errors) !!}
+                    </div>
                 </div>
 
 
             </div>
+            <div class="form-group">
+                {!! Form::label('office','Oficina:',['class'=>'col-sm-2 control-label']) !!}
+                <div class="col-sm-10">
+                    {!! Form::text('office', null,['class'=>'form-control']) !!}
+                    {!! errors_for('office',$errors) !!}
+                </div>
+
+
+            </div>
+            
             <div class="form-group">
                 {!! Form::label('size','Tamaño de terreno M2:',['class'=>'col-sm-2 control-label']) !!}
                 <div class="col-sm-10">
@@ -87,55 +107,8 @@
 
 
             </div>
-            <div class="form-group">
-                {!! Form::label('owner','Dueño:',['class'=>'col-sm-2 control-label']) !!}
-                <div class="col-sm-10">
-                    {!! Form::text('owner', null,['class'=>'form-control','required'=>'required']) !!}
-                    {!! errors_for('owner',$errors) !!}
-                </div>
-
-
-            </div>
-            <div class="form-group">
-                {!! Form::label('owner_phone1','Teléfono de dueño 1:',['class'=>'col-sm-2 control-label']) !!}
-                <div class="col-sm-10">
-                    {!! Form::text('owner_phone1', null,['class'=>'form-control','required'=>'required']) !!}
-                    {!! errors_for('owner_phone1',$errors) !!}
-                </div>
-
-
-            </div>
-            <div class="form-group">
-                {!! Form::label('owner_phone2','Teléfono de dueño 2:',['class'=>'col-sm-2 control-label']) !!}
-                <div class="col-sm-10">
-                    {!! Form::text('owner_phone2', null,['class'=>'form-control']) !!}
-                    {!! errors_for('owner_phone2',$errors) !!}
-                </div>
-
-
-            </div>
-            <div class="form-group">
-                {!! Form::label('owner_email','Email del dueño:',['class'=>'col-sm-2 control-label']) !!}
-                <div class="col-sm-10">
-                   
-                    {!! Form::email('owner_email', null,['class'=>'form-control','required'=>'required']) !!}
-                    {!! errors_for('owner_email',$errors) !!}
-
-                </div>
-
-
-            </div>
-            <div class="form-group">
-                {!! Form::label('project','Proyecto:',['class'=>'col-sm-2 control-label']) !!}
-                <div class="col-sm-10">
-                   
-                    {!! Form::text('project', null,['class'=>'form-control']) !!}
-                    {!! errors_for('project',$errors) !!}
-
-                </div>
-
-
-            </div>
+            
+            
             @if(isset($property))
                @if($property->status)
                <div class="form-group">
@@ -220,7 +193,7 @@
     </section>
 
 </div>
-<div class="col-lg-6">
+<div class="col-lg-4">
 
     <section class="panel">
         <header class="panel-heading">

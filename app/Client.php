@@ -7,17 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 class Client extends Model
 {
    
-	 protected $fillable = ['ide','fullname', 'company', 'job', 'email', 'web', 'phone1','phone2','comments', 'address','referred','referred_others','image','status','income','debts','debts_amount','potencial','prima'];
+	 protected $fillable = ['ide','fullname', 'company', 'job', 'email', 'web', 'phone1','phone2','comments', 'address','referred','referred_others','image','status','income','debts','debts_amount','potencial','prima','formalization_date','reservation_date','option_date','expedient_date','credit','avaluo_date','documents','documents_text','fiador','fiador_text','project','bank','bank2'];
 
  	public function scopeSearch($query, $search)
     {
         return $query->where(function ($query) use ($search)
         {
             $query->where('fullname', 'like', '%' . $search . '%')
-                  ->orWhere('company', 'like', '%' . $search . '%')
+                  ->orWhere('job', 'like', '%' . $search . '%')
                   ->orWhere('email', 'like', '%' . $search . '%')
                   ->orWhere('phone1', 'like', '%' . $search . '%')
-                  ->orWhere('phone2', 'like', '%' . $search . '%')
+                  //->orWhere('phone2', 'like', '%' . $search . '%')
                   ->orWhere('comments', 'like', '%' . $search . '%');
                   
         });
@@ -85,6 +85,27 @@ class Client extends Model
     public function assignProperty($properties)
     {
         return $this->properties()->sync($properties);
+        
+    }
+
+     /**
+     * Relationship with the Property Model
+     * @return [type] [description]
+     */
+       public function requirements()
+       {
+            return $this->belongsToMany(Requirement::class);
+       }
+
+       /**
+     * Assign the given client to the user.
+     *
+     * @param  string $role
+     * @return mixed
+     */
+    public function assignRequirement($requirements)
+    {
+        return $this->requirements()->sync($requirements);
         
     }
 

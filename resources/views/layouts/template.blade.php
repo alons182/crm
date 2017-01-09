@@ -16,7 +16,7 @@
     <!-- core styles -->
     <link rel="stylesheet" href="/css/main.min.css">
     <!-- /core styles -->
-
+    <link rel="stylesheet" href="/css/app.css">
     <!-- page styles -->
     @yield('css')
 

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Property extends Model
 {
 	
-    protected $fillable = ['name','price', 'province','address','size','construction','rooms','owner','owner_phone1','owner_phone2','owner_email','project','status','image','user_id'];
+    protected $fillable = ['name','price', 'province','address','size','construction','rooms','owner','owner_phone1','owner_phone2','owner_email','project','status','image','user_id','project_id','percent','seller_percent','office'];
     
     public function scopeSearch($query, $search)
     {
@@ -46,5 +46,14 @@ class Property extends Model
        public function seller()
        {
             return $this->belongsTo(User::class, 'user_id');
+       }
+
+       /**
+     * Relationship with the Client Model 
+     * @return [type] [description]
+     */
+       public function project()
+       {
+            return $this->belongsTo(Project::class, 'project_id');
        }
 }

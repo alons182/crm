@@ -24,13 +24,22 @@
                             </a>
                         </li>
                         @endcan
+                        @can('authorize_property')
                         <li>
-                            <a href="{!! URL::route('properties') !!}">
+                            <a href="{!! URL::route('projects') !!}">
                                 <i class="fa fa-home"></i>
-                                <span>Propiedades</span>
+                                <span>Proyectos</span>
                             </a>
                         </li>
-                       
+                       @endcan
+                       @can('authorize_banks')
+                        <li>
+                            <a href="{!! URL::route('banks') !!}">
+                                <i class="fa fa-home"></i>
+                                <span>Requisitos de Bancos</span>
+                            </a>
+                        </li>
+                       @endcan
 
                     </ul>
                 </nav>

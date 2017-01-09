@@ -2,23 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use Illuminate\Http\Request;
-use App\Repositories\ClientRepo;
-use App\Repositories\SellerRepo;
-use App\Repositories\PropertyRepo;
-use App\Http\Controllers\Controller;
 
 class DashboardController extends Controller
 {
     
-    function __construct(ClientRepo $clientRepo, SellerRepo $sellerRepo, PropertyRepo $propertyRepo) {
+    function __construct() {
         
         $this->middleware('auth');
 
-    	$this->clientRepo = $clientRepo;
-    	$this->sellerRepo = $sellerRepo;
-        $this->propertyRepo = $propertyRepo;
     }
     
     /**

@@ -25,13 +25,13 @@ class PropertyRequest extends Request
     {
         return [
             'name' => 'required|unique:properties',
-            'price' =>'required',
-            'province' =>'required',
+            'price' =>'required'
+            /*'province' =>'required',
             'address' =>'required',
             'rooms' =>'required',
             'owner' =>'required',
             'owner_phone1' =>'required',
-            'owner_email' => 'required|email'
+            'owner_email' => 'required|email'*/
             
             
         ];

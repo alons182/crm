@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Bank;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Http\Requests\ClientEditRequest;
 use App\Http\Requests\ClientRequest;
 use App\Http\Requests\ImportRequest;
+use App\Project;
 use App\Property;
 use App\Repositories\ClientRepo;
 use App\Repositories\SellerRepo;
@@ -29,20 +31,23 @@ class ClientsController extends Controller
  
       
         View::share('properties', $properties);
+        View::share('projects', Project::where('status',1)->pluck('name','id')->all());
+        View::share('banks', Bank::pluck('name','id')->all());
     }
 
     private function groupedSelect()
     {
-        if(!auth()->user()->hasRole('admin'))
+        /*if(!auth()->user()->hasRole('admin'))
             $properties = auth()->user()->properties()->where('status',1);
-         else
+         else*/
             $properties = Property::where('status',1);
 
         $select_optgroup_arr_properties = [];
 
         foreach ($properties->get() as $item)
         {
-            $select_optgroup_arr_properties[$item->province][$item->id] = $item->name;
+            //$select_optgroup_arr_properties[$item->province][$item->id] = $item->name;
+            $select_optgroup_arr_properties[] = $item->name;
         }
         
         return $select_optgroup_arr_properties;
@@ -122,9 +127,27 @@ class ClientsController extends Controller
     public function edit($id)
     {
         $client = $this->clientRepo->findById($id);
-        $selectedProperties = $client->properties()->pluck('id')->all();
+       
+        $selectedProject = Project::find($client->project);
+        
+        $propertiesOfSelectedProject = ($selectedProject) ? $selectedProject->properties()->pluck('name','id')->all() : null;
 
-        return View('clients.edit')->with(compact('client','selectedProperties'));
+        $selectedProperties =  $client->properties()->pluck('id')->all();
+
+        
+        $selectedBank = Bank::find($client->bank);
+        
+        $requirementsOfSelectedBank = ($selectedBank) ? $selectedBank->requirements()->pluck('name','id')->all() : null;
+
+        $selectedRequirements =  $client->requirements()->pluck('id')->all();
+
+        $selectedBank2 = Bank::find($client->bank2);
+        
+        $requirementsOfSelectedBank2 = ($selectedBank2) ? $selectedBank2->requirements()->pluck('name','id')->all() : null;
+
+        //$selectedRequirements =  $client->requirements()->pluck('id')->all();
+        //dd($selectedProperties);
+        return View('clients.edit')->with(compact('client','selectedProperties','propertiesOfSelectedProject','selectedRequirements','requirementsOfSelectedBank','requirementsOfSelectedBank2'));
     }
     
 
@@ -137,7 +160,7 @@ class ClientsController extends Controller
      */
     public function update(ClientEditRequest $request, $id)
     {
-         
+      
          $this->clientRepo->update($id, $request->all());
 
         Flash('Cliente actualizado');
@@ -196,7 +219,7 @@ class ClientsController extends Controller
      */
     public function create_task($client_id)
     {
-        if(!auth()->user()->hasRole('admin') && !auth()->user()->isAsigned($client_id))
+        if(!auth()->user()->hasRole('admin') && !auth()->user()->hasRole('manager') && !auth()->user()->isAsigned($client_id))
             return back();
 
         return View('tasks.create')->with(compact('client_id'));

@@ -1,1 +1,1 @@
-{"version":3,"sources":["app.css"],"names":[],"mappings":"AAAA","file":"app.css","sourceRoot":"/source/","sourcesContent":[]}
+{"version":3,"sources":["app.scss"],"names":[],"mappings":"AAEA;EACC,8BAA6B,EAE7B;;AACD;EACC,0BAA0B;EAC1B,eAAc,EACd","file":"app.css","sourcesContent":["// @import \"node_modules/bootstrap-sass/assets/stylesheets/bootstrap\";\n\n.table-striped>tbody>tr:nth-child(even)>td, .table-striped>tbody>tr:nth-child(even)>th{\n\tbackground-color:transparent;\n\n}\n.bg-purple{\n\tbackground-color: #D500FF;\n\tcolor:#FCCDFF;\n}\n\n"]}

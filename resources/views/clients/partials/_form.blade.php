@@ -1,8 +1,8 @@
-<div class="col-lg-6">
+<div class="col-lg-8">
     <section class="panel">
         <header class="panel-heading">
                 @if(isset($client))
-                    @if(auth()->user()->isAsigned($client) || auth()->user()->hasRole('admin'))
+                    @if(auth()->user()->isAsigned($client) || auth()->user()->hasRole('admin') || auth()->user()->hasRole('manager'))
                         {!! Form::submit(isset($buttonText) ? $buttonText : 'Crear Cliente',['class'=>'btn btn-primary'])!!}
                     @endif
                 @else
@@ -17,15 +17,7 @@
                 {!! Form::hidden('client_id',  $client->id) !!}
             @endif
             
-            <div class="form-group">
-                {!! Form::label('ide','IDE:',['class'=>'col-sm-2 control-label']) !!}
-                <div class="col-sm-10">
-                    {!! Form::text('ide', null,['class'=>'form-control','placeholder'=>'Ej: 101110111']) !!}
-                    {!! errors_for('ide',$errors) !!}
-                </div>
-
-
-            </div>
+            
             <div class="form-group">
                 {!! Form::label('fullname','Nombre completo:',['class'=>'col-sm-2 control-label']) !!}
                 <div class="col-sm-10">
@@ -35,28 +27,7 @@
 
 
             </div>
-            <div class="form-group">
-                {!! Form::label('company','Compañia:',['class'=>'col-sm-2 control-label']) !!}
-                <div class="col-sm-10">
-                   
-                    {!! Form::text('company', null,['class'=>'form-control']) !!}
-                    {!! errors_for('company',$errors) !!}
 
-                </div>
-
-
-            </div>
-            <div class="form-group">
-                {!! Form::label('job','Trabajo:',['class'=>'col-sm-2 control-label']) !!}
-                <div class="col-sm-10">
-                   
-                    {!! Form::text('job', null,['class'=>'form-control']) !!}
-                    {!! errors_for('job',$errors) !!}
-
-                </div>
-
-
-            </div>
             <div class="form-group">
                 {!! Form::label('email','Email:',['class'=>'col-sm-2 control-label']) !!}
                 <div class="col-sm-10">
@@ -68,23 +39,7 @@
 
 
             </div>
-            <div class="form-group">
-                {!! Form::label('income','Ingresos:',['class'=>'col-sm-2 control-label']) !!}
-                <div class="col-sm-10">
-                    <div class="input-group mg-b-md">
-                        <span class="input-group-addon">₡</span>                                              
-                        {!! Form::text('income', isset($client) ? money($client->income, false) : null,['class'=>'form-control','required'=>'required']) !!}
-                        {!! errors_for('income',$errors) !!}
 
-                        
-                    </div> 
-
-                     
-
-                </div>
-
-
-            </div>
             <div class="form-group">
                 {!! Form::label('phone1','Teléfono 1:',['class'=>'col-sm-2 control-label']) !!}
                 <div class="col-sm-10">
@@ -96,37 +51,7 @@
 
 
             </div>
-            <div class="form-group">
-                {!! Form::label('phone2','Teléfono 2:',['class'=>'col-sm-2 control-label']) !!}
-                <div class="col-sm-10">
-                   
-                    {!! Form::text('phone2', null,['class'=>'form-control']) !!}
-                    {!! errors_for('phone2',$errors) !!}
 
-                </div>
-
-
-            </div>
-            <div class="form-group">
-                {!! Form::label('comments','Comentarios:',['class'=>'col-sm-2 control-label']) !!}
-                <div class="col-sm-10">
-                   
-                    {!! Form::textarea('comments', null,['class'=>'form-control']) !!}
-                    {!! errors_for('comments',$errors) !!}
-
-                </div>
-
-
-            </div>
-          
-            <div class="form-group">
-                {!! Form::label('address','Dirección:',['class'=>'col-sm-2 control-label'])!!}
-                <div class="col-sm-10">
-                    {!! Form::text('address',null,['class'=>'form-control']) !!}
-                    {!! errors_for('address',$errors) !!}
-                </div>
-
-            </div>
             <div class="form-group">
                 {!! Form::label('referred','Referido:',['class'=>'col-sm-2 control-label'])!!}
                 <div class="col-sm-10">
@@ -177,67 +102,290 @@
            @endcan
 
            <div class="form-group">
-                    {!! Form::label('properties','Propiedades:',['class'=>'col-sm-2 control-label'])!!}
+                    {!! Form::label('project','Proyecto:',['class'=>'col-sm-2 control-label'])!!}
                     <div class="col-sm-10">
-                        {!! Form::select('properties[]',$properties, (isset($selectedProperties)) ? $selectedProperties: null,['class'=>'form-control chosen-select','multiple'])!!}
-                        {!! errors_for('properties',$errors) !!}
+                        <div class="row">
+                            <div class="col-xs-3">
+                                {!! Form::select('project', ['' => ''] + $projects, (isset($selectedProjects)) ? $selectedProjects: null,['class'=>'form-control '])!!}
+                            {!! errors_for('project',$errors) !!}
+                            </div>
+                            <div class="col-xs-9">
+                                 {!! Form::select('properties[]',(isset($propertiesOfSelectedProject)) ? $propertiesOfSelectedProject : $properties, (isset($selectedProperties)) ? $selectedProperties: null,['class'=>'form-control chosen-select','multiple', 'id'=>'selectProperties'])!!}
+                                {!! errors_for('properties',$errors) !!}
+                            </div>
+                            
+                        </div>
+
+
                     </div>
                 </div>
            <div class="form-group">
                     {!! Form::label('status','Estatus:',['class'=>'col-sm-2 control-label'])!!}
                     <div class="col-sm-10">
-                         {!! Form::select('status', ['0' => '','1' => 'Finalizado','2' => 'Pre-Aprobado','3' => 'Interesado','4' => 'Denegado'], null,['class'=>'form-control'])!!}
+                         {!! Form::select('status', ['0' => '','1' => 'En Tramite','2' => 'Aprobado','3' => 'Interesado','4' => 'Denegado'], null,['class'=>'form-control'])!!}
                             {!! errors_for('status',$errors) !!}
                     </div>
                 </div>
-            <div class="form-group">
-                    {!! Form::label('debts','Deudas:',['class'=>'col-sm-2 control-label'])!!}
-                    <div class="col-sm-10">
-                         <div class="row">
-                            <div class="col-xs-3">
-                                {!! Form::select('debts', ['0' => '','1' => 'No Deudas','2' => 'Si Deudas','3' => 'Por Consultar','4' => 'Monto Especifico'], null,['class'=>'form-control'])!!}
-                                {!! errors_for('debts',$errors) !!}
-                            </div>
-                            <div class="col-xs-9">
-                                <div class="input-group mg-b-md">
-                                    <span class="input-group-addon">₡</span>   
-                                 {!! Form::text('debts_amount', isset($client) ? money($client->debts_amount, false) : null,['class'=>'form-control','placeholder'=>'Monto Especifico', (isset($client)) ? ($client->debts != '4') ? 'disabled' : '' : 'disabled']) !!}
-                                 </div>
-                            </div>
-                            
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                {!! Form::label('prima','Prima Disponible:',['class'=>'col-sm-2 control-label'])!!}
-                <div class="col-sm-10">
-                    {!! Form::text('prima',null,['class'=>'form-control']) !!}
-                    {!! errors_for('prima',$errors) !!}
-                </div>
 
-            </div>
              <div class="form-group">
                     {!! Form::label('potencial','Potencial:',['class'=>'col-sm-2 control-label'])!!}
                     <div class="col-sm-10">
                          {!! Form::select('potencial', ['0' => '','1' => 'Alto','2' => 'Medio','3' => 'Bajo'], null,['class'=>'form-control'])!!}
                             {!! errors_for('prima',$errors) !!}
                     </div>
-                </div>   
-             <div class="form-group">
-                {!! Form::label('image','Imagen:',['class'=>'col-sm-2 control-label'])!!}
-
-                <div class="col-sm-10">
-                    {!! Form::file('image') !!}
-                    {!! errors_for('image',$errors) !!}
                 </div>
-            </div>
+
+
+
+
 
            
             
     </section>
+    <section class="panel">
+        <header class="panel-heading">
+                <h2>Datos Complementarios</h2>
+                
+        </header>
+        <div class="panel-body">
+            <div class="form-group">
+                {!! Form::label('address','Dirección Domiciliar:',['class'=>'col-sm-2 control-label'])!!}
+                <div class="col-sm-10">
+                    {!! Form::text('address',null,['class'=>'form-control']) !!}
+                    {!! errors_for('address',$errors) !!}
+                </div>
+
+            </div>
+            <div class="form-group">
+                {!! Form::label('ide','Cedula:',['class'=>'col-sm-2 control-label']) !!}
+                <div class="col-sm-10">
+                    {!! Form::text('ide', null,['class'=>'form-control','placeholder'=>'Ej: 101110111']) !!}
+                    {!! errors_for('ide',$errors) !!}
+                </div>
+
+
+            </div>
+            <div class="form-group">
+                {!! Form::label('income','Ingresos:',['class'=>'col-sm-2 control-label']) !!}
+                <div class="col-sm-10">
+                    <div class="input-group mg-b-md">
+                        <span class="input-group-addon">₡</span>                                              
+                        {!! Form::text('income', isset($client) ? money($client->income, false) : null,['class'=>'form-control']) !!}
+                        {!! errors_for('income',$errors) !!}
+
+                        
+                    </div> 
+
+                     
+
+                </div>
+
+
+            </div>
+            <div class="form-group">
+                    {!! Form::label('prima','Prima:',['class'=>'col-sm-2 control-label'])!!}
+                    <div class="col-sm-10">
+                        {!! Form::text('prima',null,['class'=>'form-control']) !!}
+                        {!! errors_for('prima',$errors) !!}
+                    </div>
+
+                </div>   
+            
+            <div class="form-group">
+                {!! Form::label('job','Lugar de Trabajo:',['class'=>'col-sm-2 control-label']) !!}
+                <div class="col-sm-10">
+                   
+                    {!! Form::text('job', null,['class'=>'form-control']) !!}
+                    {!! errors_for('job',$errors) !!}
+
+                </div>
+
+
+            </div>
+            <div class="form-group">
+                {!! Form::label('bank','Banco 1:',['class'=>'col-sm-2 control-label'])!!}
+                <div class="col-sm-10">
+                     <div class="row">
+                            <div class="col-xs-5">
+                                {!! Form::select('bank', ['0' => ''] + $banks, null,['class'=>'form-control '])!!}
+                            {!! errors_for('bank',$errors) !!}
+                            </div>
+                            <div class="col-xs-6">
+                                 {!! Form::select('requirements[]',(isset($requirementsOfSelectedBank)) ? $requirementsOfSelectedBank : [], (isset($selectedRequirements)) ? $selectedRequirements : null,['class'=>'form-control chosen-select','multiple', 'id'=>'selectedRequirements'])!!}
+                                {!! errors_for('requirements',$errors) !!}
+                            </div>
+                            
+                        </div>
+                     
+                </div>
+            </div>
+             <div class="form-group">
+                {!! Form::label('bank2','Banco 2:',['class'=>'col-sm-2 control-label'])!!}
+                <div class="col-sm-10">
+                     <div class="row">
+                            <div class="col-xs-5">
+                                {!! Form::select('bank2', ['0' => ''] + $banks, null,['class'=>'form-control '])!!}
+                            {!! errors_for('bank',$errors) !!}
+                            </div>
+                            <div class="col-xs-6">
+                                 {!! Form::select('requirements2[]',(isset($requirementsOfSelectedBank2)) ? $requirementsOfSelectedBank2 : [], (isset($selectedRequirements)) ? $selectedRequirements : null,['class'=>'form-control chosen-select','multiple', 'id'=>'selectedRequirements2'])!!}
+                                {!! errors_for('requirements2',$errors) !!}
+                            </div>
+                            
+                        </div>
+                     
+                </div>
+            </div>
+             @if (isset($client))
+                <div class="form-group">
+                    {!! Form::label('comments','Estados:',['class'=>'col-sm-2 control-label']) !!}
+                    <div class="col-sm-10">
+                         @can('edit_status_clients')
+                            {!! Form::textarea('comments', null,['class'=>'form-control', 'rows'=>'3','maxlength'=>'150']) !!}
+                        @else
+                            {!! Form::textarea('comments', null,['class'=>'form-control', 'disabled', 'rows'=>'3', 'maxlength'=>'150']) !!}
+                        @endcan
+                        {!! errors_for('comments',$errors) !!}
+                         
+                    </div>
+                </div>
+            @else
+                <div class="form-group">
+                    {!! Form::label('comments','Estados:',['class'=>'col-sm-2 control-label']) !!}
+                    <div class="col-sm-10">
+                        {!! Form::textarea('comments', null,['class'=>'form-control', 'rows'=>'3','maxlength'=>'150']) !!}
+                        {!! errors_for('comments',$errors) !!}
+                         
+                    </div>
+                </div>
+            @endif
+               <div class="form-group">
+                    {!! Form::label('formalization_date','Fecha de formalización:',['class'=>'col-sm-2 control-label']) !!}
+                    <div class="col-sm-10">
+                        
+                            
+                        <input type="text" class="form-control datepicker" name="formalization_date" value="{{ isset($client) && ($client->formalization_date != '0000-00-00 00:00:00') ? $client->formalization_date : '' }}">
+                        
+                        {!! errors_for('formalization_date',$errors) !!}
+                    </div>
+                    
+                            
+                       
+                </div>
+                <div class="form-group">
+                    {!! Form::label('reservation_date','Fecha firma de reserva:',['class'=>'col-sm-2 control-label']) !!}
+                    <div class="col-sm-10">
+                        
+                            
+                        <input type="text" class="form-control datepicker" name="reservation_date" value="{{ isset($client) && ($client->reservation_date != '0000-00-00 00:00:00') ? $client->reservation_date : '' }}">
+                        
+                        {!! errors_for('reservation_date',$errors) !!}
+                    </div>
+                    
+                            
+                       
+                </div>
+                <div class="form-group">
+                    {!! Form::label('option_date','Fecha firma de opción:',['class'=>'col-sm-2 control-label']) !!}
+                    <div class="col-sm-10">
+                        
+                            
+                        <input type="text" class="form-control datepicker" name="option_date" value="{{ isset($client) && ($client->option_date != '0000-00-00 00:00:00') ? $client->option_date : '' }}">
+                        
+                        {!! errors_for('option_date',$errors) !!}
+                    </div>
+                    
+                            
+                       
+                </div>
+                 <div class="form-group">
+                    {!! Form::label('expedient_date','Fecha presentacion de expediente:',['class'=>'col-sm-2 control-label']) !!}
+                    <div class="col-sm-10">
+                        
+                            
+                        <input type="text" class="form-control datepicker" name="expedient_date" value="{{ isset($client) && ($client->expedient_date != '0000-00-00 00:00:00') ? $client->expedient_date : '' }}">
+                        
+                        {!! errors_for('expedient_date',$errors) !!}
+                    </div>
+                    
+                            
+                       
+                </div>
+                <div class="form-group">
+                    {!! Form::label('credit','Linea de credito:',['class'=>'col-sm-2 control-label']) !!}
+                    <div class="col-sm-10">
+                       
+                        {!! Form::text('credit', null,['class'=>'form-control']) !!}
+                        {!! errors_for('credit',$errors) !!}
+
+                    </div>
+
+
+                </div>
+                <div class="form-group">
+                    {!! Form::label('avaluo_date','Fecha de avaluo:',['class'=>'col-sm-2 control-label']) !!}
+                    <div class="col-sm-10">
+                        
+                            
+                        <input type="text" class="form-control datepicker" name="avaluo_date" value="{{ isset($client) && ($client->avaluo_date != '0000-00-00 00:00:00') ? $client->avaluo_date : '' }}">
+                        
+                        {!! errors_for('avaluo_date',$errors) !!}
+                    </div>
+                    
+                            
+                       
+                </div>
+                <div class="form-group">
+                    {!! Form::label('documents','Documentos:',['class'=>'col-sm-2 control-label'])!!}
+                    <div class="col-sm-10">
+                          <div class="row">
+                            <div class="col-xs-2">
+                                {!! Form::select('documents', ['1' => 'Si','0' => 'No'], null,['class'=>'form-control'])!!}
+                                {!! errors_for('documents',$errors) !!}
+                            </div>
+                            <div class="col-xs-10">
+                                {!! Form::textarea('documents_text', null,['class'=>'form-control','rows'=>'2', (isset($client)) ? ($client->documents != '0') ? 'disabled' : '' : 'disabled']) !!}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    {!! Form::label('fiador','Fiador:',['class'=>'col-sm-2 control-label'])!!}
+                    <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-xs-2">
+                                    {!! Form::select('fiador', ['0' => 'No','1' => 'Si'], null,['class'=>'form-control'])!!}
+                                    {!! errors_for('fiador',$errors) !!}
+                                </div>
+                                <div class="col-xs-10">
+                                    {!! Form::textarea('fiador_text', null,['class'=>'form-control','rows'=>'2', (isset($client)) ? ($client->fiador != '1') ? 'disabled' : '' : 'disabled']) !!}
+                                </div>
+                            </div>
+                    </div>
+                </div>
+
+                
+                <div class="form-group">
+                    {!! Form::label('image','Imagen:',['class'=>'col-sm-2 control-label'])!!}
+
+                    <div class="col-sm-10">
+                        {!! Form::file('image') !!}
+                        {!! errors_for('image',$errors) !!}
+                    </div>
+                </div>
+            
+
+            </div>
+            
+          
+
+                
+             
+        
+    </section>
 
 </div>
-<div class="col-lg-6">
+<div class="col-lg-4">
 
     <section class="panel">
         <header class="panel-heading">
@@ -263,7 +411,7 @@
         <div class="panel-heading">
                 @if(isset($client))
 
-                    @if(auth()->user()->isAsigned($client) || auth()->user()->hasRole('admin'))
+                    @if(auth()->user()->isAsigned($client) || auth()->user()->hasRole('admin') || auth()->user()->hasRole('manager'))
                        {!! link_to_route('create_task_to_client', 'Crear Tarea o Notificación',  $client->id, ['class'=>'btn btn-success'])!!}
                     @endif
 
@@ -294,7 +442,7 @@
 
                        
                        
-                            @if(auth()->user()->isAsigned($client) || auth()->user()->hasRole('admin'))
+                            @if(auth()->user()->isAsigned($client) || auth()->user()->hasRole('admin') || auth()->user()->hasRole('manager'))
                                 @if ($task->status)
                                     <button type="submit"  class="btn btn-success btn-xs" form="form-pend-comp" formaction="{!! URL::route('tasks.pend', [$task->id]) !!}" ><i class="fa fa-star"></i> Completada</button>
                                 @else
@@ -311,7 +459,7 @@
                             <a class="btn btn-info btn-xs" href="{!! URL::route('tasks.edit', [$task->id]) !!}">
                                 <i class="fa fa-edit"></i>
                             </a>
-                            @if(auth()->user()->isAsigned($client) || auth()->user()->hasRole('admin'))
+                            @if(auth()->user()->isAsigned($client) || auth()->user()->hasRole('admin') || auth()->user()->hasRole('manager'))
                               @can('delete_tasks')
                                     <button type="submit" class="btn btn-danger btn-xs" form="form-delete" formaction="{!! URL::route('tasks.destroy', [$task->id]) !!}">
                                         <i class="fa fa-trash-o"></i>

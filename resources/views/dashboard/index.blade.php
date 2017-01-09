@@ -49,6 +49,7 @@
                 </div>
             </section>
         </div>
+        @can('authorize_property')
          <div class="col-md-3 col-sm-6 col-xs-12">
             <section class="panel">
                 <div class="panel-body">
@@ -57,14 +58,15 @@
                     </div>
                     <div>
 
-                        <a href="/properties" style="display: block;">
-                            <h3 class="no-margin">Propiedades</h3>
+                        <a href="/projects" style="display: block;">
+                            <h3 class="no-margin">Proyectos</h3>
                             
                         </a>
                     </div>
                 </div>
             </section>
         </div>
+        @endcan
         
     </div>
 

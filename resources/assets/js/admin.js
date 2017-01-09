@@ -34,6 +34,32 @@
                   $("input[name='debts_amount']").val('0');
             }
         });
+
+    $("select[name='documents']").change(function() {
+
+      
+            if ($(this).val() === '0') {
+                $("textarea[name='documents_text']").attr('disabled', false).focus();
+                
+
+            } else {
+                  $("textarea[name='documents_text']").attr('disabled', true);
+                  $("textarea[name='documents_text']").val('');
+            }
+        });
+
+     $("select[name='fiador']").change(function() {
+
+      
+            if ($(this).val() === '1') {
+                $("textarea[name='fiador_text']").attr('disabled', false).focus();
+                
+
+            } else {
+                  $("textarea[name='fiador_text']").attr('disabled', true);
+                  $("textarea[name='fiador_text']").val('');
+            }
+        });
    
 
     var chkItem = $('.chk-item');
@@ -444,6 +470,102 @@
 
         }).done(callback);
     }
+
+
+    var selectProject = $('select#project'),
+        selectProperties = $('#selectProperties');
+
+   
+    
+    selectProject.change(function() {
+        var $this =  $(this);
+       
+        selectProperties.empty();
+        
+
+         $.ajax({
+
+            url : '/project/properties/list',
+            dataType : 'json',
+            data : { project_id: $(this).val() }
+
+        }).done(function function_name(resp) {
+            console.log(resp);
+
+
+                
+            $.each(resp, function(index,item) {
+
+                selectProperties.append('<option value=' + item.id + '>' + item.name + '</option>');
+            });
+
+            selectProperties.trigger("chosen:updated");
+           
+        });
+       
+    });
+
+    var selectBank = $('select#bank'),
+        selectBank2 = $('select#bank2'),
+        selectRequirements = $('#selectedRequirements');
+        selectRequirements2 = $('#selectedRequirements2');
+
+   
+    
+    selectBank.change(function() {
+        var $this =  $(this);
+       
+        selectRequirements.empty();
+        
+
+         $.ajax({
+
+            url : '/bank/requirements/list',
+            dataType : 'json',
+            data : { bank_id: $(this).val() }
+
+        }).done(function function_name(resp) {
+            console.log(resp);
+
+
+                
+            $.each(resp, function(index,item) {
+
+                selectRequirements.append('<option value=' + item.id + '>' + item.name + '</option>');
+            });
+
+            selectRequirements.trigger("chosen:updated");
+           
+        });
+       
+    });
+     selectBank2.change(function() {
+        var $this =  $(this);
+       
+        selectRequirements2.empty();
+        
+
+         $.ajax({
+
+            url : '/bank/requirements/list',
+            dataType : 'json',
+            data : { bank_id: $(this).val() }
+
+        }).done(function function_name(resp) {
+            console.log(resp);
+
+
+                
+            $.each(resp, function(index,item) {
+
+                selectRequirements2.append('<option value=' + item.id + '>' + item.name + '</option>');
+            });
+
+            selectRequirements2.trigger("chosen:updated");
+           
+        });
+       
+    });
 
 
 

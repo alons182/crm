@@ -20,7 +20,7 @@ class ClientRepo extends DbRepo{
 
     public function store($data)
     {
-       // $data = $this->prepareData($data);
+        $data = $this->prepareData($data);
 
         $data['image'] = (isset($data['image']) && $data['image']) ? $this->storeImage($data['image'], $data['fullname'].'-'.getUniqueNumber(), 'clients', null, null, 640, null, false) : '';
 
@@ -32,6 +32,9 @@ class ClientRepo extends DbRepo{
         if(isset($data['properties']))
             $client->assignProperty($data['properties']);
 
+         if(isset($data['requirements']))
+            $client->assignRequirement($data['requirements']);
+
         return $client;
     	
     }
@@ -41,8 +44,17 @@ class ClientRepo extends DbRepo{
         
        $data['referred_others'] = (isset($data['referred_others'])) ? $data['referred_others'] : '';
        $data['debts_amount'] = (isset($data['debts_amount'])) ? $data['debts_amount'] : '0';
-   
 
+       if(isset($data['fiador']) && $data['fiador']== 0){
+            $data['fiador_text'] = '';
+       }
+       if(isset($data['documents']) && $data['documents'] == 1){
+            $data['documents_text'] = '';
+       }
+        if(isset($data['requirements']) && isset($data['requirements2'])){
+            $data['requirements'] = array_merge($data['requirements'], $data['requirements2']);
+        }
+       
         return $data;
     }
 
@@ -63,9 +75,10 @@ class ClientRepo extends DbRepo{
 
         $client->fill($data);
         $client->save();
-
+        
         $client->assignSeller((isset($data['sellers'])) ? $data['sellers'] : [] );
         $client->assignProperty((isset($data['properties'])) ? $data['properties'] : [] );
+        $client->assignRequirement((isset($data['requirements'])) ? $data['requirements'] : [] );
        
         return $client;
     }

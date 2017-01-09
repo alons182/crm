@@ -5,7 +5,7 @@
 
     <section class="panel">
         <div class="panel-heading" style="overflow: hidden;">
-            {!! link_to_route('properties.create','Nueva Propiedad',null,['class'=>'btn btn-success']) !!}
+            {{-- link_to_route('properties.create','Nueva Propiedad',null,['class'=>'btn btn-success']) --}}
             @include('properties/partials/_search')
         </div>
         <div class="panel-body no-padding">
