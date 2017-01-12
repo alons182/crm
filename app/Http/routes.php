@@ -91,6 +91,18 @@ Route::group(['middleware' => ['web']], function () {
         'as'   => 'option_multiple',
         'uses' => 'ClientsController@option_multiple'
     ]);
+    Route::post('clients/comments', [
+        'as'   => 'save_comments_clients',
+        'uses' => 'ClientsController@comments'
+    ]);
+     Route::put('clients/comments/update', [
+        'as'   => 'update_comments_clients',
+        'uses' => 'ClientsController@updateComments'
+    ]);
+    Route::post('clients/comments/delete', [
+        'as'   => 'delete_comments_clients',
+        'uses' => 'ClientsController@deleteComments'
+    ]);
 
 
     Route::get('tasks/list', [

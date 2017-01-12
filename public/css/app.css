@@ -1,8 +1,1 @@
-.table-striped > tbody > tr:nth-child(even) > td, .table-striped > tbody > tr:nth-child(even) > th {
-  background-color: transparent; }
-
-.bg-purple {
-  background-color: #D500FF;
-  color: #FCCDFF; }
-
-/*# sourceMappingURL=app.css.map */
+.table-striped>tbody>tr:nth-child(2n)>td,.table-striped>tbody>tr:nth-child(2n)>th{background-color:transparent}.bg-purple{background-color:#d500ff;color:#fccdff}

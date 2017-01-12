@@ -567,6 +567,153 @@
        
     });
 
+     $('#comments-list').on('click','.updateComment', function(event) {
+        event.preventDefault();
+        debugger
+        var id = $(this).data('id');
+        var comments = $('textarea[name="comments-item-'+ id +'"]').val();
+        
+        if(comments ==='' || comments === undefined) 
+            return false;
+
+         $.ajax({
+
+            method: 'PUT',
+            url : '/clients/comments/update',
+            dataType : 'json',
+            data : { id: $(this).data('id'), body: comments }
+
+        }).done(function function_name(resp) {
+            console.log(resp);
+
+
+             var commentsItems = $.map(resp ,function(obj, index){
+                return {
+                    id : obj.id,
+                    body : obj.body,
+                    client_id : obj.client_id,
+                    created_at : obj.created_at,
+                   
+
+                }
+
+            });
+
+             var templateHtml = $.trim( $('#commentsListTemplate').html() );
+
+            var template = Handlebars.compile( templateHtml );
+
+            var html = template(commentsItems);
+            
+            
+
+            $('#comments-list').html( html );
+                
+            $('#comments').val(''); 
+           
+        });
+
+
+      });
+
+      $('#comments-list').on('click','.btn-delete-comment', function(event) {
+        event.preventDefault();
+
+         $.ajax({
+
+            method: 'POST',
+            url : '/clients/comments/delete',
+            dataType : 'json',
+            data : { id: $(this).data('id') }
+
+        }).done(function function_name(resp) {
+            console.log(resp);
+
+
+             var commentsItems = $.map(resp ,function(obj, index){
+                return {
+                    id : obj.id,
+                    body : obj.body,
+                    client_id : obj.client_id,
+                    created_at : obj.created_at,
+                   
+
+                }
+
+            });
+
+             var templateHtml = $.trim( $('#commentsListTemplate').html() );
+
+            var template = Handlebars.compile( templateHtml );
+
+            var html = template(commentsItems);
+            
+            
+
+            $('#comments-list').html( html );
+                
+            $('#comments').val(''); 
+           
+        });
+
+
+      });
+
+     $('#saveComment').on('click', function(event) {
+        event.preventDefault();
+
+        var comments = $('#comments').val();
+
+        if(comments ==='') 
+            return false;
+
+
+         $.ajax({
+
+            method: 'POST',
+            url : '/clients/comments',
+            dataType : 'json',
+            data : { client_id: $(this).data('client'), body: comments }
+
+        }).done(function function_name(resp) {
+            console.log(resp);
+
+
+             var commentsItems = $.map(resp ,function(obj, index){
+                return {
+                    id : obj.id,
+                    body : obj.body,
+                    created_at : obj.created_at,
+                   
+
+                }
+
+            });
+
+             var templateHtml = $.trim( $('#commentsListTemplate').html() );
+
+            var template = Handlebars.compile( templateHtml );
+
+            var html = template(commentsItems);
+            
+            
+
+            $('#comments-list').html( html );
+                
+            $('#comments').val(''); 
+           
+        });
+
+
+      
+
+
+
+        
+       
+
+    });
+
 
 
 })(jQuery);

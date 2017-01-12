@@ -2,6 +2,7 @@
 
 namespace App;
 
+
 use Illuminate\Database\Eloquent\Model;
 
 class Client extends Model
@@ -107,6 +108,11 @@ class Client extends Model
     {
         return $this->requirements()->sync($requirements);
         
+    }
+
+    public function comments()
+    {
+        return $this->HasMany(Comment::class)->latest();
     }
 
 }

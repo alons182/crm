@@ -147,7 +147,7 @@
                 <h2>Datos Complementarios</h2>
                 
         </header>
-        <div class="panel-body">
+        <div  style="padding: 15px;">
             <div class="form-group">
                 {!! Form::label('address','Dirección Domiciliar:',['class'=>'col-sm-2 control-label'])!!}
                 <div class="col-sm-10">
@@ -236,29 +236,79 @@
                      
                 </div>
             </div>
-             @if (isset($client))
-                <div class="form-group">
-                    {!! Form::label('comments','Estados:',['class'=>'col-sm-2 control-label']) !!}
-                    <div class="col-sm-10">
-                         @can('edit_status_clients')
-                            {!! Form::textarea('comments', null,['class'=>'form-control', 'rows'=>'3','maxlength'=>'150']) !!}
-                        @else
-                            {!! Form::textarea('comments', null,['class'=>'form-control', 'disabled', 'rows'=>'3', 'maxlength'=>'150']) !!}
-                        @endcan
-                        {!! errors_for('comments',$errors) !!}
-                         
-                    </div>
-                </div>
-            @else
+
                 <div class="form-group">
                     {!! Form::label('comments','Estados:',['class'=>'col-sm-2 control-label']) !!}
                     <div class="col-sm-10">
                         {!! Form::textarea('comments', null,['class'=>'form-control', 'rows'=>'3','maxlength'=>'150']) !!}
                         {!! errors_for('comments',$errors) !!}
-                         
+                        <a href="#" class="btn btn-xs btn-default" id="saveComment" data-client="{{ (isset($client)) ? $client->id : 0 }}">Guardar</a>
+
+                        <section class="panel panel-dark" >
+                            <div class="panel-heading">Estados
+                                    <small class="pull-right">
+                                        <a class="fa panel-collapsible pd-r-xs fa-chevron-down" href="#"></a>
+                                        
+                                    </small>
+                                </div>
+                            <!--<div class="panel-body bg-white">-->
+                                <ul id="comments-list" class="list-group panel-body">
+                                     @if(isset($client))
+                                        @foreach($client->comments()->get() as $comment)
+                                            <li  class="list-group-item">
+                                                @can('edit_status_clients')
+                                                 <a href="#" data-id="{{ $comment->id }}" class="btn btn-xs btn-danger pull-left btn-delete-comment" style="margin-right: 1rem;"><i class="fa fa-trash-o"></i></a>
+
+                                                @endcan
+                                                <small class="pull-right">{{ $comment->created_at }}</small>
+                                                <div class="show no-margin pd-t-xs">
+                                                    @can('edit_status_clients')
+                                                        {!! Form::textarea('comments-item-'.$comment->id, $comment->body,['class'=>'form-control', 'rows'=>'3','maxlength'=>'150']) !!}
+                                                       <a href="#" class="btn btn-xs btn-default updateComment" data-id="{{ $comment->id }}">Actualizar</a>
+                                                    @else    
+                                                        {{ $comment->body }}
+                                                    @endcan
+                                                    
+
+                                                </div>
+                                            </li>
+                                        @endforeach
+                                    @endif
+                                    
+                                </ul>
+                            <!--</div>-->
+                            
+                        </section>
+                        
                     </div>
+                    
+
                 </div>
-            @endif
+                
+                <script id="commentsListTemplate" type="text/x-handlebars-template">
+                    @{{#each this}}
+                    <li data-id="@{{ id }}" class="list-group-item">
+                         @can('edit_status_clients')
+                            <a href="#" data-id="@{{ id }}" class="btn btn-xs btn-danger pull-left btn-delete-comment" style="margin-right: 1rem;"><i class="fa fa-trash-o"></i></a>
+                         @endcan
+                         <small class="pull-right">@{{ created_at }}</small>
+                        <div class="show no-margin pd-t-xs">
+                            @can('edit_status_clients')
+                                <textarea name="comments-item-@{{ id }}" cols="30" rows="3" maxlength="150" class="form-control">@{{ body }}</textarea>
+                                <a href="#" class="btn btn-xs btn-default updateComment" data-id="@{{ id }}">Actualizar</a>
+                            @else    
+                                @{{ body }}
+                            @endcan
+                            
+                            
+                        </div>
+                       
+                    </li>
+                    @{{/each}}
+
+
+                </script>
+          
                <div class="form-group">
                     {!! Form::label('formalization_date','Fecha de formalización:',['class'=>'col-sm-2 control-label']) !!}
                     <div class="col-sm-10">

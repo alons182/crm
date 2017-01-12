@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Bank;
+use App\Comment;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Http\Requests\ClientEditRequest;
@@ -147,6 +148,7 @@ class ClientsController extends Controller
 
         //$selectedRequirements =  $client->requirements()->pluck('id')->all();
         //dd($selectedProperties);
+        
         return View('clients.edit')->with(compact('client','selectedProperties','propertiesOfSelectedProject','selectedRequirements','requirementsOfSelectedBank','requirementsOfSelectedBank2'));
     }
     
@@ -223,6 +225,57 @@ class ClientsController extends Controller
             return back();
 
         return View('tasks.create')->with(compact('client_id'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function comments(Request $request)
+    {
+        
+        Comment::create($request->all());
+        
+       
+        $comments = Comment::where('client_id',$request->input('client_id'))->orderBy('created_at', 'desc')->get();
+
+        return $comments;
+    }
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function updateComments(Request $request)
+    {
+
+        $comment = Comment::find($request->input('id'));
+        $comment->fill($request->all());
+        $comment->save();
+       
+       
+        $comments = Comment::where('client_id',$comment->client_id)->orderBy('created_at', 'desc')->get();
+
+        return $comments;
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteComments(Request $request)
+    {
+        
+        $comment = Comment::find($request->input('id'));
+        $client_id = $comment->client_id;
+        
+        $comment->delete();
+
+        $comments = Comment::where('client_id',$client_id)->orderBy('created_at', 'desc')->get();
+
+        return $comments;
     }
 
     public function import(Excel $excel, ImportRequest $request)
