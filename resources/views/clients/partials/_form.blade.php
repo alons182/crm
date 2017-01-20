@@ -122,7 +122,7 @@
            <div class="form-group">
                     {!! Form::label('status','Estatus:',['class'=>'col-sm-2 control-label'])!!}
                     <div class="col-sm-10">
-                         {!! Form::select('status', ['0' => '','1' => 'En Tramite','2' => 'Aprobado','3' => 'Interesado','4' => 'Denegado'], null,['class'=>'form-control'])!!}
+                         {!! Form::select('status', ['0' => '','1' => 'Reservado','2' => 'Aprobado','3' => 'Interesado','4' => 'Formalizado'], null,['class'=>'form-control'])!!}
                             {!! errors_for('status',$errors) !!}
                     </div>
                 </div>
@@ -308,20 +308,7 @@
 
 
                 </script>
-          
-               <div class="form-group">
-                    {!! Form::label('formalization_date','Fecha de formalización:',['class'=>'col-sm-2 control-label']) !!}
-                    <div class="col-sm-10">
-                        
-                            
-                        <input type="text" class="form-control datepicker" name="formalization_date" value="{{ isset($client) && ($client->formalization_date != '0000-00-00 00:00:00') ? $client->formalization_date : '' }}">
-                        
-                        {!! errors_for('formalization_date',$errors) !!}
-                    </div>
-                    
-                            
-                       
-                </div>
+
                 <div class="form-group">
                     {!! Form::label('reservation_date','Fecha firma de reserva:',['class'=>'col-sm-2 control-label']) !!}
                     <div class="col-sm-10">
@@ -362,17 +349,6 @@
                        
                 </div>
                 <div class="form-group">
-                    {!! Form::label('credit','Linea de credito:',['class'=>'col-sm-2 control-label']) !!}
-                    <div class="col-sm-10">
-                       
-                        {!! Form::text('credit', null,['class'=>'form-control']) !!}
-                        {!! errors_for('credit',$errors) !!}
-
-                    </div>
-
-
-                </div>
-                <div class="form-group">
                     {!! Form::label('avaluo_date','Fecha de avaluo:',['class'=>'col-sm-2 control-label']) !!}
                     <div class="col-sm-10">
                         
@@ -385,6 +361,23 @@
                             
                        
                 </div>
+          
+               <div class="form-group">
+                    {!! Form::label('formalization_date','Fecha de formalización:',['class'=>'col-sm-2 control-label']) !!}
+                    <div class="col-sm-10">
+                        
+                            
+                        <input type="text" class="form-control datepicker" name="formalization_date" value="{{ isset($client) && ($client->formalization_date != '0000-00-00 00:00:00') ? $client->formalization_date : '' }}">
+                        
+                        {!! errors_for('formalization_date',$errors) !!}
+                    </div>
+                    
+                            
+                       
+                </div>
+                
+                
+                
                 <div class="form-group">
                     {!! Form::label('documents','Documentos:',['class'=>'col-sm-2 control-label'])!!}
                     <div class="col-sm-10">
@@ -412,6 +405,17 @@
                                 </div>
                             </div>
                     </div>
+                </div>
+                <div class="form-group">
+                    {!! Form::label('credit','Linea de credito:',['class'=>'col-sm-2 control-label']) !!}
+                    <div class="col-sm-10">
+                       
+                        {!! Form::text('credit', null,['class'=>'form-control']) !!}
+                        {!! errors_for('credit',$errors) !!}
+
+                    </div>
+
+
                 </div>
 
                 

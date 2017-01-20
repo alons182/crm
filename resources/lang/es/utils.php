@@ -3,10 +3,10 @@
 return [
     'status_client'  => [
         '0' => '',
-        '1' => 'En Tramite',
+        '1' => 'Reservado',
         '2' => 'Aprobado',
         '3' => 'Interesado',
-        '4' => "Denegado",
+        '4' => "Formalizado",
     ],
     'status_color'  => [
         '0' => 'default',
@@ -49,6 +49,19 @@ return [
         'debts_amount'=> 'Monto específico deudas',
         'potencial'=> 'Potencial',
         'prima' => 'Prima',
+        'option_date' => 'Fecha de firma de opción',
+        'avaluo_date' => 'Fecha de avaluo',
+        'bank' => 'Banco',
+        'bank2' => 'Banco 2',
+        'formalization_date' =>'Fecha de formalización',
+        'expedient_date' => 'Fecha de expediente',
+        'documents' => 'Documentos',
+        'reservation_date' => 'Fecha de reservación',
+        'credit' => 'Linea de credito',
+        'project' =>'Proyecto',
+        'fiador' => 'Fiador',
+        'fiador_text' => 'contenido de fiador',
+        'documents_text' => 'contenido de documentos'
         
     ],
     
