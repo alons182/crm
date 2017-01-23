@@ -419,12 +419,55 @@
                 </div>
 
                 
-                <div class="form-group">
+                <!-- <div class="form-group">
                     {!! Form::label('image','Imagen:',['class'=>'col-sm-2 control-label'])!!}
 
                     <div class="col-sm-10">
                         {!! Form::file('image') !!}
                         {!! errors_for('image',$errors) !!}
+                    </div>
+                </div> -->
+                <div class="form-group">
+
+                    {!! Form::label('file','Archivos Adjuntos:',['class'=>'control-label col-sm-2'])!!}
+                    <div class="col-sm-10">
+                    @if(isset($client))
+
+                        <div id="container-files">
+
+                            <a class="UploadButton btn btn-info" id="UploadButton">Subir Archivo</a>
+                            <div id="InfoBox"></div>
+                            <ul id="files-list">
+
+                                @foreach ($client->files as $file)
+                                    <li>
+                                        <span class="delete" data-file="{!! $file->id !!}" title="Eliminar Archivo"><i class="icon-close fa fa-trash-o"></i></span>
+                                        <a href="{!! photos_path('clients') !!}{!! $file->client_id !!}/files/{!! $file->name !!}" title="{!! $file->name !!}" target="_blank">{!! $file->name !!}</a>
+                                    </li>
+                                @endforeach
+
+                            </ul>
+                            <script id="fileTemplate" type="text/x-handlebars-template">
+
+                                <li>
+                                    <span class="delete" data-file="@{{ id }}" title="Eliminar archivo"><i class="icon-close fa fa-trash-o"></i></span>
+                                    <a href="/media/clients/@{{ client_id }}/files/@{{ name }}" title="@{{ name }}" target="_blank">@{{ name }}</a>
+                                </li>
+
+
+                            </script>
+
+                        </div>
+                    @else
+                        <div id="inputs_files">
+                            <input class="inputbox btn btn-info" type="button" name="new_file"  value="Nuevo Archivo"  id="add_input_file"/><i class="glyphicon glyphicon-plus-sign"></i>
+
+                            <!--<input class="inputfile" id="imageGallery" type="file" name="new_photo_file[]" data-multiple-caption="{count} imagenes seleccionadas" multiple  />
+                            <label for="imageGallery"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg> <span>Agregar imagenes</span></label>
+                            <output id="result" />-->
+                        </div>
+
+                    @endif
                     </div>
                 </div>
             

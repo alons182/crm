@@ -704,15 +704,83 @@
            
         });
 
-
-      
-
+    });
 
 
-        
-       
+
+     //files
+     var filesList = $('#files-list'),
+        infoBox = $('#InfoBox'),
+        files  = 0,
+        inputsFiles = $("#inputs_files");
+
+    $("#add_input_file").on('click', function (e) {
+        files++;
+
+        inputsFiles.append('<div><strong>Archivo ' + files + ': </strong>'+
+        '<input type="file" name="new_file_file[]" size="45" /></div><br />');
 
     });
+    function deleteFile()
+    {
+        var btn_delete = $(this),
+            url = "/files/" + btn_delete.attr("data-file");
+
+        $.post(url,{_token: $('input[name=_token]').val()}, function(data){
+            btn_delete.parent().fadeOut("slow");
+        });
+    }
+
+    $("#UploadButton").ajaxUpload({
+        url : "/files",
+        name: "file",
+        data: {id: $('input[name=client_id]').val(), _token: $('input[name=_token]').val() },
+        onSubmit: function() {
+            infoBox.html('Uploading ... ');
+        },
+        onComplete: function(result) {
+
+            infoBox.html('Uploaded succesfull!');
+
+            var files = jQuery.parseJSON(result);
+
+
+            fillFilesInfo(files);
+
+            filesList.find('li').find('.delete').on('click',deleteFile);
+
+
+        }
+    });
+
+    filesList.find('li').find('.delete').on('click',deleteFile);
+
+    function fileTemplate(file)
+    {
+
+        var templateHtml = $.trim( $('#fileTemplate').html() );
+
+        var template = Handlebars.compile( templateHtml );
+
+        return template(file);
+
+    }
+
+
+    function fillFilesInfo(jsonData) {
+        if (jsonData.error) {
+            return onError();
+        }
+
+        var html = fileTemplate(jsonData);
+
+        (filesList.length === 0) ? filesList.html( html ) : filesList.prepend(html);
+
+        filesList.find('li').eq(0).hide().show("slow");
+
+    }
+
+
 
 
 

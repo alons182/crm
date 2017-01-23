@@ -115,4 +115,13 @@ class Client extends Model
         return $this->HasMany(Comment::class)->latest();
     }
 
+    /**
+     * Relationship with the Task Model
+     * @return [type] [description]
+     */
+    public function files()
+    {
+         return $this->hasMany(File::class);
+    }
+
 }

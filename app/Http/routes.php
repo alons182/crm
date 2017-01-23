@@ -63,7 +63,16 @@ Route::group(['middleware' => ['web']], function () {
         ));
     }
 
-   
+    #files(Gallery)
+    Route::post('files', [
+        'as'   => 'save_file',
+        'uses' => 'FilesController@store'
+    ]);
+    Route::post('files/{file}', [
+        'as'   => 'delete_file',
+        'uses' => 'FilesController@destroy'
+    ]);
+
     Route::get('clients/list', [
         'as' => 'clients_list',
         'uses' => 'ClientsController@list_clients'

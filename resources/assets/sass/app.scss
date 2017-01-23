@@ -8,4 +8,21 @@
 	background-color: #D500FF;
 	color:#FCCDFF;
 }
+#files-list{
+	margin-top: 1rem;
+}
+#files-list li{
+	margin-top: .5rem;
+	.delete{
+	  color: red;
+	  cursor: pointer;
+
+	}
+	.delete:hover{
+	   color:black;
+	}
+}
+#files-list li a:hover{
+	text-decoration: underline;
+}
 

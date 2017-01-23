@@ -1,9 +1,11 @@
 <?php namespace App\Repositories;
 
 use App\Client;
+use App\File as Adjusto;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 class ClientRepo extends DbRepo{
 
@@ -35,8 +37,34 @@ class ClientRepo extends DbRepo{
          if(isset($data['requirements']))
             $client->assignRequirement($data['requirements']);
 
+        $this->sync_files($client, $data);
+
         return $client;
     	
+    }
+
+    /**
+     * Save the photos of the product
+     * @param $client
+     * @param $data
+     */
+    public function sync_files($client, $data)
+    {
+        if (isset($data['new_file_file']))
+        {
+            $cant = count($data['new_file_file']);
+            foreach ($data['new_file_file'] as $file)
+            {
+                if($file)
+                {
+                    $filename = $this->storeFile($file,  $cant--, 'clients/' . $client->id.'/files');
+                    $files = new Adjusto;
+                    $files->name = $filename;
+                    $client->files()->save($files);
+                }
+            }
+        }
+
     }
     private function prepareData($data)
     {
@@ -256,4 +284,33 @@ class ClientRepo extends DbRepo{
 
         return $clients;
     }
+
+    /**
+     * Save the photo in the server
+     * @param $file
+     * @param $name
+     * @param $directory
+     * @param null $width
+     * @param null $height
+     * @param $thumbWidth
+     * @param null $thumbHeight
+     * @param null $watermark
+     * @return string
+     */
+    public function storeFile($file, $name, $directory)
+    {
+        $filename = Str::slug($file->getClientOriginalName()) . '_'.$name. '.' . $file->getClientOriginalExtension();
+        $path = dir_photos_path($directory);
+       
+ 
+        File::exists($path) or File::makeDirectory($path, 0775, true);
+        
+        if ( ! File::copy($file, $path . $filename))
+        {
+            die("Couldn't copy file");
+        }
+       
+        return $filename;
+    }
+
 }
