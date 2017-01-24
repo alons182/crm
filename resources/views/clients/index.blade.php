@@ -106,7 +106,7 @@
                     <tfoot>
 
                     @if ($clients)
-                        <td  colspan="10" class="pagination-container">{!!$clients->appends(['q' => $search,'referred'=> $selectedReference,'seller'=> $selectedSeller, 'status'=> $selectedStatus,'debts'=> $selectedDebts,'potencial'=> $selectedPotencial, 'date1' => $date1,'date2' =>$date2 ])->render()!!}</td>
+                        <td  colspan="10" class="pagination-container">{!!$clients->appends(['q' => $search,'referred'=> $selectedReference,'seller'=> $selectedSeller, 'status'=> $selectedStatus,'project'=> $selectedProject,'potencial'=> $selectedPotencial, 'date1' => $date1,'date2' =>$date2 ])->render()!!}</td>
                     @endif
 
 

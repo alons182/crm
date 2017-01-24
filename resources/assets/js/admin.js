@@ -35,6 +35,8 @@
             }
         });
 
+
+
     $("select[name='documents']").change(function() {
 
       
@@ -108,6 +110,7 @@
         referred = $('#referred'),
         sellers = $('#seller'),
         debts = $('#debts'),
+        project = $('#project'),
         potencial = $('#potencial'),
         filters = $(".filtros");
         
@@ -127,6 +130,7 @@
     sellers.change(submitForm);
     debts.change(submitForm);
     potencial.change(submitForm);
+    project.change(submitForm);
     
 
     $('.btn-edit-slug').on('click',function(){

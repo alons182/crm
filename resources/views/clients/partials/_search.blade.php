@@ -28,8 +28,9 @@
 
                              </div>
                              <div class=" form-group">
+                                
+                                 {!! Form::select('project', ['' => '-- Filtrar por proyecto --'] + $projects , $selectedProject, ['id'=>'project','class'=>'form-control'] ) !!}
 
-                                {!! Form::select('debts', ['' => '-- Filtrar por deudas --'] + ['1' => 'No Deudas','2' => 'Si Deudas','3' => 'Por Consultar','4' => 'Monto especifico'] , $selectedDebts, ['id'=>'debts','class'=>'form-control'] ) !!}
 
                              </div>
                              <div class=" form-group">

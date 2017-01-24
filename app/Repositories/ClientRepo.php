@@ -165,6 +165,10 @@ class ClientRepo extends DbRepo{
         {
             $clients = $clients->where('debts', $search['debts']);
         }
+         if (isset($search['project']) && $search['project'] != "")
+        {
+            $clients = $clients->where('project', $search['project']);
+        }
          if (isset($search['potencial']) && $search['potencial'] != "")
         {
             $clients = $clients->where('potencial', $search['potencial']);

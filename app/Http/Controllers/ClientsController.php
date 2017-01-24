@@ -65,7 +65,8 @@ class ClientsController extends Controller
         $search['referred'] = (isset($search['referred'])) ? $search['referred'] : '';
         $search['seller'] = (isset($search['seller'])) ? $search['seller'] : '';
         $search['status'] = (isset($search['status'])) ? $search['status'] : '';
-        $search['debts'] = (isset($search['debts'])) ? $search['debts'] : '';
+        //$search['debts'] = (isset($search['debts'])) ? $search['debts'] : '';
+        $search['project'] = (isset($search['project'])) ? $search['project'] : '';
         $search['potencial'] = (isset($search['potencial'])) ? $search['potencial'] : '';
         $search['date1'] = (isset($search['date1'])) ? $search['date1'] : '';
         $search['date2'] = (isset($search['date2'])) ? $search['date2'] : '';
@@ -82,7 +83,8 @@ class ClientsController extends Controller
             'selectedSeller' =>  $search['seller'],
             'sellers'           => $sellers,
             'selectedStatus' =>  $search['status'],
-            'selectedDebts' =>  $search['debts'],
+            'selectedProject' =>  $search['project'],
+            //'selectedDebts' =>  $search['debts'],
             'selectedPotencial' =>  $search['potencial'],
             'date1'           => $search['date1'],
             'date2'           => $search['date2'],
