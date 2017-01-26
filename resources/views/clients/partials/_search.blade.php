@@ -24,7 +24,7 @@
                              </div>
                               <div class=" form-group">
 
-                                {!! Form::select('status', ['' => '-- Filtrar por estatus --'] + ['1' => 'En Tramite','2' => 'Aprobado','3' => 'Interesado','4' => 'Denegado'] , $selectedStatus, ['id'=>'status','class'=>'form-control'] ) !!}
+                                {!! Form::select('status', ['' => '-- Filtrar por estatus --'] + ['1' => 'Reservado','2' => 'Aprobado','3' => 'Interesado','4' => 'Formalizado'] , $selectedStatus, ['id'=>'status','class'=>'form-control'] ) !!}
 
                              </div>
                              <div class=" form-group">
