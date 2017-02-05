@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Property extends Model
 {
 	
-    protected $fillable = ['name','price', 'province','address','size','construction','rooms','owner','owner_phone1','owner_phone2','owner_email','project','status','image','user_id','project_id','percent','seller_percent','office'];
+    protected $fillable = ['name','price', 'province','address','size','construction','rooms','owner','owner_phone1','owner_phone2','owner_email','project','status','image','user_id','project_id','percent','seller_percent','office','block','completed_house_date','delivery_date'];
     
     public function scopeSearch($query, $search)
     {

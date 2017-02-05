@@ -40,6 +40,27 @@
                             </a>
                         </li>
                        @endcan
+                       @can('create_sellers')
+                        <li class="dropdown show-on-hover">
+                            <a href="#" data-toggle="dropdown">
+                                <i class="fa fa-file"></i>
+                                <span>Reportes</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="{!! URL::route('r_tracing') !!}">
+                                        <span>Seguimiento</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span>Ventas</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        
+                        @endcan
 
                     </ul>
                 </nav>

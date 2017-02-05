@@ -134,6 +134,33 @@ class ClientRepo extends DbRepo{
      * @param $search
      * @return mixed
      */
+    public function reports($search)
+    {
+        //$clients = $this->model;
+        /*if(auth()->user()->hasRole('admin'))       
+            $clients = $this->model;
+        else
+            $clients = auth()->user()->clients();*/
+         $clients = $this->model->whereHas('properties', function($q) use($search){
+                                                    $q->where('project_id', $search['project']);
+                                                });
+        
+       
+        if (isset($search['project']) && $search['project'] != "")
+        {
+            $clients = $clients->where('project', $search['project']);
+        }
+        
+
+
+
+        return $clients->with('comments')->orderBy('created_at', 'desc')->paginate($this->limit);
+    }
+     /**
+     * Get all the clients for the admin panel
+     * @param $search
+     * @return mixed
+     */
     public function getAll($search)
     {
         $clients = $this->model;

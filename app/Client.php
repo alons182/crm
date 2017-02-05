@@ -124,4 +124,13 @@ class Client extends Model
          return $this->hasMany(File::class);
     }
 
+    public function getBankName()
+    {
+        return $this->bank != 0 ? Bank::find($this->bank)->name : '';
+    }
+    public function getBank2Name()
+    {
+        return $this->bank2 != 0 ? Bank::find($this->bank2)->name : '';
+    }
+
 }

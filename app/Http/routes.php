@@ -220,6 +220,15 @@ Route::group(['middleware' => ['web']], function () {
         'uses' => 'RequirementsController@option_multiple'
     ]);
 
+     Route::get('reports/tracing', [
+        'as' => 'r_tracing',
+        'uses' => 'ReportsController@tracing'
+    ]);
+     Route::get('reports/sales', [
+        'as' => 'r_sales',
+        'uses' => 'ReportsController@sales'
+    ]);
+
    
 
 });

@@ -65,6 +65,15 @@
 
             </div>
             <div class="form-group">
+                {!! Form::label('block','Bloque:',['class'=>'col-sm-2 control-label']) !!}
+                <div class="col-sm-10">
+                    {!! Form::text('block', null,['class'=>'form-control']) !!}
+                    {!! errors_for('block',$errors) !!}
+                </div>
+
+
+            </div>
+            <div class="form-group">
                 {!! Form::label('office','Oficina:',['class'=>'col-sm-2 control-label']) !!}
                 <div class="col-sm-10">
                     {!! Form::text('office', null,['class'=>'form-control']) !!}
@@ -72,6 +81,32 @@
                 </div>
 
 
+            </div>
+             <div class="form-group">
+                    {!! Form::label('completed_house_date','Fecha casa terminada:',['class'=>'col-sm-2 control-label']) !!}
+                    <div class="col-sm-10">
+                        
+                            
+                        <input type="text" class="form-control datepicker" name="completed_house_date" value="{{ isset($property) && ($property->completed_house_date != '0000-00-00 00:00:00') ? $property->completed_house_date : '' }}">
+                        
+                        {!! errors_for('completed_house_date',$errors) !!}
+                    </div>
+                    
+                            
+                       
+            </div>
+             <div class="form-group">
+                    {!! Form::label('delivery_date','Fecha de entrega:',['class'=>'col-sm-2 control-label']) !!}
+                    <div class="col-sm-10">
+                        
+                            
+                        <input type="text" class="form-control datepicker" name="delivery_date" value="{{ isset($property) && ($property->delivery_date != '0000-00-00 00:00:00') ? $property->delivery_date : '' }}">
+                        
+                        {!! errors_for('delivery_date',$errors) !!}
+                    </div>
+                    
+                            
+                       
             </div>
             
             <div class="form-group">
