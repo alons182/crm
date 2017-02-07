@@ -240,10 +240,17 @@
                 <div class="form-group">
                     {!! Form::label('comments','Estados:',['class'=>'col-sm-2 control-label']) !!}
                     <div class="col-sm-10">
-                        {!! Form::textarea('comments', null,['class'=>'form-control', 'rows'=>'3','maxlength'=>'150']) !!}
-                        {!! errors_for('comments',$errors) !!}
-                        <a href="#" class="btn btn-xs btn-default" id="saveComment" data-client="{{ (isset($client)) ? $client->id : 0 }}">Guardar</a>
-
+                          @if(isset($client))
+                             {!! Form::textarea('comments', null,['class'=>'form-control', 'rows'=>'3','maxlength'=>'150']) !!}
+                            {!! errors_for('comments',$errors) !!}
+                            <a href="#" class="btn btn-xs btn-default" id="saveComment" data-client="{{ (isset($client)) ? $client->id : 0 }}">Guardar</a>
+                            @else
+                             <div class="alert alert-warning">
+                                 Necesitas Guardar el cliente para poder agregarle estados
+                             </div>
+                           
+                            @endif
+                       
                         <section class="panel panel-dark" >
                             <div class="panel-heading">Estados
                                     <small class="pull-right">
