@@ -129,6 +129,7 @@ class ClientRepo extends DbRepo{
 
         return $client;
     }
+
      /**
      * Get all the clients for the admin panel
      * @param $search
@@ -154,7 +155,33 @@ class ClientRepo extends DbRepo{
 
 
 
-        return $clients->with('comments')->orderBy('created_at', 'desc')->paginate($this->limit);
+        return $clients->with('banco','estados','properties')->orderBy('created_at', 'desc')->paginate($this->limit);
+    }
+
+     /**
+     * Get all the clients for the admin panel
+     * @param $search
+     * @return mixed
+     */
+    public function reportsSales($search)
+    {
+        //$clients = $this->model;
+        /*if(auth()->user()->hasRole('admin'))       
+            $clients = $this->model;
+        else
+            $clients = auth()->user()->clients();*/
+         $clients = $this->model->has('properties');
+        
+       
+        if (isset($search['project']) && $search['project'] != "")
+        {
+            $clients = $clients->where('project', $search['project']);
+        }
+        
+
+
+
+        return $clients->with('proyecto','sellers','properties')->orderBy('created_at', 'desc')->paginate($this->limit);
     }
      /**
      * Get all the clients for the admin panel
@@ -296,7 +323,7 @@ class ClientRepo extends DbRepo{
             $client = $this->model->with('sellers')->findOrFail($id);
         else
             $client = auth()->user()->clients()->with('sellers')->findOrFail($id);*/
-        $client = $this->model->with('sellers')->findOrFail($id);    
+        $client = $this->model->with('sellers','tasks')->findOrFail($id);    
         
         return $client;
     }

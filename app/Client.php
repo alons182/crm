@@ -110,7 +110,12 @@ class Client extends Model
         
     }
 
-    public function comments()
+     public function proyecto()
+    {
+        return $this->HasOne(Project::class, 'id','project');
+    }
+
+    public function estados()
     {
         return $this->HasMany(Comment::class)->latest();
     }
@@ -122,6 +127,15 @@ class Client extends Model
     public function files()
     {
          return $this->hasMany(File::class);
+    }
+
+     public function banco()
+    {
+        return $this->HasOne(Bank::class, 'id','bank');
+    }
+     public function banco2()
+    {
+        return $this->HasOne(Bank::class, 'id','bank2');
     }
 
     public function getBankName()

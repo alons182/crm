@@ -53,4 +53,32 @@ class ReportsController extends Controller
             
         ]);
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function sales(Request $request)
+    {
+        $search = $request->all();
+        $clients = [];
+        
+       
+
+            $search['project'] = (isset($search['project'])) ? $search['project'] : '';
+           
+            
+           
+            $clients = $this->clientRepo->reportsSales($search);
+           // dd($clients->toArray());
+            return View('reports.sales')->with([
+                'clients'         => $clients,
+                'selectedProject' =>  $search['project']
+                
+            ]);
+      
+        
+        
+    }
 }

@@ -254,7 +254,7 @@
                             <!--<div class="panel-body bg-white">-->
                                 <ul id="comments-list" class="list-group panel-body">
                                      @if(isset($client))
-                                        @foreach($client->comments()->get() as $comment)
+                                        @foreach($client->estados as $comment)
                                             <li  class="list-group-item">
                                                 @can('edit_status_clients')
                                                  <a href="#" data-id="{{ $comment->id }}" class="btn btn-xs btn-danger pull-left btn-delete-comment" style="margin-right: 1rem;"><i class="fa fa-trash-o"></i></a>

@@ -56,4 +56,23 @@ class Property extends Model
        {
             return $this->belongsTo(Project::class, 'project_id');
        }
+
+       public function calculatePercent()
+       { 
+
+          return ($this->percent) ? $this->price * ($this->percent/100) : $this->price * 0.05;
+          
+       }
+       public function calculateSellerPercent()
+       { 
+
+          return ($this->seller_percent) ? $this->price * ($this->seller_percent/100) : $this->price * 0.05;
+
+       }
+       public function totalVivenda()
+       { 
+
+          return $this->calculatePercent() - $this->calculateSellerPercent();
+
+       }
 }

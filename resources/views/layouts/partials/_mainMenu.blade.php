@@ -53,7 +53,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#">
+                                    <a href="{!! URL::route('r_sales') !!}">
                                         <span>Ventas</span>
                                     </a>
                                 </li>

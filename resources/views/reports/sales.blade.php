@@ -80,7 +80,7 @@
 </style>
 @stop
 @section('content')
-    @include('layouts/partials/_breadcumbs', ['page' => 'Reporte Seguimiento'])
+    @include('layouts/partials/_breadcumbs', ['page' => 'Reporte Ventas'])
 
     <section class="panel">
 
@@ -88,7 +88,7 @@
         
             <div class="filtros" >
                
-                {!! Form::open(['route' => 'r_tracing','method' => 'get', 'class'=>'form-inline']) !!}
+                {!! Form::open(['route' => 'r_sales','method' => 'get', 'class'=>'form-inline']) !!}
                             
                              <div class=" form-group">
                                 
@@ -108,17 +108,17 @@
                 <table class="table table-bordered table-striped" /*data-toggle="table"*/>
                     <thead>
                     <tr>
+                        <th>Proyecto</th>
                         <th /*style="width: 5%"*/ >Casa</th>
-                        <th>Bloque</th>
                         <th /*style="width: 15%"*/>Cliente</th>
-                        <th>Fecha Reserva</th>
-                        <th>Fecha Casa terminada</th>
-                        <th>Opción firmada</th>
-                        <th>Banco</th>
-                        <th>Presentacion expediente</th>
-                        <th>Fecha de Avalúo</th>
-                        <th>Fiador / codeudor</th>
-                        <th colspan="6">Estados</th>
+                        <th>Precio Venta</th>
+                        <th>5%</th>
+                        <th>Vendedor</th>
+                        <th>Porcentaje vendedor</th>
+                        <th>Total vendedor</th>
+                        <th>Vivenda</th>
+                        <th>₡ vivenda</th>
+                        <th>Entrega</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -126,30 +126,24 @@
                     @foreach ($clients as $client)
                         <tr>
                         
-                            <td>{!!$client->properties->first()->name!!}</td>
-                            <td>{!! $client->properties->first()->block !!}</td>
-                            <td>{!!$client->fullname!!}</td>
-                            <td>{!! ($client->reservation_date == '0000-00-00 00:00:00') ? '' : \Carbon\Carbon::parse($client->reservation_date)->toDateString()  !!}</td>
-                            <td>{!! ($client->properties->first()->completed_house_date == '0000-00-00 00:00:00') ? '' : \Carbon\Carbon::parse($client->properties->first()->completed_house_date)->toDateString()  !!}</td>
-                            <td>{!! ($client->option_date == '0000-00-00 00:00:00') ? '' : \Carbon\Carbon::parse($client->option_date)->toDateString()  !!}</td>
-                            <td>{!! ($client->banco) ? $client->banco->name : 'Banco no asignado' !!}</td>
+                            <td>{!! ($client->proyecto) ? $client->proyecto->name : '' !!}</td>
+                            <td>{!!$client->properties->first()->name !!}</td>
+                            <td>{!! $client->fullname !!}</td>
+                            <td>{!! money($client->properties->first()->price) !!}</td>
+                            <td>{!! money($client->properties->first()->calculatePercent())  !!} ({!! ($client->properties->first()->percent) ? $client->properties->first()->percent : '5' !!}%)</td>
+                            <td>
+                                @foreach($client->sellers as $seller)
+                                    {!! $seller->name !!}
+                                @endforeach
+                            </td>
+                            <td>{!! $client->properties->first()->seller_percent !!}%</td>
                             
                              
-                            <td>{!! ($client->expedient_date == '0000-00-00 00:00:00') ? '' : \Carbon\Carbon::parse($client->expedient_date)->toDateString()  !!}</td>
-                            <td>{!! ($client->avaluo_date == '0000-00-00 00:00:00') ? '' : \Carbon\Carbon::parse($client->avaluo_date)->toDateString()  !!}</td>
-                            <td>{!! ($client->fiador) ? 'Si' : 'No' !!}</td>
+                            <td>{!! money($client->properties->first()->calculateSellerPercent()) !!}</td>
+                            <td>{!! money($client->properties->first()->totalVivenda())  !!}</td>
+                            <td>{!! convertColon($client->properties->first()->totalVivenda())  !!}</td>
                             
-                                @forelse($client->estados as $comment)
-                                  <td>
-                                    <small class="label label-warning">{{ $comment->created_at }}</small><br>
-                                    {{ $comment->body }}
-                                 </td>
-                                @empty
-                                  <td>
-                                    
-                                  </td>
-                                @endforelse
-                            
+                            <td>{!! ($client->properties->first()->delivery_date == '0000-00-00 00:00:00') ? '' : \Carbon\Carbon::parse($client->properties->first()->delivery_date)->toDateString()  !!}</td>
 
                             
                         </tr>
