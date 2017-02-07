@@ -43,10 +43,11 @@
                         <th>#</th>
                         <th>IDE</th>
                         <th>Nombre completo</th>
-                        <th>Compañia</th>
+                        <th>Vendedor</th>
                         <th>Email</th>
                         <th>Teléfono</th>
                         <th>Estatus</th>
+                        <th>Ultimo Estado</th>
                         <th>Creado</th>
 
                         
@@ -61,7 +62,11 @@
                             <td>{!!$client->id!!}</td>
                              <td>{!! $client->ide !!}</td>
                             <td>{!!$client->fullname!!}</td>
-                            <td>{!! $client->company !!}</td>
+                            <td>
+                                @foreach($client->sellers as $seller)
+                                     {!! $seller->name !!}
+                                @endforeach
+                            </td>
                              <td>{!! $client->email !!}</td>
                               <td>{!! $client->phone1 !!}</td>
                              <td><span class="btn btn-{!! \Lang::get('utils.status_color.'. $client->status)  !!} btn-sm">
@@ -84,6 +89,7 @@
                                     @endcan
                                 @endforeach
                                </td>-->
+                            <td class="center">{!! ($client->estados->first()) ? $client->estados->first()->body : '' !!}</td>
                             <td class="center">{!! $client->created_at !!}</td>
 
                             <td class="center" style="background-color: white;">
@@ -139,6 +145,7 @@
                                 <div class='col-xs-4'>
                                     {!! Form::select('fil-seller', ['' => '-- Filtrar por vendedor --'] + $sellers , null, ['id'=>'fil-seller','class'=>'form-control'] ) !!}
                                 </div>
+                                
 
                             </div>
                             <div class="row">
@@ -164,6 +171,12 @@
                                     {!! Form::text('fil-date2', null,['class'=>'form-control fil-datepicker','placeholder'=>'Filtrar por fecha']) !!}
                                     {!! errors_for('fil-date2',$errors) !!}
                                 </div>
+                                <div class="col-xs-4">
+                                
+                                     {!! Form::select('fil-project', ['' => '-- Filtrar por proyecto --'] + $projects , null, ['id'=>'fil-project','class'=>'form-control'] ) !!}
+
+
+                                 </div>
                             </div>
                             <div class="row">
                                 <h3>Campos a exportar</h3>

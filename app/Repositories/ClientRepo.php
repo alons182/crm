@@ -248,7 +248,7 @@ class ClientRepo extends DbRepo{
  
 
 
-        return $clients->with('sellers')->orderBy('created_at', 'desc')->paginate($this->limit);
+        return $clients->with('sellers','estados')->orderBy('created_at', 'desc')->paginate($this->limit);
     }
     public function getColumnsName()
     {
@@ -260,7 +260,7 @@ class ClientRepo extends DbRepo{
     }
     public function reportClients($fields, $filters)
     {
-        if(auth()->user()->hasRole('admin'))       
+        if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('manager'))       
             $clients = $this->model;
         else
             $clients = auth()->user()->clients();
@@ -287,6 +287,10 @@ class ClientRepo extends DbRepo{
         if (isset($filters['fil-debts']) && $filters['fil-debts'] != "")
         {
             $clients = $clients->where('debts', $filters['fil-debts']);
+        }
+        if (isset($filters['fil-project']) && $filters['fil-project'] != "")
+        {
+            $clients = $clients->where('project', $filters['fil-project']);
         }
          if (isset($filters['fil-potencial']) && $filters['fil-potencial'] != "")
         {
