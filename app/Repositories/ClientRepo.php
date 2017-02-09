@@ -135,7 +135,7 @@ class ClientRepo extends DbRepo{
      * @param $search
      * @return mixed
      */
-    public function reports($search)
+    public function reportsTracing($search)
     {
         //$clients = $this->model;
         /*if(auth()->user()->hasRole('admin'))       
@@ -158,6 +158,34 @@ class ClientRepo extends DbRepo{
         return $clients->with('banco','estados','properties')->orderBy('created_at', 'desc')->paginate($this->limit);
     }
 
+    /**
+     * Get all the clients for the admin panel
+     * @param $search
+     * @return mixed
+     */
+    public function reportsTracingExcel($search)
+    {
+        //$clients = $this->model;
+        /*if(auth()->user()->hasRole('admin'))       
+            $clients = $this->model;
+        else
+            $clients = auth()->user()->clients();*/
+         $clients = $this->model->whereHas('properties', function($q) use($search){
+                                                    $q->where('project_id', $search['fil-project']);
+                                                });
+        
+       
+        if (isset($search['fil-project']) && $search['fil-project'] != "")
+        {
+            $clients = $clients->where('project', $search['fil-project']);
+        }
+        
+
+
+
+        return $clients->with('banco','estados','properties')->orderBy('created_at', 'desc')->get();
+    }
+
      /**
      * Get all the clients for the admin panel
      * @param $search
@@ -170,18 +198,93 @@ class ClientRepo extends DbRepo{
             $clients = $this->model;
         else
             $clients = auth()->user()->clients();*/
-         $clients = $this->model->has('properties');
+         
+        if (isset($search['seller']) && $search['seller'] != "")
+        {
+            $seller = User::find($search['seller']);
+            
+            $clients = $seller->clients()->has('properties');
+            //dd($clients);
+        }else{
+
+            $clients = $this->model->has('properties');
+        }
         
        
         if (isset($search['project']) && $search['project'] != "")
         {
             $clients = $clients->where('project', $search['project']);
         }
+        if (isset($search['currency']) && $search['currency'] != "")
+        {
+           
+            $clients = $clients->whereHas('properties', function($q) use($search){
+                                                    $q->where('currency', $search['currency']);
+                                                });
+        }
+         if (isset($search['month']) && $search['month'] != "" && isset($search['year']) && $search['year'] != "")
+        {
+            
+            $clients = $clients->whereHas('properties', function($q) use($search){
+                                                    $q->where(\DB::raw('MONTH(delivery_date)'), '=', $search['month'])
+                                                    ->where(\DB::raw('YEAR(delivery_date)'), '=', $search['year']);
+                                                });
+        }
         
 
 
 
-        return $clients->with('proyecto','sellers','properties')->orderBy('created_at', 'desc')->paginate($this->limit);
+        return $clients->with('proyecto','sellers','properties')->orderBy('created_at', 'desc');
+    }
+     /**
+     * Get all the clients for the admin panel
+     * @param $search
+     * @return mixed
+     */
+    public function reportsSalesExcel($search)
+    {
+        //$clients = $this->model;
+        /*if(auth()->user()->hasRole('admin'))       
+            $clients = $this->model;
+        else
+            $clients = auth()->user()->clients();*/
+         
+        if (isset($search['fil-seller']) && $search['fil-seller'] != "")
+        {
+            $seller = User::find($search['fil-seller']);
+            
+            $clients = $seller->clients()->has('properties');
+            //dd($clients);
+        }else{
+
+            $clients = $this->model->has('properties');
+        }
+        
+       
+        if (isset($search['fil-project']) && $search['fil-project'] != "")
+        {
+            $clients = $clients->where('project', $search['fil-project']);
+        }
+        if (isset($search['fil-currency']) && $search['fil-currency'] != "")
+        {
+           
+            $clients = $clients->whereHas('properties', function($q) use($search){
+                                                    $q->where('currency', $search['fil-currency']);
+                                                });
+        }
+         if (isset($search['fil-month']) && $search['fil-month'] != "" && isset($search['fil-year']) && $search['fil-year'] != "")
+        {
+            
+            $clients = $clients->whereHas('properties', function($q) use($search){
+                                                    $q->where(\DB::raw('MONTH(delivery_date)'), '=', $search['fil-month'])
+                                                    ->where(\DB::raw('YEAR(delivery_date)'), '=', $search['fil-year']);
+                                                });
+        }
+        
+
+
+
+        return $clients->with('proyecto','sellers','properties')->orderBy('created_at', 'desc');
     }
      /**
      * Get all the clients for the admin panel

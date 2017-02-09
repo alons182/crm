@@ -112,6 +112,8 @@
         debts = $('#debts'),
         project = $('#project'),
         potencial = $('#potencial'),
+        month = $('#month'),
+        currency = $('#currency'),
         filters = $(".filtros");
         
     function submitForm(){
@@ -131,6 +133,8 @@
     debts.change(submitForm);
     potencial.change(submitForm);
     project.change(submitForm);
+    month.change(submitForm);
+    currency.change(submitForm);
     
 
     $('.btn-edit-slug').on('click',function(){

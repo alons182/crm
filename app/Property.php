@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Property extends Model
 {
 	
-    protected $fillable = ['name','price', 'province','address','size','construction','rooms','owner','owner_phone1','owner_phone2','owner_email','project','status','image','user_id','project_id','percent','seller_percent','office','block','completed_house_date','delivery_date'];
+    protected $fillable = ['name','price', 'province','address','size','construction','rooms','owner','owner_phone1','owner_phone2','owner_email','project','status','image','user_id','project_id','percent','seller_percent','office','block','completed_house_date','delivery_date','currency'];
     
     public function scopeSearch($query, $search)
     {
@@ -16,6 +16,11 @@ class Property extends Model
             $query->where('name', 'like', '%' . $search . '%')
                 ->orWhere('province', 'like', '%' . $search . '%');
         });
+    }
+
+    public function setPriceAttribute($price)
+    {
+        $this->attributes['price'] = (number($price) == "") ? 0 : number($price);
     }
 
     /**

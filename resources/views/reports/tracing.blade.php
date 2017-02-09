@@ -97,6 +97,11 @@
                              
                 {!! Form::close() !!}
 
+                 <div class="export pull-right">
+                    <a href="#" class="btn btn-success" data-toggle="modal" data-target=".bs-modal-sm">Exportar</a>
+                     
+                 </div>
+
             </div>
 
             
@@ -118,7 +123,7 @@
                         <th>Presentacion expediente</th>
                         <th>Fecha de Avalúo</th>
                         <th>Fiador / codeudor</th>
-                        <th colspan="6">Estados</th>
+                        <th colspan="5">Estados</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -139,15 +144,13 @@
                             <td>{!! ($client->avaluo_date == '0000-00-00 00:00:00') ? '' : \Carbon\Carbon::parse($client->avaluo_date)->toDateString()  !!}</td>
                             <td>{!! ($client->fiador) ? 'Si' : 'No' !!}</td>
                             
-                                @forelse($client->estados as $comment)
+                                @forelse($client->estados->take(5) as $comment)
                                   <td>
                                     <small class="label label-warning">{{ $comment->created_at }}</small><br>
                                     {{ $comment->body }}
                                  </td>
                                 @empty
-                                  <td>
-                                    
-                                  </td>
+                                  
                                 @endforelse
                             
 
@@ -158,7 +161,7 @@
                     <tfoot>
 
                     @if ($clients)
-                        <td  colspan="16" class="pagination-container">{!!$clients->appends(['project'=> $selectedProject])->render()!!}</td>
+                        <td  colspan="15" class="pagination-container">{!!$clients->appends(['project'=> $selectedProject])->render()!!}</td>
                     @endif
 
 
@@ -168,6 +171,43 @@
             
         </div>
     </section>
+
+      <div class="modal fade bs-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    {!! Form::open(['route' =>['export_tracing'],'method' => 'post', 'id' =>'form-export']) !!}
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h5 class="modal-title text-center" id="myModalLabel">Exportar</h5>
+                    </div>
+                    <div class="modal-body">
+                        
+                        
+                             <h3>Filtros</h3>
+                             <div class="row">
+                                <div class="col-xs-3">
+                                     <div class=" form-group">
+                                        
+                                         {!! Form::select('fil-project', ['' => '-- Filtrar por proyecto --'] + $projects , $selectedProject, ['id'=>'fil-project','class'=>'form-control'] ) !!}
+                                     </div>
+                                </div>
+                               
+
+                             </div>
+                            
+                       
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn bg-default btn-sm" data-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary btn-sm">Exportar »</button>
+                    </div>
+                    {!! Form::close() !!}
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
 
     
 @stop

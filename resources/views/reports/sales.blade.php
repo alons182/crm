@@ -92,12 +92,28 @@
                             
                              <div class=" form-group">
                                 
+                                 {!! Form::select('currency', ['$' => '$','₡'=>'₡'] , $selectedCurrency, ['id'=>'currency','class'=>'form-control'] ) !!}
+                             </div>
+                             <div class=" form-group">
+                                
                                  {!! Form::select('project', ['' => '-- Filtrar por proyecto --'] + $projects , $selectedProject, ['id'=>'project','class'=>'form-control'] ) !!}
+                             </div>
+                             <div class=" form-group">
+                                
+                                 {!! Form::select('month', ['' => '-- Filtrar por Mes --'] + $monthWithItems , $selectedMonth, ['id'=>'month','class'=>'form-control'] ) !!}
+                             </div>
+                             <div class=" form-group">
+                                
+                                 {!! Form::select('seller', ['' => '-- Filtrar por vendedor --'] + $sellers , $selectedSeller, ['id'=>'seller','class'=>'form-control'] ) !!}
                              </div>
                              
                 {!! Form::close() !!}
 
             </div>
+             <div class="export pull-right">
+                <a href="#" class="btn btn-success" data-toggle="modal" data-target=".bs-modal-sm">Exportar</a>
+                 
+             </div>
 
             
         </div>
@@ -114,10 +130,9 @@
                         <th>Precio Venta</th>
                         <th>5%</th>
                         <th>Vendedor</th>
-                        <th>Porcentaje vendedor</th>
+                        <th>% vendedor</th>
                         <th>Total vendedor</th>
                         <th>Vivenda</th>
-                        <th>₡ vivenda</th>
                         <th>Entrega</th>
                     </tr>
                     </thead>
@@ -129,8 +144,8 @@
                             <td>{!! ($client->proyecto) ? $client->proyecto->name : '' !!}</td>
                             <td>{!!$client->properties->first()->name !!}</td>
                             <td>{!! $client->fullname !!}</td>
-                            <td>{!! money($client->properties->first()->price) !!}</td>
-                            <td>{!! money($client->properties->first()->calculatePercent())  !!} ({!! ($client->properties->first()->percent) ? $client->properties->first()->percent : '5' !!}%)</td>
+                            <td>{!! money($client->properties->first()->price, $client->properties->first()->currency ) !!}</td>
+                            <td>{!! money($client->properties->first()->calculatePercent(), $client->properties->first()->currency)  !!} ({!! ($client->properties->first()->percent) ? $client->properties->first()->percent : '5' !!}%)</td>
                             <td>
                                 @foreach($client->sellers as $seller)
                                     {!! $seller->name !!}
@@ -139,9 +154,9 @@
                             <td>{!! $client->properties->first()->seller_percent !!}%</td>
                             
                              
-                            <td>{!! money($client->properties->first()->calculateSellerPercent()) !!}</td>
-                            <td>{!! money($client->properties->first()->totalVivenda())  !!}</td>
-                            <td>{!! convertColon($client->properties->first()->totalVivenda())  !!}</td>
+                            <td>{!! money($client->properties->first()->calculateSellerPercent(), $client->properties->first()->currency) !!}</td>
+                            <td>{!! money($client->properties->first()->totalVivenda(), $client->properties->first()->currency)  !!}</td>
+                           
                             
                             <td>{!! ($client->properties->first()->delivery_date == '0000-00-00 00:00:00') ? '' : \Carbon\Carbon::parse($client->properties->first()->delivery_date)->toDateString()  !!}</td>
 
@@ -150,10 +165,25 @@
                     @endforeach
                     </tbody>
                     <tfoot>
-
+                        <tr class="success">
+                            <td colspan="3"><center><b>Totales:</b></center></td>
+                            
+                            <td><b>{{ money($totalVenta, $selectedCurrency) }}</b></td>
+                            <td><b>{{ money($totalPorc, $selectedCurrency) }}</b></td>
+                            <td colspan="2"></td>
+                            <td><b>{{ money($totalVendedor, $selectedCurrency) }}</b></td>
+                            <td><b>{{ money($totalVivenda, $selectedCurrency) }}</b></td>
+                            <td></td>
+                        </tr>
+                        
                     @if ($clients)
-                        <td  colspan="16" class="pagination-container">{!!$clients->appends(['project'=> $selectedProject])->render()!!}</td>
+                        <tr>
+                            <td  colspan="16" class="pagination-container">{!!$clients->appends(['project'=> $selectedProject,'month' => $selectedMonth,'currency' => $selectedCurrency, 'seller' => $selectedSeller])->render()!!}</td>
+                        </tr>
                     @endif
+                        
+                       
+
 
 
                     </tfoot>
@@ -162,6 +192,60 @@
             
         </div>
     </section>
+
+    <div class="modal fade bs-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    {!! Form::open(['route' =>['export_sales'],'method' => 'post', 'id' =>'form-export']) !!}
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h5 class="modal-title text-center" id="myModalLabel">Exportar</h5>
+                    </div>
+                    <div class="modal-body">
+                        
+                        
+                             <h3>Filtros</h3>
+                             <div class="row">
+                                <div class="col-xs-1">
+                                    <div class=" form-group">
+                                        
+                                         {!! Form::select('fil-currency', ['$' => '$','₡'=>'₡'] , $selectedCurrency, ['id'=>'fil-currency','class'=>'form-control'] ) !!}
+                                     </div>
+                                </div>
+                                <div class="col-xs-3">
+                                     <div class=" form-group">
+                                        
+                                         {!! Form::select('fil-project', ['' => '-- Filtrar por proyecto --'] + $projects , $selectedProject, ['id'=>'fil-project','class'=>'form-control'] ) !!}
+                                     </div>
+                                </div>
+                                 <div class="col-xs-3">
+                                     <div class=" form-group">
+                                        
+                                         {!! Form::select('fil-month', ['' => '-- Filtrar por Mes --'] + $monthWithItems , $selectedMonth, ['id'=>'fil-month','class'=>'form-control'] ) !!}
+                                     </div>
+                                </div>
+                                 <div class="col-xs-3">
+                                     <div class=" form-group">
+                                        
+                                         {!! Form::select('fil-seller', ['' => '-- Filtrar por vendedor --'] + $sellers , $selectedSeller, ['id'=>'fil-seller','class'=>'form-control'] ) !!}
+                                     </div>
+                                </div>
+
+                             </div>
+                            
+                       
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn bg-default btn-sm" data-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary btn-sm">Exportar »</button>
+                    </div>
+                    {!! Form::close() !!}
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
 
     
 @stop

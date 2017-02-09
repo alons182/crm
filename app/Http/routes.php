@@ -228,6 +228,14 @@ Route::group(['middleware' => ['web']], function () {
         'as' => 'r_sales',
         'uses' => 'ReportsController@sales'
     ]);
+     Route::post('reports/sales/export', [
+        'as' => 'export_sales',
+        'uses' => 'ReportsController@exportSales'
+    ]);
+      Route::post('reports/tracing/export', [
+        'as' => 'export_tracing',
+        'uses' => 'ReportsController@exportTracing'
+    ]);
 
    
 

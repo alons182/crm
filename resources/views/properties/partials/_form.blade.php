@@ -27,6 +27,25 @@
             <div class="form-group">
                 {!! Form::label('price','Precio de venta:',['class'=>'col-sm-2 control-label']) !!}
                 <div class="col-sm-10">
+                     <div class="row">
+                        <div class="col-xs-2 col-md-2 col-lg-1" style="padding-right: 0;">
+                            {!! Form::select('currency', ['$' => '$','₡' => '₡'], null,['class'=>'form-control'])!!}
+                            {!! errors_for('currency',$errors) !!}
+                        </div>
+                        <div class="col-xs-10 col-md-10 col-lg-11" style="padding-left: 0;">
+                             {!! Form::text('price', isset($property) ? money($property->price, false) : null,['class'=>'form-control','required'=>'required']) !!}
+                             {!! errors_for('price',$errors) !!}
+                        </div>
+                        
+                    </div>
+
+
+
+                </div>
+            </div>
+            <!--<div class="form-group">
+                
+                <div class="col-sm-10">
                   
                     <div class="input-group mg-b-md">
                         <span class="input-group-addon">$</span>                                              
@@ -39,7 +58,7 @@
                 </div>
 
 
-            </div>
+            </div>-->
             <div class="form-group">
                 {!! Form::label('percent','Porcentaje:',['class'=>'col-sm-2 control-label']) !!}
                 <div class="col-sm-10">
