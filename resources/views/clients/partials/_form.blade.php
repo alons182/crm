@@ -187,9 +187,101 @@
                     <div class="col-sm-10">
                         {!! Form::text('prima',null,['class'=>'form-control']) !!}
                         {!! errors_for('prima',$errors) !!}
+
+                          @if(isset($client))
+                          <h3>Abonos:</h3>
+                             {!! Form::text('amount', null,['id'=>'amount', 'class'=>'form-control ', 'placeholder'=>'Monto']) !!}
+                            {!! errors_for('amount',$errors) !!}
+                             {!! Form::text('description', null,['id'=>'abono-description', 'class'=>'form-control', 'placeholder'=>'Descripción del abono']) !!}
+                             {!! errors_for('description',$errors) !!}
+                            <a href="#" class="btn btn-xs btn-default" id="saveAbono" data-client="{{ (isset($client)) ? $client->id : 0 }}">Guardar</a>
+                            @else
+                             <div class="alert alert-warning">
+                                 Necesitas Guardar el cliente para poder agregarle abonos
+                             </div>
+                           
+                            @endif
+                       
+                        <section class="panel panel-dark" >
+                            <div class="panel-heading">Abonos
+                                    <small class="pull-right">
+                                        <a class="fa panel-collapsible pd-r-xs fa-chevron-down" href="#"></a>
+                                        
+                                    </small>
+                                </div>
+                            <!--<div class="panel-body bg-white">-->
+                                <ul id="abonos-list" class="list-group panel-body">
+                                     @if(isset($client))
+                                        @foreach($client->abonos as $abono)
+                                            <li  class="list-group-item">
+                                                @can('edit_status_clients')
+                                                 <a href="#" data-id="{{ $abono->id }}" class="btn btn-xs btn-danger pull-left btn-delete-abono" style="margin-right: 1rem;"><i class="fa fa-trash-o"></i></a>
+
+                                                @endcan
+                                                <small class="pull-right">{{ $abono->created_at }}</small>
+                                                <div class="show no-margin pd-t-xs">
+                                                    @can('edit_status_clients')
+                                                         <div class="row">
+                                                            <div class="col-xs-10 col-md-3">
+                                                                {!! Form::text('abonos-item-'.$abono->id, $abono->amount,['class'=>'form-control']) !!}
+                                                            </div>
+                                                             <div class="col-xs-10 col-md-5">
+                                                                {!! Form::text('description-item-'.$abono->id, $abono->description,['class'=>'form-control']) !!}
+                                                            </div>
+                                                        </div>
+                                                       
+                                                            
+                                                         <a href="#" style="margin-top:5px;" class="btn btn-xs btn-default updateAbono" data-id="{{ $abono->id }}">Actualizar</a>
+                                                        
+                                                    @else    
+                                                        {{ $abono->amount }} | {{ $abono->description }}
+                                                    @endcan
+                                                    
+
+                                                </div>
+                                            </li>
+                                        @endforeach
+                                    @endif
+                                    
+                                </ul>
+                            <!--</div>-->
+                            <script id="abonosListTemplate" type="text/x-handlebars-template">
+                                @{{#each this}}
+                                <li data-id="@{{ id }}" class="list-group-item">
+                                     @can('edit_status_clients')
+                                        <a href="#" data-id="@{{ id }}" class="btn btn-xs btn-danger pull-left btn-delete-abono" style="margin-right: 1rem;"><i class="fa fa-trash-o"></i></a>
+                                     @endcan
+                                     <small class="pull-right">@{{ created_at }}</small>
+                                    <div class="show no-margin pd-t-xs">
+                                        @can('edit_status_clients')
+                                            <div class="row">
+                                                <div class="col-xs-10 col-md-3">
+                                                    <input type="text" name="abonos-item-@{{ id }}" class="form-control" value="@{{ amount }}" />
+                                                </div>
+                                                 <div class="col-xs-10 col-md-5">
+                                                    <input type="text" name="description-item-@{{ id }}" class="form-control" value="@{{ description }}" />
+                                                </div>
+                                            </div>
+                                            
+                                           
+                                            <a href="#" style="margin-top:5px;" class="btn btn-xs btn-default updateAbono" data-id="@{{ id }}">Actualizar</a>
+                                        @else    
+                                            @{{ amount }} | {{ $abono->description }}
+                                        @endcan
+                                        
+                                        
+                                    </div>
+                                   
+                                </li>
+                                @{{/each}}
+
+
+                            </script>
+                        </section>
                     </div>
 
-                </div>   
+            </div>
+           
             
             <div class="form-group">
                 {!! Form::label('job','Lugar de Trabajo:',['class'=>'col-sm-2 control-label']) !!}

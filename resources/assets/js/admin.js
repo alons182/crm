@@ -577,7 +577,7 @@
 
      $('#comments-list').on('click','.updateComment', function(event) {
         event.preventDefault();
-        debugger
+        
         var id = $(this).data('id');
         var comments = $('textarea[name="comments-item-'+ id +'"]').val();
         
@@ -709,6 +709,155 @@
             $('#comments-list').html( html );
                 
             $('#comments').val(''); 
+           
+        });
+
+    });
+
+
+     // abonos
+      $('#abonos-list').on('click','.updateAbono', function(event) {
+        event.preventDefault();
+        
+        var id = $(this).data('id');
+        var abono = $('input[name="abonos-item-'+ id +'"]').val();
+        var description = $('input[name="description-item-'+ id +'"]').val();
+        
+        if(abono ==='' || abono === undefined) 
+            return false;
+
+         $.ajax({
+
+            method: 'PUT',
+            url : '/clients/abonos/update',
+            dataType : 'json',
+            data : { id: $(this).data('id'), amount: abono, description: description }
+
+        }).done(function function_name(resp) {
+            console.log(resp);
+
+
+             var abonosItems = $.map(resp ,function(obj, index){
+                return {
+                    id : obj.id,
+                    amount : obj.amount,
+                    description : obj.description,
+                    client_id : obj.client_id,
+                    created_at : obj.created_at,
+                   
+
+                }
+
+            });
+
+             var templateHtml = $.trim( $('#abonosListTemplate').html() );
+
+            var template = Handlebars.compile( templateHtml );
+
+            var html = template(abonosItems);
+            
+            
+
+            $('#abonos-list').html( html );
+                
+            $('#amount').val('');
+            $('#abono-description').val('');  
+           
+        });
+
+
+      });
+
+      $('#abonos-list').on('click','.btn-delete-abono', function(event) {
+        event.preventDefault();
+
+         $.ajax({
+
+            method: 'POST',
+            url : '/clients/abonos/delete',
+            dataType : 'json',
+            data : { id: $(this).data('id') }
+
+        }).done(function function_name(resp) {
+            console.log(resp);
+
+
+             var abonosItems = $.map(resp ,function(obj, index){
+                return {
+                    id : obj.id,
+                    amount : obj.amount,
+                    description : obj.description,
+                    client_id : obj.client_id,
+                    created_at : obj.created_at
+                   
+
+                }
+
+            });
+
+             var templateHtml = $.trim( $('#abonosListTemplate').html() );
+
+            var template = Handlebars.compile( templateHtml );
+
+            var html = template(abonosItems);
+            
+            
+
+            $('#abonos-list').html( html );
+                
+            $('#amount').val(''); 
+            $('#abono-description').val('');  
+           
+        });
+
+
+      });
+
+     $('#saveAbono').on('click', function(event) {
+        event.preventDefault();
+
+        var abono = $('#amount').val();
+        var description = $('#abono-description').val();
+
+        if(abono ==='') 
+            return false;
+
+
+         $.ajax({
+
+            method: 'POST',
+            url : '/clients/abonos',
+            dataType : 'json',
+            data : { client_id: $(this).data('client'), amount: abono, description: description }
+
+        }).done(function function_name(resp) {
+            console.log(resp);
+
+
+             var abonosItems = $.map(resp ,function(obj, index){
+                return {
+                    id : obj.id,
+                    description: obj.description,
+                    amount : obj.amount,
+                    created_at : obj.created_at
+                   
+
+                }
+
+            });
+
+             var templateHtml = $.trim( $('#abonosListTemplate').html() );
+
+            var template = Handlebars.compile( templateHtml );
+
+            var html = template(abonosItems);
+            
+            
+
+            $('#abonos-list').html( html );
+                
+            $('#amount').val('');
+            $('#abono-description').val('');  
            
         });
 

@@ -113,6 +113,19 @@ Route::group(['middleware' => ['web']], function () {
         'uses' => 'ClientsController@deleteComments'
     ]);
 
+    Route::post('clients/abonos', [
+        'as'   => 'save_abonos_clients',
+        'uses' => 'ClientsController@abonos'
+    ]);
+     Route::put('clients/abonos/update', [
+        'as'   => 'update_abonos_clients',
+        'uses' => 'ClientsController@updateAbonos'
+    ]);
+    Route::post('clients/abonos/delete', [
+        'as'   => 'delete_abonos_clients',
+        'uses' => 'ClientsController@deleteAbonos'
+    ]);
+
 
     Route::get('tasks/list', [
         'as' => 'tasks_list',

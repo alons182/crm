@@ -59,6 +59,15 @@ class Client extends Model
         
     }
 
+     /**
+     * Relationship with the Task Model
+     * @return [type] [description]
+     */
+    public function abonos()
+    {
+         return $this->hasMany(Abono::class)->latest();
+    }
+
     /**
      * Relationship with the Task Model
      * @return [type] [description]

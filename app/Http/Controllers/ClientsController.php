@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Abono;
 use App\Bank;
 use App\Comment;
 use App\Http\Controllers\Controller;
@@ -278,6 +279,57 @@ class ClientsController extends Controller
         $comments = Comment::where('client_id',$client_id)->orderBy('created_at', 'desc')->get();
 
         return $comments;
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function abonos(Request $request)
+    {
+        
+        Abono::create($request->all());
+        
+       
+        $abonos = Abono::where('client_id',$request->input('client_id'))->orderBy('created_at', 'desc')->get();
+
+        return $abonos;
+    }
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function updateAbonos(Request $request)
+    {
+
+        $abono = Abono::find($request->input('id'));
+        $abono->fill($request->all());
+        $abono->save();
+       
+       
+        $abonos = Abono::where('client_id',$abono->client_id)->orderBy('created_at', 'desc')->get();
+
+        return $abonos;
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteAbonos(Request $request)
+    {
+        
+        $abono = Abono::find($request->input('id'));
+        $client_id = $abono->client_id;
+        
+        $abono->delete();
+
+        $abonos = Abono::where('client_id',$client_id)->orderBy('created_at', 'desc')->get();
+
+        return $abonos;
     }
 
     public function import(Excel $excel, ImportRequest $request)

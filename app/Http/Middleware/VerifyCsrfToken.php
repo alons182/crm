@@ -14,6 +14,9 @@ class VerifyCsrfToken extends BaseVerifier
     protected $except = [
         '/clients/comments',
         '/clients/comments/delete',
-        '/clients/comments/update'
+        '/clients/comments/update',
+        '/clients/abonos',
+        '/clients/abonos/delete',
+        '/clients/abonos/update'
     ];
 }
