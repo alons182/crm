@@ -211,8 +211,10 @@
                                 </div>
                             <!--<div class="panel-body bg-white">-->
                                 <ul id="abonos-list" class="list-group panel-body">
+                                       
                                      @if(isset($client))
                                         @foreach($client->abonos as $abono)
+                                         
                                             <li  class="list-group-item">
                                                 @can('edit_status_clients')
                                                  <a href="#" data-id="{{ $abono->id }}" class="btn btn-xs btn-danger pull-left btn-delete-abono" style="margin-right: 1rem;"><i class="fa fa-trash-o"></i></a>
@@ -266,7 +268,7 @@
                                            
                                             <a href="#" style="margin-top:5px;" class="btn btn-xs btn-default updateAbono" data-id="@{{ id }}">Actualizar</a>
                                         @else    
-                                            @{{ amount }} | {{ $abono->description }}
+                                            @{{ amount }} | @{{ description }}
                                         @endcan
                                         
                                         

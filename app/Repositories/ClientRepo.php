@@ -430,7 +430,7 @@ class ClientRepo extends DbRepo{
             $client = $this->model->with('sellers')->findOrFail($id);
         else
             $client = auth()->user()->clients()->with('sellers')->findOrFail($id);*/
-        $client = $this->model->with('sellers','tasks')->findOrFail($id);    
+        $client = $this->model->with('sellers','tasks','abonos')->findOrFail($id);    
         
         return $client;
     }
