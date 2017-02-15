@@ -12,7 +12,11 @@ class TasksController extends Controller
 {
     
     function __construct(TaskRepo $taskRepo) {
-        $this->middleware('auth');
+        
+        $this->middleware('auth', ['except' => [
+            'notification'
+        ]]);;
+
     	$this->taskRepo = $taskRepo;
     }
     /**
