@@ -2,7 +2,7 @@
     <section class="panel">
         <header class="panel-heading">
                 @if(isset($task))
-                    @if(auth()->user()->isAsigned($task->client_id) || auth()->user()->hasRole('admin'))
+                    @if(auth()->user()->isAsigned($task->client_id) || auth()->user()->hasRole('admin') || auth()->user()->hasRole('manager'))
                          {!! Form::submit(isset($buttonText) ? $buttonText : 'Crear Tarea',['class'=>'btn btn-primary'])!!}
                     @endif
                 @else
