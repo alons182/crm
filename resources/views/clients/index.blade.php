@@ -11,8 +11,8 @@
 
     <section class="panel">
 
-        <div class="panel-heading" style="overflow: hidden;">
-            <div class="import pull-right" >
+        <div class="panel-heading" style="overflow: hidden; position: relative;">
+            <div class="import pull-right" style="position: absolute;right: 0;top: 0">
                  <h4>Importar Excel (CVS, XLS)</h4>
                  {!! Form::open(['route' =>['import_clients'],'method' => 'post','files'=> true, 'id' =>'form-import']) !!}
                     {!! Form::file('excel', null, ['id' => 'excel', 'required'=>'required']) !!}
@@ -23,8 +23,9 @@
                 {!! Form::close() !!}
                  
             </div>
-            {!! link_to_route('clients.create','Nuevo Cliente',null,['class'=>'btn btn-success']) !!}
-        
+            <div class=" form-group">
+                {!! link_to_route('clients.create','Nuevo Cliente',null,['class'=>'btn btn-success']) !!}
+            </div>
             @include('clients/partials/_search')
             
         </div>
@@ -112,7 +113,7 @@
                     <tfoot>
 
                     @if ($clients)
-                        <td  colspan="10" class="pagination-container">{!!$clients->appends(['q' => $search,'referred'=> $selectedReference,'seller'=> $selectedSeller, 'status'=> $selectedStatus,'project'=> $selectedProject,'potencial'=> $selectedPotencial, 'date1' => $date1,'date2' =>$date2 ])->render()!!}</td>
+                        <td  colspan="10" class="pagination-container">{!!$clients->appends(['q' => $search,'referred'=> $selectedReference,'seller'=> $selectedSeller, 'status'=> $selectedStatus,'project'=> $selectedProject,'potencial'=> $selectedPotencial, 'date1' => $date1,'date2' =>$date2, 'cita' => $selectedCita ])->render()!!}</td>
                     @endif
 
 
@@ -183,7 +184,7 @@
                                 @foreach ($fieldsToExport as $field)
                                 <div class='col-xs-4'>
                                     <label>
-                                            <input type="checkbox" name="exp-{{ $field }}" value="{{ $field}}" checked="checked">
+                                            <input type="checkbox" name="exp-{{ $field }}" value="{{ $field}}" >
                                             {{  \Lang::get('utils.export_fields.'.$field) }}</label>
                                 </div>
                                 @endforeach

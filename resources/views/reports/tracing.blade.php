@@ -94,6 +94,10 @@
                                 
                                  {!! Form::select('project', ['' => '-- Filtrar por proyecto --'] + $projects , $selectedProject, ['id'=>'project','class'=>'form-control'] ) !!}
                              </div>
+                             <div class=" form-group">
+                                
+                                 {!! Form::select('order', ['' => '-- Filtrar por fecha de ... --','reservation_date' => 'fecha de reserva','completed_house_date' =>'fecha de casa terminada', 'option_date' =>'fecha opcion firmada'] , $selectedOrder, ['id'=>'order','class'=>'form-control'] ) !!}
+                             </div>
                              
                 {!! Form::close() !!}
 
@@ -131,11 +135,11 @@
                     @foreach ($clients as $client)
                         <tr>
                         
-                            <td>{!!$client->properties->first()->name!!}</td>
-                            <td>{!! $client->properties->first()->block !!}</td>
+                            <td>{!! $client->casa !!}</td>
+                            <td>{!! $client->bloque !!}</td>
                             <td>{!!$client->fullname!!}</td>
                             <td>{!! ($client->reservation_date == '0000-00-00 00:00:00') ? '' : \Carbon\Carbon::parse($client->reservation_date)->toDateString()  !!}</td>
-                            <td>{!! ($client->properties->first()->completed_house_date == '0000-00-00 00:00:00') ? '' : \Carbon\Carbon::parse($client->properties->first()->completed_house_date)->toDateString()  !!}</td>
+                            <td>{!! ($client->completed_house_date == '0000-00-00 00:00:00') ? '' : \Carbon\Carbon::parse($client->completed_house_date)->toDateString()  !!}</td>
                             <td>{!! ($client->option_date == '0000-00-00 00:00:00') ? '' : \Carbon\Carbon::parse($client->option_date)->toDateString()  !!}</td>
                             <td>{!! ($client->banco) ? $client->banco->name : 'Banco no asignado' !!}</td>
                             
@@ -146,7 +150,7 @@
                             
                                 @forelse($client->estados->take(5) as $comment)
                                   <td>
-                                    <small class="label label-warning">{{ $comment->created_at }}</small><br>
+                                    <small class="label label-warning">{{ $comment->user->name }} - {{ $comment->created_at }}</small><br>
                                     {{ $comment->body }}
                                  </td>
                                 @empty
@@ -161,7 +165,7 @@
                     <tfoot>
 
                     @if ($clients)
-                        <td  colspan="15" class="pagination-container">{!!$clients->appends(['project'=> $selectedProject])->render()!!}</td>
+                        <td  colspan="15" class="pagination-container">{!!$clients->appends(['project'=> $selectedProject, 'order'=> $selectedOrder])->render()!!}</td>
                     @endif
 
 
@@ -189,6 +193,12 @@
                                      <div class=" form-group">
                                         
                                          {!! Form::select('fil-project', ['' => '-- Filtrar por proyecto --'] + $projects , $selectedProject, ['id'=>'fil-project','class'=>'form-control'] ) !!}
+                                     </div>
+                                </div>
+                                <div class="col-xs-3">
+                                    <div class=" form-group">
+                                    
+                                     {!! Form::select('fil-order', ['' => '-- Filtrar por fecha de ... --','reservation_date' => 'fecha de reserva','completed_house_date' =>'fecha de casa terminada', 'option_date' =>'fecha opcion firmada'] , $selectedOrder, ['id'=>'fil-order','class'=>'form-control'] ) !!}
                                      </div>
                                 </div>
                                

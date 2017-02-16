@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
 {
-    protected $fillable = ['body','client_id'];
+    protected $fillable = ['body','client_id','user_id'];
     
     public function scopeSearch($query, $search)
     {
@@ -19,5 +19,9 @@ class Comment extends Model
      public function client()
      {
         return $this->belongsTo(Client::class);
+     }
+     public function user()
+     {
+        return $this->belongsTo(User::class);
      }
 }

@@ -105,7 +105,12 @@ class ClientRepo extends DbRepo{
         $client->save();
         
         $client->assignSeller((isset($data['sellers'])) ? $data['sellers'] : [] );
-        $client->assignProperty((isset($data['properties'])) ? $data['properties'] : [] );
+
+        if($client->status == 5) // si se actualiza a estado retirado desasociar las propedades
+            $client->assignProperty([]);
+        else
+            $client->assignProperty((isset($data['properties'])) ? $data['properties'] : [] );
+
         $client->assignRequirement((isset($data['requirements'])) ? $data['requirements'] : [] );
        
         return $client;
@@ -142,20 +147,44 @@ class ClientRepo extends DbRepo{
             $clients = $this->model;
         else
             $clients = auth()->user()->clients();*/
-         $clients = $this->model->whereHas('properties', function($q) use($search){
+         $order = 'created_at';
+         $dir = 'desc';
+
+         /*$clients = $this->model->whereHas('properties', function($q) use($search){
                                                     $q->where('project_id', $search['project']);
-                                                });
+                                                });*/
         
        
-        if (isset($search['project']) && $search['project'] != "")
+        /*if (isset($search['project']) && $search['project'] != "")
         {
             $clients = $clients->where('project', $search['project']);
+        }*/
+        if (isset($search['order']) && $search['order'] != "")
+        {
+             $order = $search['order'];
+             
         }
+
+         $items =  $this->model->selectRaw('clients.*, properties.name as casa, properties.block as bloque, properties.completed_house_date')
+            ->join('client_property', 'client_property.client_id', '=', 'clients.id')
+            ->join('properties', 'properties.id', '=', 'client_property.property_id')
+            ->leftJoin('banks', 'banks.id', '=', 'clients.bank')
+            ->where('clients.project', $search['project'])
+            ->with('estados.user')
+            ->with('banco')
+            ->orderBy($order, $dir)
+            ->get();
+           
+            
+        $paginator = paginate($items->all(), $this->limit);
+          
+        return $paginator; //$offices->with('user')->orderBy('distance', 'ASC')->get();//paginate($this->limit);
+
         
 
 
 
-        return $clients->with('banco','estados','properties')->orderBy('created_at', 'desc')->paginate($this->limit);
+        //return $clients->with('banco','estados','properties')->orderBy($order, $dir)->paginate($this->limit);
     }
 
     /**
@@ -170,7 +199,10 @@ class ClientRepo extends DbRepo{
             $clients = $this->model;
         else
             $clients = auth()->user()->clients();*/
-         $clients = $this->model->whereHas('properties', function($q) use($search){
+        $order = 'created_at';
+        $dir = 'desc';
+
+         /*$clients = $this->model->whereHas('properties', function($q) use($search){
                                                     $q->where('project_id', $search['fil-project']);
                                                 });
         
@@ -178,12 +210,33 @@ class ClientRepo extends DbRepo{
         if (isset($search['fil-project']) && $search['fil-project'] != "")
         {
             $clients = $clients->where('project', $search['fil-project']);
+        }*/
+
+         if (isset($search['fil-order']) && $search['fil-order'] != "")
+        {
+             $order = $search['fil-order'];
+             
         }
+
+         $items =  $this->model->selectRaw('clients.*, properties.name as casa, properties.block as bloque, properties.completed_house_date')
+            ->join('client_property', 'client_property.client_id', '=', 'clients.id')
+            ->join('properties', 'properties.id', '=', 'client_property.property_id')
+            ->leftJoin('banks', 'banks.id', '=', 'clients.bank')
+            ->where('clients.project', $search['fil-project'])
+            ->with('estados.user')
+            ->with('banco')
+            ->orderBy($order, $dir)
+            ->get();
+           
+            
+        //$paginator = paginate($items->all(), $this->limit);
+          
+        return $items;
         
 
 
 
-        return $clients->with('banco','estados','properties')->orderBy('created_at', 'desc')->get();
+        //return $clients->with('banco','estados','properties')->orderBy('created_at', 'desc')->get();
     }
 
      /**
@@ -330,7 +383,10 @@ class ClientRepo extends DbRepo{
         {
             $clients = $clients->where('potencial', $search['potencial']);
         }
-
+        if (isset($search['cita']) && $search['cita'] != "")
+        {
+            $clients = $clients->where('cita', $search['cita']);
+        }
         if (isset($search['date1']) && $search['date1'] != "")
         {
            
@@ -345,6 +401,7 @@ class ClientRepo extends DbRepo{
                     ['created_at', '<=', $date2->endOfDay()]]);
             
         }
+
         
 
 

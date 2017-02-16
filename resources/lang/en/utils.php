@@ -3,17 +3,19 @@
 return [
     'status_client'  => [
         '0' => '',
-        '1' => 'Finalizado',
-        '2' => 'Pre-Aprobado',
+        '1' => 'Reservado',
+        '2' => 'Aprobado',
         '3' => 'Interesado',
-        '4' => "Denegado",
+        '4' => "Formalizado",
+        '5' => "Retirado",
     ],
     'status_color'  => [
-        '0' => 'default',
-        '1' => 'info',
+        '0' => '',
+        '1' => 'purple',
         '2' => 'success',
         '3' => 'warning',
         '4' => "danger",
+        '5' => "default",
     ],
     'debts_client'  => [
         '0' => '',

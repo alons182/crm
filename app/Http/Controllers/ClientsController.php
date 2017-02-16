@@ -71,6 +71,7 @@ class ClientsController extends Controller
         $search['potencial'] = (isset($search['potencial'])) ? $search['potencial'] : '';
         $search['date1'] = (isset($search['date1'])) ? $search['date1'] : '';
         $search['date2'] = (isset($search['date2'])) ? $search['date2'] : '';
+        $search['cita'] = (isset($search['cita'])) ? $search['cita'] : '';
         
        
         $clients = $this->clientRepo->getAll($search);
@@ -89,6 +90,7 @@ class ClientsController extends Controller
             'selectedPotencial' =>  $search['potencial'],
             'date1'           => $search['date1'],
             'date2'           => $search['date2'],
+            'selectedCita' =>  $search['cita'],
             'fieldsToExport'   => $fieldsToExport
         ]);
     }
@@ -237,11 +239,13 @@ class ClientsController extends Controller
      */
     public function comments(Request $request)
     {
-        
-        Comment::create($request->all());
+        $data = $request->all();
+        $data['user_id'] = auth()->id();
+
+        Comment::create($data);
         
        
-        $comments = Comment::where('client_id',$request->input('client_id'))->orderBy('created_at', 'desc')->get();
+        $comments = Comment::where('client_id',$request->input('client_id'))->with('user')->orderBy('created_at', 'desc')->get();
 
         return $comments;
     }
@@ -258,7 +262,7 @@ class ClientsController extends Controller
         $comment->save();
        
        
-        $comments = Comment::where('client_id',$comment->client_id)->orderBy('created_at', 'desc')->get();
+        $comments = Comment::where('client_id',$comment->client_id)->with('user')->orderBy('created_at', 'desc')->get();
 
         return $comments;
     }
@@ -276,7 +280,7 @@ class ClientsController extends Controller
         
         $comment->delete();
 
-        $comments = Comment::where('client_id',$client_id)->orderBy('created_at', 'desc')->get();
+        $comments = Comment::where('client_id',$client_id)->with('user')->orderBy('created_at', 'desc')->get();
 
         return $comments;
     }

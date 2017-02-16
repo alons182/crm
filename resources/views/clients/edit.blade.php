@@ -32,7 +32,7 @@
 		$(".handles").sortable({
 	        handle: "span"
 	    });
-	    $("#ide").mask("999999999");
+	    //$("#ide").mask("999999999");
 		$("#phone1").mask("9999-9999");
 		$("#phone2").mask("9999-9999");
 		$("#phone3").mask("9999-9999");

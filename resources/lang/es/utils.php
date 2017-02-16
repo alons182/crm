@@ -7,13 +7,15 @@ return [
         '2' => 'Aprobado',
         '3' => 'Interesado',
         '4' => "Formalizado",
+        '5' => "Retirado",
     ],
     'status_color'  => [
-        '0' => 'default',
+        '0' => '',
         '1' => 'purple',
         '2' => 'success',
         '3' => 'warning',
         '4' => "danger",
+        '5' => "default",
     ],
     'debts_client'  => [
         '0' => '',
@@ -61,7 +63,9 @@ return [
         'project' =>'Proyecto',
         'fiador' => 'Fiador',
         'fiador_text' => 'contenido de fiador',
-        'documents_text' => 'contenido de documentos'
+        'documents_text' => 'contenido de documentos',
+        'email2' => 'Email 2',
+        'cita' => 'Asistió a cita'
         
     ],
     

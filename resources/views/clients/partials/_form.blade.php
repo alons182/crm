@@ -39,6 +39,17 @@
 
 
             </div>
+            <div class="form-group">
+                {!! Form::label('email2','Email 2:',['class'=>'col-sm-2 control-label']) !!}
+                <div class="col-sm-10">
+                   
+                    {!! Form::email('email2', null,['class'=>'form-control']) !!}
+                    {!! errors_for('email2',$errors) !!}
+
+                </div>
+
+
+            </div>
 
             <div class="form-group">
                 {!! Form::label('phone1','Teléfono 1:',['class'=>'col-sm-2 control-label']) !!}
@@ -122,7 +133,7 @@
            <div class="form-group">
                     {!! Form::label('status','Estatus:',['class'=>'col-sm-2 control-label'])!!}
                     <div class="col-sm-10">
-                         {!! Form::select('status', ['0' => '','1' => 'Reservado','2' => 'Aprobado','3' => 'Interesado','4' => 'Formalizado'], null,['class'=>'form-control'])!!}
+                         {!! Form::select('status', ['0' => '','1' => 'Reservado','2' => 'Aprobado','3' => 'Interesado','4' => 'Formalizado', '5' => 'Retirado'], null,['class'=>'form-control'])!!}
                             {!! errors_for('status',$errors) !!}
                     </div>
                 </div>
@@ -132,6 +143,22 @@
                     <div class="col-sm-10">
                          {!! Form::select('potencial', ['0' => '','1' => 'Alto','2' => 'Medio','3' => 'Bajo'], null,['class'=>'form-control'])!!}
                             {!! errors_for('prima',$errors) !!}
+                    </div>
+                </div>
+
+            <div class="form-group">
+                    {!! Form::label('cita','Asistió a cita:',['class'=>'col-sm-2 control-label'])!!}
+                    <div class="col-sm-10">
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="cita"  {{ (isset($client)) ? ($client->cita) ? '' : 'checked' : 'checked' }} value="0">No</label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="cita" {{ (isset($client)) ? ($client->cita) ? 'checked' : '' : '' }} value="1">Si</label>
+                        </div>
+                        
+                            {!! errors_for('cita',$errors) !!}
                     </div>
                 </div>
 
@@ -361,7 +388,7 @@
                                                  <a href="#" data-id="{{ $comment->id }}" class="btn btn-xs btn-danger pull-left btn-delete-comment" style="margin-right: 1rem;"><i class="fa fa-trash-o"></i></a>
 
                                                 @endcan
-                                                <small class="pull-right">{{ $comment->created_at }}</small>
+                                                <small class="pull-right">{{ ($comment->user) ? $comment->user->name : '' }} - {{ $comment->created_at }}</small>
                                                 <div class="show no-margin pd-t-xs">
                                                     @can('edit_status_clients')
                                                         {!! Form::textarea('comments-item-'.$comment->id, $comment->body,['class'=>'form-control', 'rows'=>'3','maxlength'=>'150']) !!}
@@ -392,7 +419,7 @@
                          @can('edit_status_clients')
                             <a href="#" data-id="@{{ id }}" class="btn btn-xs btn-danger pull-left btn-delete-comment" style="margin-right: 1rem;"><i class="fa fa-trash-o"></i></a>
                          @endcan
-                         <small class="pull-right">@{{ created_at }}</small>
+                         <small class="pull-right">@{{ user }} - @{{ created_at }}</small>
                         <div class="show no-margin pd-t-xs">
                             @can('edit_status_clients')
                                 <textarea name="comments-item-@{{ id }}" cols="30" rows="3" maxlength="150" class="form-control">@{{ body }}</textarea>

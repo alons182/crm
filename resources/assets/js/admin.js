@@ -114,6 +114,8 @@
         potencial = $('#potencial'),
         month = $('#month'),
         currency = $('#currency'),
+        cita = $('#cita'),
+        order = $('#order'),
         filters = $(".filtros");
         
     function submitForm(){
@@ -135,6 +137,8 @@
     project.change(submitForm);
     month.change(submitForm);
     currency.change(submitForm);
+    cita.change(submitForm);
+    order.change(submitForm);
     
 
     $('.btn-edit-slug').on('click',function(){
@@ -601,6 +605,7 @@
                     body : obj.body,
                     client_id : obj.client_id,
                     created_at : obj.created_at,
+                    user : (obj.user) ? obj.user.name : '',
                    
 
                 }
@@ -644,6 +649,7 @@
                     body : obj.body,
                     client_id : obj.client_id,
                     created_at : obj.created_at,
+                    user : (obj.user) ? obj.user.name : '',
                    
 
                 }
@@ -688,10 +694,12 @@
 
 
              var commentsItems = $.map(resp ,function(obj, index){
+               
                 return {
                     id : obj.id,
                     body : obj.body,
                     created_at : obj.created_at,
+                    user : (obj.user) ? obj.user.name : '',
                    
 
                 }

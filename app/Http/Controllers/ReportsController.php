@@ -61,6 +61,7 @@ class ReportsController extends Controller
         if($search){
 
             $search['project'] = (isset($search['project'])) ? $search['project'] : '';
+            $search['order'] = (isset($search['order'])) ? $search['order'] : '';
 
            
             
@@ -69,15 +70,16 @@ class ReportsController extends Controller
            // dd($clients->toArray());
             return View('reports.tracing')->with([
                 'clients'         => $clients,
-                'selectedProject' =>  $search['project']
+                'selectedProject' =>  $search['project'],
+                'selectedOrder' =>  $search['order']
                 
             ]);
        }
         
         return View('reports.tracing')->with([
             'clients'         => $clients,
-            'selectedProject' =>  ''
-            
+            'selectedProject' =>  '',
+            'selectedOrder' =>''
         ]);
     }
      public function exportTracing(Excel $excel, Request $request)
@@ -107,11 +109,11 @@ class ReportsController extends Controller
                  
 
                     
-                    $itemArray['Lote / Casa'] = $client->properties->first()->name;
-                    $itemArray['Bloque'] = $client->properties->first()->block;
+                    $itemArray['Lote / Casa'] = $client->casa;
+                    $itemArray['Bloque'] = $client->bloque;
                     $itemArray['Cliente'] = $client->fullname;
                     $itemArray['Fecha de reserva'] = ($client->reservation_date == '0000-00-00 00:00:00') ? '' : \Carbon\Carbon::parse($client->reservation_date)->toDateString();
-                    $itemArray['Fecha de casa terminada'] = ($client->properties->first()->completed_house_date == '0000-00-00 00:00:00') ? '' : \Carbon\Carbon::parse($client->properties->first()->completed_house_date)->toDateString();
+                    $itemArray['Fecha de casa terminada'] = ($client->completed_house_date == '0000-00-00 00:00:00') ? '' : \Carbon\Carbon::parse($client->completed_house_date)->toDateString();
                     $itemArray['Fecha opcion firmada'] = ($client->option_date == '0000-00-00 00:00:00') ? '' : \Carbon\Carbon::parse($client->option_date)->toDateString();
                     $itemArray['Banco'] = ($client->banco) ? $client->banco->name : 'Banco no asignado';
                     $itemArray['Fecha Presentacion de expediente'] = ($client->expedient_date == '0000-00-00 00:00:00') ? '' : \Carbon\Carbon::parse($client->expedient_date)->toDateString();
@@ -121,7 +123,7 @@ class ReportsController extends Controller
                      foreach($client->estados as $comment)
                      {
                        
-                        $itemArray['('.$comment->id.')'.$comment->created_at->toDateString()] = $comment->body;
+                        $itemArray['('.$comment->id.'-'. $comment->user->name .')'.$comment->created_at->toDateString()] = $comment->body;
                            
                      }
 

@@ -29,7 +29,7 @@
     <script src="/vendor/picker.date.js"></script>
 	<script type="text/javascript">
 		$(".chosen-select").chosen({no_results_text: "Oops, nothing found!"}); 
-		$("#ide").mask("999999999");
+		//$("#ide").mask("999999999");
 		$("#phone1").mask("9999-9999");
 		$("#phone2").mask("9999-9999");
 		$("#phone3").mask("9999-9999");
