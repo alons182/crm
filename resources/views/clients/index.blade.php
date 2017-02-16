@@ -11,7 +11,7 @@
 
     <section class="panel">
 
-        <div class="panel-heading" style="overflow: hidden; position: relative;">
+        <div class="panel-heading" style="position: relative;">
             <div class="import pull-right" style="position: absolute;right: 0;top: 0">
                  <h4>Importar Excel (CVS, XLS)</h4>
                  {!! Form::open(['route' =>['import_clients'],'method' => 'post','files'=> true, 'id' =>'form-import']) !!}
