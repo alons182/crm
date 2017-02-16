@@ -90,7 +90,7 @@
                                     @endcan
                                 @endforeach
                                </td>-->
-                            <td class="center">{!! ($client->estados->first()) ? $client->estados->first()->body : '' !!}</td>
+                            <td class="center">{!! ($client->estados->first()) ? ($client->estados->first()->user) ? '('.$client->estados->first()->user->name .') '.$client->estados->first()->body : $client->estados->first()->body : '' !!}</td>
                             <td class="center">{!! $client->created_at !!}</td>
 
                             <td class="center" style="background-color: white;">

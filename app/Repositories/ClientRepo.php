@@ -408,7 +408,7 @@ class ClientRepo extends DbRepo{
  
 
 
-        return $clients->with('sellers','estados')->orderBy('created_at', 'desc')->paginate($this->limit);
+        return $clients->with('sellers','estados.user')->orderBy('created_at', 'desc')->paginate($this->limit);
     }
     public function getColumnsName()
     {
@@ -487,7 +487,7 @@ class ClientRepo extends DbRepo{
             $client = $this->model->with('sellers')->findOrFail($id);
         else
             $client = auth()->user()->clients()->with('sellers')->findOrFail($id);*/
-        $client = $this->model->with('sellers','tasks','abonos')->findOrFail($id);    
+        $client = $this->model->with('sellers','tasks','abonos','estados.user')->findOrFail($id);    
         
         return $client;
     }
