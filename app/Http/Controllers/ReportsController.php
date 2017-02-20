@@ -123,7 +123,7 @@ class ReportsController extends Controller
                      foreach($client->estados as $comment)
                      {
                        
-                        $itemArray['('.$comment->id.'-'. $comment->user->name .')'.$comment->created_at->toDateString()] = $comment->body;
+                        $itemArray['('.$comment->id.'-'. ($comment->user) ? $comment->user->name : '' .')'.$comment->created_at->toDateString()] = $comment->body;
                            
                      }
 
