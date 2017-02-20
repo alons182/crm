@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Client extends Model
 {
    
-	 protected $fillable = ['ide','fullname', 'company', 'job', 'email', 'web', 'phone1','phone2','comments', 'address','referred','referred_others','image','status','income','debts','debts_amount','potencial','prima','formalization_date','reservation_date','option_date','expedient_date','credit','avaluo_date','documents','documents_text','fiador','fiador_text','project','bank','bank2','email2','cita'];
+	 protected $fillable = ['ide','fullname', 'company', 'job', 'email', 'web', 'phone1','phone2','phone3','comments', 'address','referred','referred_others','image','status','income','debts','debts_amount','potencial','prima','formalization_date','reservation_date','option_date','expedient_date','credit','avaluo_date','documents','documents_text','fiador','fiador_text','project','bank','bank2','email2','cita'];
 
  	public function scopeSearch($query, $search)
     {
