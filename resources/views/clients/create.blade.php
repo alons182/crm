@@ -30,10 +30,10 @@
 	<script type="text/javascript">
 		$(".chosen-select").chosen({no_results_text: "Oops, nothing found!"}); 
 		//$("#ide").mask("999999999");
-		$("#phone1").mask("9999-9999");
+		/*$("#phone1").mask("9999-9999");
 		$("#phone2").mask("9999-9999");
 		$("#phone3").mask("9999-9999");
-		$("#phone4").mask("9999-9999");
+		$("#phone4").mask("9999-9999");*/
 
 		$('.datepicker').pickadate({
 	        monthsFull: ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'],
