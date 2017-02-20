@@ -150,7 +150,7 @@
                             
                                 @forelse($client->estados->take(5) as $comment)
                                   <td>
-                                    <small class="label label-warning">{{ $comment->user->name }} - {{ $comment->created_at }}</small><br>
+                                    <small class="label label-warning">{{ ($comment->user) ? $comment->user->name : '' }} - {{ $comment->created_at }}</small><br>
                                     {{ $comment->body }}
                                  </td>
                                 @empty
