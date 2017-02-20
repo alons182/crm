@@ -52,11 +52,23 @@
             </div>
 
             <div class="form-group">
-                {!! Form::label('phone1','Teléfono 1:',['class'=>'col-sm-2 control-label']) !!}
-                <div class="col-sm-10">
+                {!! Form::label('phone1','Teléfonos:',['class'=>'col-sm-2 control-label']) !!}
+                <div class="col-sm-3">
                    
-                    {!! Form::text('phone1', null,['class'=>'form-control']) !!}
+                    {!! Form::text('phone1', null,['class'=>'form-control', 'placeholder'=>'Teléfono 1']) !!}
                     {!! errors_for('phone1',$errors) !!}
+
+                </div>
+                <div class="col-sm-3">
+                   
+                    {!! Form::text('phone2', null,['class'=>'form-control', 'placeholder'=>'Teléfono 2']) !!}
+                    {!! errors_for('phone2',$errors) !!}
+
+                </div>
+                <div class="col-sm-3">
+                   
+                    {!! Form::text('phone3', null,['class'=>'form-control', 'placeholder'=>'Teléfono 3']) !!}
+                    {!! errors_for('phone3',$errors) !!}
 
                 </div>
 
