@@ -107,7 +107,7 @@ class ReportsController extends Controller
 
                 foreach ($clients as $client) {
                  
-
+                    $itemArray = [];
                     
                     $itemArray['Lote / Casa'] = $client->casa;
                     $itemArray['Bloque'] = $client->bloque;
