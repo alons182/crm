@@ -42,7 +42,7 @@ class ReportsController extends Controller
         foreach ($items as $month) {
             
             if($month['year'] > 0)
-                $monthWithItems[$month['month'] .'_'. $month['year']] = $month['monthname'];
+                $monthWithItems[$month['month'] .'_'. $month['year']] = $month['monthname'] .' '. $month['year'];
         }
         
         return $monthWithItems;
