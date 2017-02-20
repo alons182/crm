@@ -122,8 +122,12 @@ class ReportsController extends Controller
 
                      foreach($client->estados as $comment)
                      {
-                       
-                        $itemArray['('.$comment->id.'-'. ($comment->user) ? $comment->user->name : "" .')'.$comment->created_at->toDateString()] = $comment->body;
+                       $username = '';
+                       if($comment->user)
+                       {
+                            $username = $comment->user->name;
+                       }
+                        $itemArray['('.$comment->id.'-'. $username .')'.$comment->created_at->toDateString()] = $comment->body;
                            
                      }
 
