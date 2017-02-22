@@ -12,17 +12,19 @@
     <section class="panel">
 
         <div class="panel-heading" style="position: relative;">
-            <div class="import pull-right" style="position: absolute;right: 0;top: 0">
-                 <h4>Importar Excel (CVS, XLS)</h4>
-                 {!! Form::open(['route' =>['import_clients'],'method' => 'post','files'=> true, 'id' =>'form-import']) !!}
-                    {!! Form::file('excel', null, ['id' => 'excel', 'required'=>'required']) !!}
-                    {!! errors_for('excel',$errors) !!} 
-                    {!! Form::submit('Import',['class'=>'btn btn-primary'])!!}
+            @if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('manager'))
+                <div class="import pull-right" style="position: absolute;right: 0;top: 0">
+                     <h4>Importar Excel (CVS, XLS)</h4>
+                     {!! Form::open(['route' =>['import_clients'],'method' => 'post','files'=> true, 'id' =>'form-import']) !!}
+                        {!! Form::file('excel', null, ['id' => 'excel', 'required'=>'required']) !!}
+                        {!! errors_for('excel',$errors) !!} 
+                        {!! Form::submit('Import',['class'=>'btn btn-primary'])!!}
 
-                    <a href="#" class="btn btn-success" data-toggle="modal" data-target=".bs-modal-sm">Exportar</a>
-                {!! Form::close() !!}
-                 
-            </div>
+                        <a href="#" class="btn btn-success" data-toggle="modal" data-target=".bs-modal-sm">Exportar</a>
+                    {!! Form::close() !!}
+                     
+                </div>
+            @endif
             <div class=" form-group">
                 {!! link_to_route('clients.create','Nuevo Cliente',null,['class'=>'btn btn-success']) !!}
             </div>
