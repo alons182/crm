@@ -71,7 +71,7 @@ class Property extends Model
        public function calculateSellerPercent()
        { 
 
-          return ($this->seller_percent) ? $this->price * ($this->seller_percent/100) : $this->price * 0.05;
+          return ($this->seller_percent) ? $this->price * ($this->seller_percent/100) : 0;
 
        }
        public function totalVivenda()
