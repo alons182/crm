@@ -2,12 +2,29 @@
 
     console.log('msg');
     
-
+    $(".btn-print").on('click',function (e) {
+         e.preventDefault();
+         
+            window.print();
+        });
     $("form[data-confirm]").submit(function() {
         if ( ! confirm($(this).attr("data-confirm"))) {
             return false;
         }
     });
+
+    $("input[name='cita']").change(function() {
+
+        
+            if ($(this).val() == '1') {
+                $("input[name='cita_date']").attr('disabled', false).focus();
+                
+
+            } else {
+                  $("input[name='cita_date']").attr('disabled', true);
+                  $("input[name='cita_date']").val('');
+            }
+        });
 
      $("select[name='referred']").change(function() {
 
@@ -116,6 +133,7 @@
         currency = $('#currency'),
         cita = $('#cita'),
         order = $('#order'),
+        reservation_paid = $('#reservation_paid'),
         filters = $(".filtros");
         
     function submitForm(){
@@ -139,7 +157,7 @@
     currency.change(submitForm);
     cita.change(submitForm);
     order.change(submitForm);
-    
+    reservation_paid.change(submitForm);
 
     $('.btn-edit-slug').on('click',function(){
         $('input[name="slug"]').prop( "readOnly", null );
@@ -180,7 +198,7 @@
                         if (yaAgregado($(this).val()) == false)
                         {
                     $('ul.users').append('<li data-id="' + users[i].id +'"><span class="delete" data-id="'+ users[i].id +'"><i class="glyphicon glyphicon-remove"></i></span>'+
-                    '<span class="label label-success">'+ users[i].name +'</span><input type="hidden" name="sellers[]" value="'+users[i].id +'"/> </li>');
+                    '<span class="label label-success">'+ users[i].name +'</span><input type="hidden" name="sellers" value="'+users[i].id +'"/> </li>');
 
                     $('input[name="user_id"]').val(users[i].id);
                     /* $('ul.users').append('<li data-id="' + users[i].id +'"><span class="delete" data-id="'+ users[i].id +'"><i class="glyphicon glyphicon-remove"></i></span>'+
@@ -499,7 +517,7 @@
 
             url : '/project/properties/list',
             dataType : 'json',
-            data : { project_id: $(this).val() }
+            data : { project_id: $(this).val(), client_id: ($('input[name=client_id]').val()) ? $('input[name=client_id]').val() : 0 }
 
         }).done(function function_name(resp) {
             console.log(resp);
@@ -588,6 +606,9 @@
         if(comments ==='' || comments === undefined) 
             return false;
 
+        if($(this).data('id') == '0' || $(this).data('id') == '') 
+            return false;
+
          $.ajax({
 
             method: 'PUT',
@@ -632,43 +653,51 @@
       $('#comments-list').on('click','.btn-delete-comment', function(event) {
         event.preventDefault();
 
-         $.ajax({
-
-            method: 'POST',
-            url : '/clients/comments/delete',
-            dataType : 'json',
-            data : { id: $(this).data('id') }
-
-        }).done(function function_name(resp) {
-            console.log(resp);
+         if($(this).data('id') == '0' || $(this).data('id') == '')
+         {
+            $(this).parent('li').remove();
+            return false;
+         }
 
 
-             var commentsItems = $.map(resp ,function(obj, index){
-                return {
-                    id : obj.id,
-                    body : obj.body,
-                    client_id : obj.client_id,
-                    created_at : obj.created_at,
-                    user : (obj.user) ? obj.user.name : '',
+                 $.ajax({
+
+                    method: 'POST',
+                    url : '/clients/comments/delete',
+                    dataType : 'json',
+                    data : { id: $(this).data('id') }
+
+                }).done(function function_name(resp) {
+                    console.log(resp);
+
+
+                     var commentsItems = $.map(resp ,function(obj, index){
+                        return {
+                            id : obj.id,
+                            body : obj.body,
+                            client_id : obj.client_id,
+                            created_at : obj.created_at,
+                            user : (obj.user) ? obj.user.name : '',
+                           
+
+                        }
+
+                    });
+
+                     var templateHtml = $.trim( $('#commentsListTemplate').html() );
+
+                    var template = Handlebars.compile( templateHtml );
+
+                    var html = template(commentsItems);
+                    
+                    
+
+                    $('#comments-list').html( html );
+                        
+                    $('#comments').val(''); 
                    
-
-                }
-
-            });
-
-             var templateHtml = $.trim( $('#commentsListTemplate').html() );
-
-            var template = Handlebars.compile( templateHtml );
-
-            var html = template(commentsItems);
-            
-            
-
-            $('#comments-list').html( html );
-                
-            $('#comments').val(''); 
-           
-        });
+                });
+        
 
 
       });
@@ -681,44 +710,92 @@
         if(comments ==='') 
             return false;
 
+        if($(this).data('client'))
+        {
+             $.ajax({
 
-         $.ajax({
+                method: 'POST',
+                url : '/clients/comments',
+                dataType : 'json',
+                data : { client_id: $(this).data('client'), body: comments }
 
-            method: 'POST',
-            url : '/clients/comments',
-            dataType : 'json',
-            data : { client_id: $(this).data('client'), body: comments }
-
-        }).done(function function_name(resp) {
-            console.log(resp);
+            }).done(function function_name(resp) {
+                console.log(resp);
 
 
-             var commentsItems = $.map(resp ,function(obj, index){
-               
-                return {
-                    id : obj.id,
-                    body : obj.body,
-                    created_at : obj.created_at,
-                    user : (obj.user) ? obj.user.name : '',
+                 var commentsItems = $.map(resp ,function(obj, index){
                    
+                    return {
+                        id : obj.id,
+                        body : obj.body,
+                        created_at : obj.created_at,
+                        user : (obj.user) ? obj.user.name : '',
+                       
 
-                }
+                    }
 
+                });
+
+                 var templateHtml = $.trim( $('#commentsListTemplate').html() );
+
+                var template = Handlebars.compile( templateHtml );
+
+                var html = template(commentsItems);
+                
+                
+
+                $('#comments-list').html( html );
+                    
+                $('#comments').val(''); 
+               
+            });
+        }else{
+            var commentsItems = [];
+            
+            $("#comments-list li").each(function() {
+               
+                    var com = {
+                        id : 0,
+                        body : $(this).find('input[name="commentsfromcreate[]"]').val(),
+                        created_at : '',
+                        user : ''
+                       
+
+                        }
+
+                    commentsItems.push(com);
             });
 
-             var templateHtml = $.trim( $('#commentsListTemplate').html() );
-
-            var template = Handlebars.compile( templateHtml );
-
-            var html = template(commentsItems);
-            
-            
-
-            $('#comments-list').html( html );
-                
-            $('#comments').val(''); 
            
-        });
+
+             var com = {
+                        id : 0,
+                        body : comments,
+                        created_at : '',
+                        user : ''
+                       
+
+                    }
+
+             commentsItems.push(com);
+            
+                  
+                    
+
+             
+
+                 var templateHtml = $.trim( $('#commentsListTemplate').html() );
+
+                var template = Handlebars.compile( templateHtml );
+
+                var html = template(commentsItems);
+                
+                
+
+                $('#comments-list').html( html );
+                    
+                $('#comments').val(''); 
+        }
 
     });
 
@@ -734,12 +811,15 @@
         if(abono ==='' || abono === undefined) 
             return false;
 
+        if(id == '0' || id == '') 
+            return false;
+
          $.ajax({
 
             method: 'PUT',
             url : '/clients/abonos/update',
             dataType : 'json',
-            data : { id: $(this).data('id'), amount: abono, description: description }
+            data : { id: id, amount: abono, description: description }
 
         }).done(function function_name(resp) {
             console.log(resp);
@@ -778,6 +858,12 @@
 
       $('#abonos-list').on('click','.btn-delete-abono', function(event) {
         event.preventDefault();
+
+        if($(this).data('id') == '0' || $(this).data('id') == '')
+         {
+            $(this).parent('li').remove();
+            return false;
+         }
 
          $.ajax({
 
@@ -830,44 +916,95 @@
         if(abono ==='') 
             return false;
 
+        if($(this).data('client'))
+        {
+             $.ajax({
 
-         $.ajax({
+                method: 'POST',
+                url : '/clients/abonos',
+                dataType : 'json',
+                data : { client_id: $(this).data('client'), amount: abono, description: description }
 
-            method: 'POST',
-            url : '/clients/abonos',
-            dataType : 'json',
-            data : { client_id: $(this).data('client'), amount: abono, description: description }
-
-        }).done(function function_name(resp) {
-            console.log(resp);
+            }).done(function function_name(resp) {
+                console.log(resp);
 
 
-             var abonosItems = $.map(resp ,function(obj, index){
-                return {
-                    id : obj.id,
-                    description: obj.description,
-                    amount : obj.amount,
-                    created_at : obj.created_at
+                 var abonosItems = $.map(resp ,function(obj, index){
+                    return {
+                        id : obj.id,
+                        description: obj.description,
+                        amount : obj.amount,
+                        created_at : obj.created_at
+                       
+
+                    }
+
+                });
+
+                 var templateHtml = $.trim( $('#abonosListTemplate').html() );
+
+                var template = Handlebars.compile( templateHtml );
+
+                var html = template(abonosItems);
+                
+                
+
+                $('#abonos-list').html( html );
+                    
+                $('#amount').val('');
+                $('#abono-description').val('');  
+               
+            });
+        }else{
+            
+            var abonosItems = [];
+            
+            $("#abonos-list li").each(function() {
+                var result = $(this).find('input[name="abonosfromcreate[]"]').val().split('|');
+                var amount = result[0];
+                var desc = result[1];
+                    
+                var abon = {
+                    id : 0,
+                    description: desc,
+                    amount : amount,
+                    created_at : ''
+                   
                    
 
-                }
+                    }
 
+                    abonosItems.push(abon);
             });
 
-             var templateHtml = $.trim( $('#abonosListTemplate').html() );
-
-            var template = Handlebars.compile( templateHtml );
-
-            var html = template(abonosItems);
-            
-            
-
-            $('#abonos-list').html( html );
-                
-            $('#amount').val('');
-            $('#abono-description').val('');  
            
-        });
+
+             var abon = {
+                    id : 0,
+                    description: description,
+                    amount : abono,
+                    created_at : ''
+                   
+                   
+
+                    }
+
+             abonosItems.push(abon);
+
+                
+               var templateHtml = $.trim( $('#abonosListTemplate').html() );
+
+                var template = Handlebars.compile( templateHtml );
+
+                var html = template(abonosItems);
+                
+                
+
+                $('#abonos-list').html( html );
+                    
+                $('#amount').val('');
+                $('#abono-description').val('');  
+        }
 
     });
 

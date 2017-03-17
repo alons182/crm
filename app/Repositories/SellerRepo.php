@@ -1,9 +1,10 @@
 <?php namespace App\Repositories;
 
-use App\Role;
-use App\User;
 use App\Client;
 use App\Profile;
+use App\Role;
+use App\User;
+use Carbon\Carbon;
 
 
 class SellerRepo extends DbRepo{
@@ -117,5 +118,207 @@ class SellerRepo extends DbRepo{
             $sellers = $this->model->search($search)->paginate(8);
 
         return $sellers;
+    }
+
+    /**
+     * Get all the clients for the admin panel
+     * @param $search
+     * @return mixed
+     */
+    public function reportsStatisticsSellers($search)
+    {
+        
+         $order = 'created_at';
+         $dir = 'desc';
+        
+         $sellers = $this->model->has('clients');
+        
+    
+        
+        if (isset($search['seller']) && $search['seller'] != "")
+        {
+            $sellers = $sellers->where('users.id', $search['seller']);
+        }
+      
+       
+        
+        $statistics = [];
+        $citas = 0; 
+        $created = 0;  //clientes creados
+        $reservados = 0; //clientes reservados
+        $formalizados = 0;
+        $aprobados = 0;
+        $retirados = 0;
+        $interesados = 0;
+        $desinteresados = 0;
+
+        $seller = $sellers->first();
+
+        if($seller)
+        {
+            foreach ($seller->clients as $client) {
+
+              
+
+               if (isset($search['date1']) && $search['date1'] != "")
+                {
+                   
+                    
+                    
+                    $date1 = new Carbon($search['date1']);
+                    $date2 = (isset($search['date2']) && $search['date2'] != "") ? $search['date2'] : $search['date1'];
+                    $date2 = new Carbon($date2);
+        
+
+                    if($client->cita && Carbon::parse($client->cita_date)->between($date1, $date2))
+                    {
+                      $citas += ($client->cita) ? 1 : 0;
+                    }
+
+                    if($client->created_at->between($date1, $date2))
+                    {
+
+                      $created +=  1;
+                      $reservados += ($client->status == 1) ? 1 : 0;
+                      $aprobados += ($client->status == 2) ? 1 : 0;
+                      $interesados += ($client->status == 3) ? 1 : 0;
+                      $formalizados +=  ($client->status == 4) ? 1 : 0;
+                      $retirados +=  ($client->status == 5) ? 1 : 0;
+                      $desinteresados +=  ($client->status == 6) ? 1 : 0;
+
+                    }
+                    
+                 
+
+                }else{
+
+                     $created += 1 ;//$seller->clients->count();
+
+
+                     $citas += ($client->cita) ? 1 : 0;
+
+                    $reservados += ($client->status == 1) ? 1 : 0;
+                    $aprobados += ($client->status == 2) ? 1 : 0;
+                    $interesados += ($client->status == 3) ? 1 : 0;
+                    $formalizados += ($client->status == 4) ? 1 : 0;
+                    $retirados +=  ($client->status == 5) ? 1 : 0; 
+                    $desinteresados +=  ($client->status == 6) ? 1 : 0;
+                }
+
+
+            }
+
+            $statistics['created'] = $created;
+            $statistics['citas'] = $citas;
+            $statistics['reservados'] = $reservados;
+            $statistics['aprobados'] = $aprobados;
+            $statistics['interesados'] = $interesados;
+            $statistics['retirados'] = $retirados;
+            $statistics['desinteresados'] = $desinteresados;
+            $statistics['formalizados'] = $formalizados;
+        }
+        
+      return $statistics;
+       
+    }
+     /**
+     * Get all the clients for the admin panel
+     * @param $search
+     * @return mixed
+     */
+    public function reportsStatisticsSellersExcel($search)
+    {
+        
+        $order = 'created_at';
+         $dir = 'desc';
+        
+         $sellers = $this->model->has('clients');
+        
+    
+        
+        if (isset($search['fil-seller']) && $search['fil-seller'] != "")
+        {
+            $sellers = $sellers->where('users.id', $search['fil-seller']);
+        }
+      
+       
+        
+        $statistics = [];
+        $citas = 0; 
+        $created = 0;  //clientes creados
+        $reservados = 0; //clientes reservados
+        $formalizados = 0;
+        $aprobados = 0;
+        $retirados = 0;
+        $interesados = 0;
+        $desinteresados = 0;
+
+        $seller = $sellers->first();
+
+        if($seller)
+        {
+            foreach ($seller->clients as $client) {
+
+              
+
+               if (isset($search['fil-date1']) && $search['fil-date1'] != "")
+                {
+                   
+                    
+                    
+                    $date1 = new Carbon($search['fil-date1']);
+                    $date2 = (isset($search['fil-date2']) && $search['fil-date2'] != "") ? $search['fil-date2'] : $search['fil-date1'];
+                    $date2 = new Carbon($date2);
+        
+
+                    if($client->cita && Carbon::parse($client->cita_date)->between($date1, $date2))
+                    {
+                      $citas += ($client->cita) ? 1 : 0;
+                    }
+
+                    if($client->created_at->between($date1, $date2))
+                    {
+
+                      $created +=  1;
+                      $reservados += ($client->status == 1) ? 1 : 0;
+                      $aprobados += ($client->status == 2) ? 1 : 0;
+                      $interesados += ($client->status == 3) ? 1 : 0;
+                      $formalizados +=  ($client->status == 4) ? 1 : 0;
+                      $retirados +=  ($client->status == 5) ? 1 : 0;
+                      $desinteresados +=  ($client->status == 6) ? 1 : 0;
+
+                    }
+                    
+                 
+
+                }else{
+
+                     $created += 1 ;//$seller->clients->count();
+
+
+                     $citas += ($client->cita) ? 1 : 0;
+
+                    $reservados += ($client->status == 1) ? 1 : 0;
+                    $aprobados += ($client->status == 2) ? 1 : 0;
+                    $interesados += ($client->status == 3) ? 1 : 0;
+                    $formalizados += ($client->status == 4) ? 1 : 0;
+                    $retirados +=  ($client->status == 5) ? 1 : 0; 
+                    $desinteresados +=  ($client->status == 6) ? 1 : 0;
+                }
+
+
+            }
+
+            $statistics['created'] = $created;
+            $statistics['citas'] = $citas;
+            $statistics['reservados'] = $reservados;
+            $statistics['aprobados'] = $aprobados;
+            $statistics['interesados'] = $interesados;
+            $statistics['retirados'] = $retirados;
+            $statistics['desinteresados'] = $desinteresados;
+            $statistics['formalizados'] = $formalizados;
+        }
+        
+      return $statistics;
     }
 }

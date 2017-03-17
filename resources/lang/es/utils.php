@@ -8,6 +8,7 @@ return [
         '3' => 'Interesado',
         '4' => "Formalizado",
         '5' => "Retirado",
+        '6' => "Desinteresado",
     ],
     'status_color'  => [
         '0' => '',
@@ -16,6 +17,7 @@ return [
         '3' => 'warning',
         '4' => "danger",
         '5' => "default",
+        '6' => "info",
     ],
     'debts_client'  => [
         '0' => '',
@@ -65,7 +67,8 @@ return [
         'fiador_text' => 'contenido de fiador',
         'documents_text' => 'contenido de documentos',
         'email2' => 'Email 2',
-        'cita' => 'Asistió a cita'
+        'cita' => 'Asistió a cita',
+        'reservation_paid' => 'Pagó Reservación'
         
     ],
     

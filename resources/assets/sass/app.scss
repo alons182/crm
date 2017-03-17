@@ -32,3 +32,15 @@ input[type=file] {
 	margin-bottom: 1rem;
 }
 
+@media print {
+	   .breadcrumb {
+	       display: none;
+	    }
+	   .layout .sidebar{
+	   	display: none;
+	   }
+	   .btn-print{
+	   	display: none;
+	   }
+	    
+	}

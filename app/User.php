@@ -77,6 +77,15 @@ class User extends Authenticatable
     }
 
      /**
+     * Relationship with the stat Model
+     * @return [type] [description]
+     */
+    public function stats()
+    {
+         return $this->HasMany(Stats::class);
+    }
+
+     /**
      * Relationship with the Client Model
      * @return [type] [description]
      */

@@ -82,6 +82,9 @@ class ClientRepo extends DbRepo{
         if(isset($data['requirements']) && isset($data['requirements2'])){
             $data['requirements'] = array_merge($data['requirements'], $data['requirements2']);
         }
+         if(isset($data['cita']) && $data['cita'] == 0){
+            $data['cita_date'] = '';
+       }
        
         return $data;
     }
@@ -135,6 +138,101 @@ class ClientRepo extends DbRepo{
         return $client;
     }
 
+    /**
+     * Get all the clients for the admin panel
+     * @param $search
+     * @return mixed
+     */
+    public function reportsStatisticsClients($search)
+    {
+        
+         $order = 'created_at';
+         $dir = 'desc';
+
+    
+        $clients = $this->model;
+        
+        if (isset($search['project']) && $search['project'] != "")
+        {
+            $clients = $clients->where('project', $search['project']);
+        }
+
+        if (isset($search['date1']) && $search['date1'] != "")
+        {
+           
+            
+            
+            $date1 = new Carbon($search['date1']);
+            $date2 = (isset($search['date2']) && $search['date2'] != "") ? $search['date2'] : $search['date1'];
+            $date2 = new Carbon($date2);
+            
+         
+            $clients = $clients->where([['clients.created_at', '>=', $date1],
+                    ['clients.created_at', '<=', $date2->endOfDay()]]);
+            
+        }
+
+        $statistics = $clients->selectRaw('status, count(*) items')
+                         ->groupBy('status')
+                         ->orderBy('status','DESC')
+                         ->get()
+                         ->toArray();
+         
+      return $statistics;
+       
+    }
+     /**
+     * Get all the clients for the admin panel
+     * @param $search
+     * @return mixed
+     */
+    public function reportsStatisticsClientsExcel($search)
+    {
+        
+        $order = 'created_at';
+        $dir = 'desc';
+
+         $clients = $this->model;
+
+        if (isset($search['fil-project']) && $search['fil-project'] != "")
+        {
+            $clients = $clients->where('clients.project', $search['fil-project']);
+        }
+
+         if (isset($search['fil-date1']) && $search['fil-date1'] != "")
+        {
+           
+            
+            
+            $date1 = new Carbon($search['fil-date1']);
+            $date2 = (isset($search['fil-date2']) && $search['fil-date2'] != "") ? $search['fil-date2'] : $search['fil-date1'];
+            $date2 = new Carbon($date2);
+            
+         
+            $clients = $clients->where([['clients.created_at', '>=', $date1],
+                    ['clients.created_at', '<=', $date2->endOfDay()]]);
+            
+        }
+
+
+        $statistics = $clients->selectRaw('status, count(*) items')
+                         ->groupBy('status')
+                         ->orderBy('status','DESC')
+                         ->get()
+                         ->toArray();
+
+       
+            
+        //$paginator = paginate($items->all(), $this->limit);
+          
+        return $statistics;
+        
+
+
+
+        //return $clients->with('banco','estados','properties')->orderBy('created_at', 'desc')->get();
+    }
+
      /**
      * Get all the clients for the admin panel
      * @param $search
@@ -147,34 +245,54 @@ class ClientRepo extends DbRepo{
             $clients = $this->model;
         else
             $clients = auth()->user()->clients();*/
-         $order = 'created_at';
+         $order = 'clients.created_at';
          $dir = 'desc';
 
          /*$clients = $this->model->whereHas('properties', function($q) use($search){
                                                     $q->where('project_id', $search['project']);
                                                 });*/
         
+        $clients = $this->model;
        
-        /*if (isset($search['project']) && $search['project'] != "")
+        if (isset($search['project']) && $search['project'] != "")
         {
-            $clients = $clients->where('project', $search['project']);
-        }*/
+            $clients = $clients->where('clients.project', $search['project']);
+        }
+        
         if (isset($search['order']) && $search['order'] != "")
         {
              $order = $search['order'];
              
         }
+        if (isset($search['reservation_paid']) && $search['reservation_paid'] != "")
+        {
+            $clients = $clients->where('reservation_paid', $search['reservation_paid']);
+        }
 
-         $items =  $this->model->selectRaw('clients.*, properties.name as casa, properties.block as bloque, properties.completed_house_date')
+        if (isset($search['date1']) && $search['date1'] != "")
+        {
+           
+            
+            
+            $date1 = new Carbon($search['date1']);
+            $date2 = (isset($search['date2']) && $search['date2'] != "") ? $search['date2'] : $search['date1'];
+            $date2 = new Carbon($date2);
+            
+         
+            $clients = $clients->where([[$order, '>=', $date1],
+                    [$order, '<=', $date2->endOfDay()]]);
+            
+        }
+
+        $items =  $clients->selectRaw('clients.*, properties.name as casa, properties.block as bloque, properties.completed_house_date')
             ->join('client_property', 'client_property.client_id', '=', 'clients.id')
             ->join('properties', 'properties.id', '=', 'client_property.property_id')
             ->leftJoin('banks', 'banks.id', '=', 'clients.bank')
-            ->where('clients.project', $search['project'])
             ->with('estados.user')
             ->with('banco')
             ->orderBy($order, $dir)
             ->get();
-           
+        
             
         $paginator = paginate($items->all(), $this->limit);
           
@@ -199,35 +317,52 @@ class ClientRepo extends DbRepo{
             $clients = $this->model;
         else
             $clients = auth()->user()->clients();*/
-        $order = 'created_at';
+        $order = 'clients.created_at';
         $dir = 'desc';
 
-         /*$clients = $this->model->whereHas('properties', function($q) use($search){
-                                                    $q->where('project_id', $search['fil-project']);
-                                                });
-        
-       
+         $clients = $this->model;
+
         if (isset($search['fil-project']) && $search['fil-project'] != "")
         {
-            $clients = $clients->where('project', $search['fil-project']);
-        }*/
+            $clients = $clients->where('clients.project', $search['fil-project']);
+        }
 
          if (isset($search['fil-order']) && $search['fil-order'] != "")
         {
              $order = $search['fil-order'];
              
         }
+        if (isset($search['fil-reservation_paid']) && $search['fil-reservation_paid'] != "")
+        {
+            $clients = $clients->where('reservation_paid', $search['fil-reservation_paid']);
+        }
 
-         $items =  $this->model->selectRaw('clients.*, properties.name as casa, properties.block as bloque, properties.completed_house_date')
+         if (isset($search['fil-date1']) && $search['fil-date1'] != "")
+        {
+           
+            
+            
+            $date1 = new Carbon($search['fil-date1']);
+            $date2 = (isset($search['fil-date2']) && $search['fil-date2'] != "") ? $search['fil-date2'] : $search['fil-date1'];
+            $date2 = new Carbon($date2);
+            
+         
+            $clients = $clients->where([[$order, '>=', $date1],
+                    [$order, '<=', $date2->endOfDay()]]);
+            
+        }
+
+
+        $items =  $clients->selectRaw('clients.*, properties.name as casa, properties.block as bloque, properties.completed_house_date')
             ->join('client_property', 'client_property.client_id', '=', 'clients.id')
             ->join('properties', 'properties.id', '=', 'client_property.property_id')
             ->leftJoin('banks', 'banks.id', '=', 'clients.bank')
-            ->where('clients.project', $search['fil-project'])
             ->with('estados.user')
             ->with('banco')
             ->orderBy($order, $dir)
             ->get();
-           
+
+       
             
         //$paginator = paginate($items->all(), $this->limit);
           
@@ -268,6 +403,10 @@ class ClientRepo extends DbRepo{
         {
             $clients = $clients->where('project', $search['project']);
         }
+        if (isset($search['reservation_paid']) && $search['reservation_paid'] != "")
+        {
+             $clients = $clients->where('reservation_paid', $search['reservation_paid']);
+        }
         if (isset($search['currency']) && $search['currency'] != "")
         {
            
@@ -275,13 +414,14 @@ class ClientRepo extends DbRepo{
                                                     $q->where('currency', $search['currency']);
                                                 });
         }
+        
          if (isset($search['month']) && $search['month'] != "" && isset($search['year']) && $search['year'] != "")
         {
             
-            $clients = $clients->whereHas('properties', function($q) use($search){
-                                                    $q->where(\DB::raw('MONTH(delivery_date)'), '=', $search['month'])
-                                                    ->where(\DB::raw('YEAR(delivery_date)'), '=', $search['year']);
-                                                });
+            $clients = $clients->where(function($q) use($search){
+                                            $q->where(\DB::raw('MONTH(reservation_date)'), '=', $search['month'])
+                                            ->where(\DB::raw('YEAR(reservation_date)'), '=', $search['year']);
+                                        });
         }
         
 
@@ -317,6 +457,120 @@ class ClientRepo extends DbRepo{
         if (isset($search['fil-project']) && $search['fil-project'] != "")
         {
             $clients = $clients->where('project', $search['fil-project']);
+        }
+        if (isset($search['fil-reservation_paid']) && $search['fil-reservation_paid'] != "")
+        {
+             $clients = $clients->where('reservation_paid', $search['fil-reservation_paid']);
+        }
+        if (isset($search['fil-currency']) && $search['fil-currency'] != "")
+        {
+           
+            $clients = $clients->whereHas('properties', function($q) use($search){
+                                                    $q->where('currency', $search['fil-currency']);
+                                                });
+        }
+         if (isset($search['fil-month']) && $search['fil-month'] != "" && isset($search['fil-year']) && $search['fil-year'] != "")
+        {
+            
+            $clients = $clients->where(function($q) use($search){
+                                            $q->where(\DB::raw('MONTH(reservation_date)'), '=', $search['fil-month'])
+                                            ->where(\DB::raw('YEAR(reservation_date)'), '=', $search['fil-year']);
+                                        });
+        }
+        
+
+
+
+        return $clients->with('proyecto','sellers','properties')->orderBy('created_at', 'desc');
+    }
+
+     /**
+     * Get all the clients for the admin panel
+     * @param $search
+     * @return mixed
+     */
+    public function reportsSalesProjection($search)
+    {
+        //$clients = $this->model;
+        /*if(auth()->user()->hasRole('admin'))       
+            $clients = $this->model;
+        else
+            $clients = auth()->user()->clients();*/
+         
+        if (isset($search['seller']) && $search['seller'] != "")
+        {
+            $seller = User::find($search['seller']);
+            
+            $clients = $seller->clients()->has('properties');
+            //dd($clients);
+        }else{
+
+            $clients = $this->model->has('properties');
+        }
+        
+       
+        if (isset($search['project']) && $search['project'] != "")
+        {
+            $clients = $clients->where('project', $search['project']);
+        }
+        if (isset($search['reservation_paid']) && $search['reservation_paid'] != "")
+        {
+             $clients = $clients->where('reservation_paid', $search['reservation_paid']);
+        }
+        if (isset($search['currency']) && $search['currency'] != "")
+        {
+           
+            $clients = $clients->whereHas('properties', function($q) use($search){
+                                                    $q->where('currency', $search['currency']);
+                                                });
+        }
+        
+         if (isset($search['month']) && $search['month'] != "" && isset($search['year']) && $search['year'] != "")
+        {
+            
+            $clients = $clients->whereHas('properties', function($q) use($search){
+                                                    $q->where(\DB::raw('MONTH(delivery_date)'), '=', $search['month'])
+                                                    ->where(\DB::raw('YEAR(delivery_date)'), '=', $search['year']);
+                                                });
+        }
+        
+
+
+
+        return $clients->with('proyecto','sellers','properties')->orderBy('created_at', 'desc');
+    }
+     /**
+     * Get all the clients for the admin panel
+     * @param $search
+     * @return mixed
+     */
+    public function reportsSalesProjectionExcel($search)
+    {
+        //$clients = $this->model;
+        /*if(auth()->user()->hasRole('admin'))       
+            $clients = $this->model;
+        else
+            $clients = auth()->user()->clients();*/
+         
+        if (isset($search['fil-seller']) && $search['fil-seller'] != "")
+        {
+            $seller = User::find($search['fil-seller']);
+            
+            $clients = $seller->clients()->has('properties');
+            //dd($clients);
+        }else{
+
+            $clients = $this->model->has('properties');
+        }
+        
+       
+        if (isset($search['fil-project']) && $search['fil-project'] != "")
+        {
+            $clients = $clients->where('project', $search['fil-project']);
+        }
+        if (isset($search['fil-reservation_paid']) && $search['fil-reservation_paid'] != "")
+        {
+             $clients = $clients->where('reservation_paid', $search['fil-reservation_paid']);
         }
         if (isset($search['fil-currency']) && $search['fil-currency'] != "")
         {
@@ -387,6 +641,11 @@ class ClientRepo extends DbRepo{
         {
             $clients = $clients->where('cita', $search['cita']);
         }
+        if (isset($search['reservation_paid']) && $search['reservation_paid'] != "")
+        {
+            $clients = $clients->where('reservation_paid', $search['reservation_paid']);
+        }
+        
         if (isset($search['date1']) && $search['date1'] != "")
         {
            
@@ -455,6 +714,14 @@ class ClientRepo extends DbRepo{
          if (isset($filters['fil-potencial']) && $filters['fil-potencial'] != "")
         {
             $clients = $clients->where('potencial', $filters['fil-potencial']);
+        }
+        if (isset($filters['fil-cita']) && $filters['fil-cita'] != "")
+        {
+            $clients = $clients->where('cita', $filters['fil-cita']);
+        }
+        if (isset($filters['fil-reservation_paid']) && $filters['fil-reservation_paid'] != "")
+        {
+            $clients = $clients->where('reservation_paid', $filters['fil-reservation_paid']);
         }
 
         if (isset($filters['fil-date1']) && $filters['fil-date1'] != "")

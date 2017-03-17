@@ -241,13 +241,37 @@ Route::group(['middleware' => ['web']], function () {
         'as' => 'r_sales',
         'uses' => 'ReportsController@sales'
     ]);
+      Route::get('reports/projection', [
+        'as' => 'r_sales_projection',
+        'uses' => 'ReportsController@sales_projection'
+    ]);
+    Route::get('reports/statistics/clients', [
+        'as' => 'r_statistics_clients',
+        'uses' => 'ReportsController@statistics_clients'
+    ]);
+    Route::get('reports/statistics/sellers', [
+        'as' => 'r_statistics_sellers',
+        'uses' => 'ReportsController@statistics_sellers'
+    ]);
      Route::post('reports/sales/export', [
         'as' => 'export_sales',
         'uses' => 'ReportsController@exportSales'
     ]);
+     Route::post('reports/projection/export', [
+        'as' => 'export_sales_projection',
+        'uses' => 'ReportsController@exportSalesProjection'
+    ]);
       Route::post('reports/tracing/export', [
         'as' => 'export_tracing',
         'uses' => 'ReportsController@exportTracing'
+    ]);
+       Route::post('reports/statistics/clients/export', [
+        'as' => 'export_statistics_clients',
+        'uses' => 'ReportsController@exportStatisticsClients'
+    ]);
+         Route::post('reports/statistics/sellers/export', [
+        'as' => 'export_statistics_sellers',
+        'uses' => 'ReportsController@exportStatisticsSellers'
     ]);
 
    

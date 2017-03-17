@@ -9,6 +9,9 @@
                     {!! Form::submit(isset($buttonText) ? $buttonText : 'Crear Cliente',['class'=>'btn btn-primary'])!!}
                 @endif
                 {!! link_to_route('clients',  'Cancelar', null, ['class'=>'btn btn-default'])!!}
+                <div class="pull-right">
+                    <button class="btn btn-sm btn-warning btn-print">Imprimir</button>
+                </div>
                 
         </header>
         <div class="panel-body">
@@ -108,7 +111,8 @@
                                 <span class="label label-success">{!! $seller->name !!}</span>
 
                                 
-                                {!! Form::hidden('sellers[]', $seller->id , ['class' => 'form-control']) !!}
+                                <!-- {!! Form::hidden('sellers[]', $seller->id , ['class' => 'form-control']) !!} -->
+                                <input type="hidden" name="sellers" value="{{ $seller->id }}" class="form-control">
                             </li>
                             @endforeach
                         
@@ -133,7 +137,7 @@
                             {!! errors_for('project',$errors) !!}
                             </div>
                             <div class="col-xs-9">
-                                 {!! Form::select('properties[]',(isset($propertiesOfSelectedProject)) ? $propertiesOfSelectedProject : $properties, (isset($selectedProperties)) ? $selectedProperties: null,['class'=>'form-control chosen-select','multiple', 'id'=>'selectProperties'])!!}
+                                 {!! Form::select('properties[]',(isset($propertiesOfSelectedProject)) ? $propertiesOfSelectedProject : [], (isset($selectedProperties)) ? $selectedProperties: null,['class'=>'form-control chosen-select','multiple', 'id'=>'selectProperties'])!!}
                                 {!! errors_for('properties',$errors) !!}
                             </div>
                             
@@ -145,7 +149,7 @@
            <div class="form-group">
                     {!! Form::label('status','Estatus:',['class'=>'col-sm-2 control-label'])!!}
                     <div class="col-sm-10">
-                         {!! Form::select('status', ['0' => '','1' => 'Reservado','2' => 'Aprobado','3' => 'Interesado','4' => 'Formalizado', '5' => 'Retirado'], null,['class'=>'form-control'])!!}
+                         {!! Form::select('status', ['0' => '','1' => 'Reservado','2' => 'Aprobado','3' => 'Interesado','4' => 'Formalizado', '5' => 'Retirado', '6' => 'Desinteresado'], null,['class'=>'form-control'])!!}
                             {!! errors_for('status',$errors) !!}
                     </div>
                 </div>
@@ -160,18 +164,29 @@
 
             <div class="form-group">
                     {!! Form::label('cita','Asistió a cita:',['class'=>'col-sm-2 control-label'])!!}
-                    <div class="col-sm-10">
-                        <div class="radio">
-                            <label>
-                                <input type="radio" name="cita"  {{ (isset($client)) ? ($client->cita) ? '' : 'checked' : 'checked' }} value="0">No</label>
-                        </div>
-                        <div class="radio">
-                            <label>
-                                <input type="radio" name="cita" {{ (isset($client)) ? ($client->cita) ? 'checked' : '' : '' }} value="1">Si</label>
-                        </div>
+                   
+                    
+                        <div class="col-sm-5">
+                           <div class="radio">
+                                <label>
+                                    <input type="radio" name="cita"  {{ (isset($client)) ? ($client->cita) ? '' : 'checked' : 'checked' }} value="0">No</label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="cita" {{ (isset($client)) ? ($client->cita) ? 'checked' : '' : '' }} value="1">Si
+                                    
+                                </label>
+                                    
+                            </div>
+                              <input type="text" class="form-control datepicker" name="cita_date" value="{{ isset($client) && ($client->cita_date != '0000-00-00 00:00:00') ? $client->cita_date : '' }}" {{ (isset($client)) ? ($client->cita) ? '' : 'disabled' : 'disabled' }}>
                         
-                            {!! errors_for('cita',$errors) !!}
-                    </div>
+                                    {!! errors_for('cita_date',$errors) !!}
+                            
+                                {!! errors_for('cita',$errors) !!}
+                        </div>
+                       
+                        
+                    
                 </div>
 
 
@@ -227,19 +242,15 @@
                         {!! Form::text('prima',null,['class'=>'form-control']) !!}
                         {!! errors_for('prima',$errors) !!}
 
-                          @if(isset($client))
+                         
                           <h3>Abonos:</h3>
                              {!! Form::text('amount', null,['id'=>'amount', 'class'=>'form-control ', 'placeholder'=>'Monto']) !!}
                             {!! errors_for('amount',$errors) !!}
                              {!! Form::text('description', null,['id'=>'abono-description', 'class'=>'form-control', 'placeholder'=>'Descripción del abono']) !!}
                              {!! errors_for('description',$errors) !!}
                             <a href="#" class="btn btn-xs btn-default" id="saveAbono" data-client="{{ (isset($client)) ? $client->id : 0 }}">Guardar</a>
-                            @else
-                             <div class="alert alert-warning">
-                                 Necesitas Guardar el cliente para poder agregarle abonos
-                             </div>
                            
-                            @endif
+                           
                        
                         <section class="panel panel-dark" >
                             <div class="panel-heading">Abonos
@@ -312,7 +323,9 @@
                                         
                                         
                                     </div>
-                                   
+                                   @if(! isset($client))
+                                    <input type="hidden" name="abonosfromcreate[]" value="@{{ amount }}|@{{ description }}">
+                                   @endif
                                 </li>
                                 @{{/each}}
 
@@ -373,16 +386,11 @@
                 <div class="form-group">
                     {!! Form::label('comments','Estados:',['class'=>'col-sm-2 control-label']) !!}
                     <div class="col-sm-10">
-                          @if(isset($client))
+                          
                              {!! Form::textarea('comments', null,['class'=>'form-control', 'rows'=>'3','maxlength'=>'150']) !!}
                             {!! errors_for('comments',$errors) !!}
                             <a href="#" class="btn btn-xs btn-default" id="saveComment" data-client="{{ (isset($client)) ? $client->id : 0 }}">Guardar</a>
-                            @else
-                             <div class="alert alert-warning">
-                                 Necesitas Guardar el cliente para poder agregarle estados
-                             </div>
                            
-                            @endif
                        
                         <section class="panel panel-dark" >
                             <div class="panel-heading">Estados
@@ -413,6 +421,8 @@
                                                 </div>
                                             </li>
                                         @endforeach
+                                    
+
                                     @endif
                                     
                                 </ul>
@@ -442,7 +452,9 @@
                             
                             
                         </div>
-                       
+                         @if(! isset($client))
+                            <input type="hidden" name="commentsfromcreate[]" value="@{{ body }}">
+                         @endif
                     </li>
                     @{{/each}}
 
@@ -457,6 +469,18 @@
                         <input type="text" class="form-control datepicker" name="reservation_date" value="{{ isset($client) && ($client->reservation_date != '0000-00-00 00:00:00') ? $client->reservation_date : '' }}">
                         
                         {!! errors_for('reservation_date',$errors) !!}
+                    </div>
+                    
+                            
+                       
+                </div>
+                <div class="form-group">
+                    {!! Form::label('reservation_paid','Pagó reserva:',['class'=>'col-sm-2 control-label']) !!}
+                    <div class="col-sm-10">
+                        
+                            
+                        {!! Form::select('reservation_paid', ['0' => 'No','1' => 'Si'], null,['class'=>'form-control'])!!}
+                        {!! errors_for('reservation_paid',$errors) !!}
                     </div>
                     
                             

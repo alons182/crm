@@ -17,7 +17,7 @@
 </style>
 @stop
 @section('content')
-    @include('layouts/partials/_breadcumbs', ['page' => 'Reporte Ventas'])
+    @include('layouts/partials/_breadcumbs', ['page' => 'Reporte Proyeccón de Ventas'])
 
     <section class="panel">
 
@@ -25,7 +25,7 @@
         
             <div class="filtros" >
                
-                {!! Form::open(['route' => 'r_sales','method' => 'get', 'class'=>'form-inline']) !!}
+                {!! Form::open(['route' => 'r_sales_projection','method' => 'get', 'class'=>'form-inline']) !!}
                             
                              <div class=" form-group">
                                 
@@ -73,7 +73,7 @@
                         <th>% vendedor</th>
                         <th>Total vendedor</th>
                         <th>Vivenda</th>
-                        <th>Fecha Reserva</th>
+                        <th>Entrega</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -98,7 +98,7 @@
                             <td>{!! money($client->properties->first()->totalVivenda(), $client->properties->first()->currency)  !!}</td>
                            
                             
-                            <td>{!! ($client->reservation_date == '0000-00-00 00:00:00') ? '' : \Carbon\Carbon::parse($client->reservation_date)->toDateString()  !!}</td>
+                            <td>{!! ($client->properties->first()->delivery_date == '0000-00-00 00:00:00') ? '' : \Carbon\Carbon::parse($client->properties->first()->delivery_date)->toDateString()  !!}</td>
 
                             
                         </tr>
@@ -136,7 +136,7 @@
     <div class="modal fade bs-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
-                    {!! Form::open(['route' =>['export_sales'],'method' => 'post', 'id' =>'form-export']) !!}
+                    {!! Form::open(['route' =>['export_sales_projection'],'method' => 'post', 'id' =>'form-export']) !!}
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h5 class="modal-title text-center" id="myModalLabel">Exportar</h5>

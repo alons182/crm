@@ -72,6 +72,7 @@ class ClientsController extends Controller
         $search['date1'] = (isset($search['date1'])) ? $search['date1'] : '';
         $search['date2'] = (isset($search['date2'])) ? $search['date2'] : '';
         $search['cita'] = (isset($search['cita'])) ? $search['cita'] : '';
+        $search['reservation_paid'] = (isset($search['reservation_paid'])) ? $search['reservation_paid'] : '';
         
        
         $clients = $this->clientRepo->getAll($search);
@@ -91,6 +92,7 @@ class ClientsController extends Controller
             'date1'           => $search['date1'],
             'date2'           => $search['date2'],
             'selectedCita' =>  $search['cita'],
+            'selectedReservationPaid' =>  $search['reservation_paid'],
             'fieldsToExport'   => $fieldsToExport
         ]);
     }
@@ -115,9 +117,34 @@ class ClientsController extends Controller
     {
        
         $input = $request->all();
-        
-        $this->clientRepo->store($input);
+       
+        $client = $this->clientRepo->store($input);
 
+       if(isset($input['commentsfromcreate'])) //esto para crear comentario cuando el cliente no ha sid guardado
+       {
+            foreach ($input['commentsfromcreate'] as $comment) {
+                $data['body'] = $comment;
+                $data['client_id'] = $client->id;
+                $data['user_id'] = auth()->id();
+
+                Comment::create($data);
+            }
+                
+        }
+         if(isset($input['abonosfromcreate'])) //esto para crear abonos cuando el cliente no ha sid guardado
+       {
+            foreach ($input['abonosfromcreate'] as $abono) {
+                $porciones = explode("|", $abono);
+                $data['amount'] = $porciones[0];
+                $data['client_id'] = $client->id;
+                $data['description'] = $porciones[1];
+
+                Abono::create($data);
+            }
+                
+        }
+       
+        
         Flash('Cliente creado');
 
         return Redirect()->route('clients');
@@ -135,8 +162,18 @@ class ClientsController extends Controller
         $client = $this->clientRepo->findById($id);
        
         $selectedProject = Project::find($client->project);
+
         
-        $propertiesOfSelectedProject = ($selectedProject) ? $selectedProject->properties()->pluck('name','id')->all() : null;
+        //para saber cuales propiedades de este proyecto ya estan asignadas
+        $propertiesWithClientsAssigned = ($selectedProject) ? $selectedProject->properties()->whereHas('clients', function ($query) use($id) {
+                    $query->where('clients.id', '<>', $id);
+                })->pluck('id')->all() : null;
+
+        
+        
+        $propertiesOfSelectedProject = ($selectedProject) ? $selectedProject->properties()->whereNotIn('id', $propertiesWithClientsAssigned)->pluck('name','id')->all() : null;
+
+        //dd($propertiesOfSelectedProject);
 
         $selectedProperties =  $client->properties()->pluck('id')->all();
 

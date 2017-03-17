@@ -180,6 +180,12 @@
 
 
                                  </div>
+                                 <div class="col-xs-4">
+                                    {!! Form::select('fil-cita', ['' => '-- Filtrar si asistió a cita --'] + ['0' => 'No','1' => 'Si'] , null, ['id'=>'fil-cita','class'=>'form-control'] ) !!}
+                                </div>
+                                 <div class="col-xs-4">
+                                    {!! Form::select('fil-reservation_paid', ['' => '-- Filtrar si pagó reservación --'] + ['0' => 'No','1' => 'Si'] , null, ['id'=>'fil-reservation_paid','class'=>'form-control'] ) !!}
+                                </div>
                             </div>
                             <div class="row">
                                 <h3>Campos a exportar</h3>

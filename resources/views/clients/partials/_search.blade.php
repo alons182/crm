@@ -29,7 +29,7 @@
                              <div class="row">
                                   <div class="col-xs-12 col-sm-5 col-md-3">
                                         <div class="form-group">
-                                            {!! Form::select('status', ['' => '-- Filtrar por estatus --'] + ['1' => 'Reservado','2' => 'Aprobado','3' => 'Interesado','4' => 'Formalizado'] , $selectedStatus, ['id'=>'status','class'=>'form-control'] ) !!}
+                                            {!! Form::select('status', ['' => '-- Filtrar por estatus --'] + ['1' => 'Reservado','2' => 'Aprobado','3' => 'Interesado','4' => 'Formalizado','5' => 'Retirado', '6' => 'Desinteresado'] , $selectedStatus, ['id'=>'status','class'=>'form-control'] ) !!}
                                         </div>
                                  </div>
                              
@@ -70,6 +70,15 @@
 
                                     </div>
                                 </div>
+                           
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-5 col-md-3">
+                                    <div class="form-group">
+                                    {!! Form::select('reservation_paid', ['' => '-- Filtrar si pagó reservación --'] + ['0' => 'No','1' => 'Si'] , $selectedReservationPaid, ['id'=>'reservation_paid','class'=>'form-control'] ) !!}
+                                    </div>
+                                 </div>
+                                 
                            
                             </div>
                            

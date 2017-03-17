@@ -57,6 +57,21 @@
                                         <span>Ventas</span>
                                     </a>
                                 </li>
+                                <li>
+                                    <a href="{!! URL::route('r_sales_projection') !!}">
+                                        <span>Proyección de Ventas</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{!! URL::route('r_statistics_clients') !!}">
+                                        <span>Estadísticas de clientes</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{!! URL::route('r_statistics_sellers') !!}">
+                                        <span>Estadísticas de Vendedores</span>
+                                    </a>
+                                </li>
                             </ul>
                         </li>
                         

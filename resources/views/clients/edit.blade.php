@@ -7,7 +7,12 @@
 
 @stop
 @section('content')
+
  @include('layouts/partials/_breadcumbs', ['page' => 'Clientes'])
+
+
+
+
 	
 	{!! Form::model($client, ['method' => 'put', 'route' => ['clients.update', $client->id],'files'=> true,'class'=>'form-horizontal' ]) !!}
 		
@@ -19,7 +24,6 @@
 @endsection
 
 @section('scripts')
-
     <!--<script src="/vendor/bootstrap-select/bootstrap-select.js"></script>-->
     <script src="/vendor/chosen.jquery.min.js"></script>
     <script src="/vendor/jquery.sortable.js"></script>
@@ -28,6 +32,7 @@
 	<script src="/vendor/picker.js"></script>
     <script src="/vendor/picker.date.js"></script>
 	<script type="text/javascript">
+
 		$(".chosen-select").chosen({no_results_text: "Oops, nothing found!"}); 
 		$(".handles").sortable({
 	        handle: "span"

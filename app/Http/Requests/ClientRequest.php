@@ -27,7 +27,8 @@ class ClientRequest extends Request
         return [
             'ide' => 'numeric',
             'fullname' => 'required',
-            //'phone1' => 'required|unique:clients',
+            'phone1' => 'required|unique:clients,phone1',
+            'email' => 'required|email|unique:clients,email',
             /*'company' => 'required',
             'email' => 'required|email',
             'phone1' => 'required',

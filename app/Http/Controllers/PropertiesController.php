@@ -197,6 +197,20 @@ class PropertiesController extends Controller
     {
         $project = Project::find($request->input('project_id'));
 
-        return $project->properties()->get();
+        $client_id = $request->input('client_id');
+        //para saber cuales propiedades de este proyecto ya estan asignadas
+        if($client_id){
+            $propertiesWithClientsAssigned = ($project) ? $project->properties()->whereHas('clients', function ($query) use($client_id) {
+                    $query->where('clients.id', '<>', $client_id);
+                })->pluck('id')->all() : null;
+
+        }else{
+            $propertiesWithClientsAssigned = ($project) ? $project->properties()->has('clients')->pluck('id')->all() : null;
+        }
+        
+        
+        $propertiesOfSelectedProject = ($project) ? $project->properties()->whereNotIn('id', $propertiesWithClientsAssigned)->get() : null;
+
+        return $propertiesOfSelectedProject;
     }
 }

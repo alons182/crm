@@ -1,8 +1,8 @@
 @extends('layouts.template')
 @section('css')
-    <!--<link rel="stylesheet" href="/vendor/bootstrap-datepicker/datepicker.css">-->
-    <!-- <link rel="stylesheet" href="/css/bootstrap.min.css"> -->
-    <!-- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.0/bootstrap-table.min.css"> -->
+   <link rel="stylesheet" href="/vendor/classic.css">
+    <link rel="stylesheet" href="/vendor/classic.date.css">
+    <link rel="stylesheet" href="/vendor/classic.time.css">
 <style>
 .table-responsive {
     width: 100%;
@@ -14,69 +14,6 @@
     border: 1px solid #DDD;
 }
 
-/*.table-responsive .fixed-column {
-    position: absolute;
-    display: inline-block;
-    width:9em;/*width: auto;*/
- /*   border-right: 1px solid #ddd;
-    background-color: white;
-    left: 0;
-}
-.table-responsive .fixed-column2 {
-    position: absolute;
-    display: inline-block;
-    width:9em;/*width: auto;*/
-   /* border-right: 1px solid #ddd;
-    background-color: white;
-    left: 9em;
-}
-.table-responsive .fixed-column3 {
-    position: absolute;
-    display: inline-block;
-    width:9em;/*width: auto;*/
-    /*border-right: 1px solid #ddd;
-    background-color: white;
-    left: 18em;
-}
-.table-responsive {
-  overflow-x:scroll;  
-  margin-left:2em;
-    }
-
-/*@media(min-width:768px) {
-    .table-responsive>.fixed-column {
-        display: none;
-    }
-}*/
-    /*.table > thead:first-child > tr:first-child > th:first-child,
-    .table > thead:nth-child(2) > tr:nth-child(2) > th:nth-child(2),
-    .table > thead:nth-child(3) > tr:nth-child(3) > th:nth-child(3)
-    {
-        position: absolute;
-        display: inline-block;
-        background-color: red;
-        height: 100%;
-    }
-
-    .table > tbody > tr > td:first-child,
-    .table > tbody > tr > td:nth-child(2),
-    .table > tbody > tr > td:nth-child(3)
-     {
-        position: absolute;
-        display: inline-block;
-        background-color: red;
-        height: 100%;
-    }
-
-    .table > thead:first-child > tr:first-child > th:nth-child(2),
-    .table > thead:first-child > tr:first-child > th:nth-child(3) {
-        padding-left: 40px;
-    }
-
-    .table > tbody > tr > td:nth-child(2),
-    .table > tbody > tr > td:nth-child(3) {
-        padding-left: 50px !important;
-    }*/
 </style>
 @stop
 @section('content')
@@ -94,10 +31,29 @@
                                 
                                  {!! Form::select('project', ['' => '-- Filtrar por proyecto --'] + $projects , $selectedProject, ['id'=>'project','class'=>'form-control'] ) !!}
                              </div>
+                             <div class="form-group">
+                                {!! Form::select('reservation_paid', ['' => '-- Filtrar si pagó reservación --'] + ['0' => 'No','1' => 'Si'] , $selectedReservationPaid, ['id'=>'reservation_paid','class'=>'form-control'] ) !!}
+                                </div>
                              <div class=" form-group">
                                 
                                  {!! Form::select('order', ['' => '-- Filtrar por fecha de ... --','reservation_date' => 'fecha de reserva','completed_house_date' =>'fecha de casa terminada', 'option_date' =>'fecha opcion firmada'] , $selectedOrder, ['id'=>'order','class'=>'form-control'] ) !!}
                              </div>
+
+                                <div class="form-group ">
+                            
+                                     
+                                        {!! Form::text('date1', $date1,['class'=>'form-control datepicker','placeholder'=>'Filtrar por fecha inicio']) !!}
+                                       
+                                </div>
+                             
+                                 
+                                <div class="form-group ">
+                                        {!! Form::text('date2', $date2,['class'=>'form-control datepicker','placeholder'=>'Filtrar por fecha fin']) !!}
+                                        
+                                    
+
+                                </div>
+                               
                              
                 {!! Form::close() !!}
 
@@ -196,12 +152,33 @@
                                      </div>
                                 </div>
                                 <div class="col-xs-3">
+                                    <div class="form-group">
+                                    {!! Form::select('fil-reservation_paid', ['' => '-- Filtrar si pagó reservación --'] + ['0' => 'No','1' => 'Si'] , $selectedReservationPaid, ['id'=>'fil-reservation_paid','class'=>'form-control'] ) !!}
+                                    </div>
+                                </div>
+                                <div class="col-xs-3">
                                     <div class=" form-group">
                                     
                                      {!! Form::select('fil-order', ['' => '-- Filtrar por fecha de ... --','reservation_date' => 'fecha de reserva','completed_house_date' =>'fecha de casa terminada', 'option_date' =>'fecha opcion firmada'] , $selectedOrder, ['id'=>'fil-order','class'=>'form-control'] ) !!}
                                      </div>
                                 </div>
-                               
+                                <div class="col-xs-3">
+                                    <div class="form-group ">
+                                
+                                         
+                                            {!! Form::text('fil-date1', $date1,['class'=>'form-control datepicker','placeholder'=>'Filtrar por fecha inicio']) !!}
+                                           
+                                    </div>
+                                </div>
+                             
+                                  <div class="col-xs-3">
+                                    <div class="form-group ">
+                                            {!! Form::text('fil-date2', $date2,['class'=>'form-control datepicker','placeholder'=>'Filtrar por fecha fin']) !!}
+                                            
+                                        
+
+                                    </div>
+                               </div>
 
                              </div>
                             
@@ -222,24 +199,50 @@
     
 @stop
 @section('scripts')
-<script>
-    $(function(){
-        /*var $table = $('.table');
-        //Make a clone of our table
-        var $fixedColumn = $table.clone().insertBefore($table).addClass('fixed-column');
-
-        //Remove everything except for first column
-        $fixedColumn.find('th:not(:first-child),td:not(:first-child)').remove();
-       
-        //Match the height of the rows to that of the original table's
-        $fixedColumn.find('tr').each(function (i, elem) {
-            $(this).height($table.find('tr:eq(' + i + ')').height());
-        });*/
-    });
-</script>
-<!-- <script src="/vendor/bootstrap.min.js"></script>   -->
-<!-- Latest compiled and minified JavaScript -->
-<!-- <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.0/bootstrap-table.min.js"></script> -->
-<!-- Latest compiled and minified Locales -->
-<!-- <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.0/locale/bootstrap-table-zh-CN.min.js"> -->
+    <script src="/vendor/picker.js"></script>
+    <script src="/vendor/picker.date.js"></script>
+    <script src="/vendor/picker.time.js"></script>
+    <!--
+    <script src="/vendor/moment.js"></script>
+        
+    <script src="/vendor/bootstrap-datetimepicker.min.js"></script> -->
+    <!--<script src="/vendor/bootstrap-datepicker/bootstrap-datepicker.js"></script>-->
+    <script type="text/javascript">
+        /*$('.datepicker').datepicker();*/
+        $('.datepicker').pickadate({
+            monthsFull: ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'],
+            monthsShort: ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'],
+            weekdaysFull: ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'],
+            weekdaysShort: ['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb'],
+            today: 'hoy',
+            clear: 'borrar',
+            close: 'cerrar',
+            firstDay: 1,
+            format: 'yyyy-mm-dd',
+            formatSubmit: 'yyyy-mm-dd',
+            onClose: function(thingSet) {
+                 var filters = $(".filtros");
+                        
+                   
+                  filters.find('form').submit();
+                    
+              }
+        });
+        $('.fil-datepicker').pickadate({
+            monthsFull: ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'],
+            monthsShort: ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'],
+            weekdaysFull: ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'],
+            weekdaysShort: ['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb'],
+            today: 'hoy',
+            clear: 'borrar',
+            close: 'cerrar',
+            firstDay: 1,
+            format: 'yyyy-mm-dd',
+            formatSubmit: 'yyyy-mm-dd'
+            
+        });
+        
+    </script>
 @stop
+
+
