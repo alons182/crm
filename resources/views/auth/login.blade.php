@@ -34,7 +34,7 @@
                     <!-- Log In Form Input -->
                     <div class="form-group">
                         {!! Form::submit('Entrar', ['class' => 'btn btn-info btn-block']) !!}
-                        {!! link_to('/password/reset', 'Olvidó la contraseña?') !!}
+                        {!! link_to('/password/reset', 'Olvidó la contraseña??') !!}
                     </div>
             </form>
 
