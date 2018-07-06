@@ -23,12 +23,48 @@
             
             <div class="form-group">
                 {!! Form::label('fullname','Nombre completo:',['class'=>'col-sm-2 control-label']) !!}
-                <div class="col-sm-10">
+                <div class="col-sm-4">
                     {!! Form::text('fullname', null,['class'=>'form-control','required'=>'required']) !!}
                     {!! errors_for('fullname',$errors) !!}
                 </div>
+                <div class="col-sm-3">
+                    {!! Form::text('apellido1', null,['class'=>'form-control','placeholder'=>'Primer apellido']) !!}
+                    {!! errors_for('apellido1',$errors) !!}
+                </div>
+                <div class="col-sm-3">
+                    {!! Form::text('apellido2', null,['class'=>'form-control','placeholder'=>'Segundo apellido']) !!}
+                    {!! errors_for('apellido2',$errors) !!}
+                </div>
 
 
+            </div>
+            <div class="form-group">
+                    {!! Form::label('birthdate','Fecha de nacimiento:',['class'=>'col-sm-2 control-label']) !!}
+                    <div class="col-sm-10">
+                        
+                            
+                        <input type="text" class="form-control datepicker" name="birthdate" value="{{ isset($client) && ($client->birthdate != '0000-00-00 00:00:00') ? $client->birthdate : '' }}">
+                        
+                        {!! errors_for('birthdate',$errors) !!}
+                    </div>
+                    
+                            
+                       
+            </div>
+             <div class="form-group">
+                {!! Form::label('gender','Sexo:',['class'=>'col-sm-2 control-label'])!!}
+                <div class="col-sm-10">
+                    
+                            {!! Form::select('gender', ['m' => 'Masculino','f' => 'Femenino'], null,['class'=>'form-control'])!!}
+                            {!! errors_for('gender',$errors) !!}
+                      
+                        
+                        
+                    </div>
+
+
+
+       
             </div>
 
             <div class="form-group">
@@ -188,6 +224,19 @@
                         
                     
                 </div>
+             <div class="form-group">
+                    {!! Form::label('interesado','Interesado:',['class'=>'col-sm-2 control-label']) !!}
+                    <div class="col-sm-10">
+                        
+                            
+                        <input type="text" class="form-control" name="interesado" value="{{ isset($client) ? $client->interesado : '' }}">
+                        
+                        {!! errors_for('interesado',$errors) !!}
+                    </div>
+                    
+                            
+                       
+            </div>
 
 
 

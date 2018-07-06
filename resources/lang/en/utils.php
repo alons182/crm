@@ -51,7 +51,19 @@ return [
         'debts_amount'=> 'Monto específico deudas',
         'potencial'=> 'Potencial',
         'prima' => 'Prima',
+        'apellido1' => 'Primer Apellido',
+        'apellido2' => 'Segundo Apellido',
+        'birthdate' => 'Fecha de nacimiento',
+        'gender' => 'Sexo',
+        'interesado' => 'Interesado',
+        'phone3' => 'Telefono 3',
+        'cita_date' => 'Fecha de cita',
         
+    ],
+    'gender' => [
+        'm' => 'Masculino',
+        'f' => 'Femenino',
+       
     ],
     
 

@@ -92,6 +92,15 @@
 
 
             </div>
+             <div class="form-group">
+                {!! Form::label('etapa','Etapa:',['class'=>'col-sm-2 control-label']) !!}
+                <div class="col-sm-10">
+                    {!! Form::text('etapa', null,['class'=>'form-control']) !!}
+                    {!! errors_for('etapa',$errors) !!}
+                </div>
+
+
+            </div>
             <div class="form-group">
                 {!! Form::label('office','Oficina:',['class'=>'col-sm-2 control-label']) !!}
                 <div class="col-sm-10">

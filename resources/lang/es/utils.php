@@ -68,9 +68,20 @@ return [
         'documents_text' => 'contenido de documentos',
         'email2' => 'Email 2',
         'cita' => 'Asistió a cita',
-        'reservation_paid' => 'Pagó Reservación'
+        'reservation_paid' => 'Pagó Reservación',
+        'apellido1' => 'Primer Apellido',
+        'apellido2' => 'Segundo Apellido',
+        'birthdate' => 'Fecha de nacimiento',
+        'gender' => 'Sexo',
+        'interesado' => 'Interesado',
+        'phone3' => 'Telefono 3',
+        'cita_date' => 'Fecha de cita',
         
     ],
-    
+    'gender' => [
+        'm' => 'Masculino',
+        'f' => 'Femenino',
+
+    ],
 
 ];
