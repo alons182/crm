@@ -15,6 +15,8 @@ class Client extends Model
         return $query->where(function ($query) use ($search)
         {
             $query->where('fullname', 'like', '%' . $search . '%')
+                  ->orWhere('apellido1', 'like', '%' . $search . '%')
+                  ->orWhere('apellido2', 'like', '%' . $search . '%')
                   ->orWhere('job', 'like', '%' . $search . '%')
                   ->orWhere('email', 'like', '%' . $search . '%')
                   ->orWhere('phone1', 'like', '%' . $search . '%')
