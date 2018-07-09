@@ -64,7 +64,7 @@
                             <td>{!! Form::checkbox('chk_client[]', $client->id, null, ['class' => 'chk-item']) !!}</td>
                             <td>{!!$client->id!!}</td>
                              <td>{!! $client->ide !!}</td>
-                            <td>{!!$client->fullname!!}</td>
+                            <td>{!!$client->fullname!!} {!! $client->apellido1 !!} {!! $client->apellido2 !!}</td>
                             <td>
                                 @foreach($client->sellers as $seller)
                                      {!! $seller->name !!}
