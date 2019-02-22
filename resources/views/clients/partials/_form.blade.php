@@ -84,7 +84,77 @@
 
                 </div>
             </div>
+            <div class="form-group">
+                {!! Form::label('family_members','Hijos o miembros de familia:',['class'=>'col-sm-2 control-label']) !!}
+                <div class="col-sm-10">
+
+                    {!! Form::text('family_members', null,['class'=>'form-control']) !!}
+                    {!! errors_for('family_members',$errors) !!}
+
+                </div>
+
+
+            </div>
+            <div class="form-group">
+                {!! Form::label('pets','Mascotas:',['class'=>'col-sm-2 control-label'])!!}
+                <div class="col-sm-10">
+
+                    {!! Form::select('pets', ['0' => 'No','1' => 'Si'], null,['class'=>'form-control'])!!}
+                    {!! errors_for('pets',$errors) !!}
+
+
+
+                </div>
+
+
+
+
+            </div>
+            <div class="form-group">
+                {!! Form::label('profesion','Profesión:',['class'=>'col-sm-2 control-label']) !!}
+                <div class="col-sm-10">
+
+                    {!! Form::text('profesion', null,['class'=>'form-control']) !!}
+                    {!! errors_for('profesion',$errors) !!}
+
+                </div>
+
+
+            </div>
+            <div class="form-group">
+                {!! Form::label('residencia','Lugar de Residencia:',['class'=>'col-sm-2 control-label']) !!}
+                <div class="col-sm-10">
+
+                    {!! Form::text('residencia', null,['class'=>'form-control']) !!}
+                    {!! errors_for('residencia',$errors) !!}
+
+                </div>
+
+
+            </div>
+            <div class="form-group">
+                {!! Form::label('job','Lugar de Trabajo:',['class'=>'col-sm-2 control-label']) !!}
+                <div class="col-sm-10">
+
+                    {!! Form::text('job', null,['class'=>'form-control']) !!}
+                    {!! errors_for('job',$errors) !!}
+
+                </div>
+
+
+            </div>
             
+            <div class="form-group">
+                {!! Form::label('motivo_compra','Mótivo de compra:',['class'=>'col-sm-2 control-label']) !!}
+                <div class="col-sm-10">
+
+                    {!! Form::text('motivo_compra', null,['class'=>'form-control']) !!}
+                    {!! errors_for('motivo_compra',$errors) !!}
+
+                </div>
+
+
+            </div>
 
             <div class="form-group">
                 {!! Form::label('email','Email:',['class'=>'col-sm-2 control-label']) !!}
@@ -138,7 +208,7 @@
                 <div class="col-sm-10">
                     <div class="row">
                         <div class="col-xs-3">
-                            {!! Form::select('referred', ['mail' => 'Correo','facebook' => 'Facebook','website' => 'Sitio Web','vallas' => 'Vallas','others' => 'Otros'], null,['class'=>'form-control'])!!}
+                            {!! Form::select('referred', ['mail' => 'Correo','facebook' => 'Facebook','instagram' => 'Instagram','website' => 'Sitio Web','vallas' => 'Vallas','others' => 'Otros'], null,['class'=>'form-control'])!!}
                             {!! errors_for('referred',$errors) !!}
                         </div>
                         <div class="col-xs-9">
@@ -405,17 +475,7 @@
             </div>
 
 
-            <div class="form-group">
-                {!! Form::label('job','Lugar de Trabajo:',['class'=>'col-sm-2 control-label']) !!}
-                <div class="col-sm-10">
-
-                    {!! Form::text('job', null,['class'=>'form-control']) !!}
-                    {!! errors_for('job',$errors) !!}
-
-                </div>
-
-
-            </div>
+            
             <div class="form-group">
                 {!! Form::label('bank','Banco 1:',['class'=>'col-sm-2 control-label'])!!}
                 <div class="col-sm-10">

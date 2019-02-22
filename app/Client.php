@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Client extends Model
 {
    
-	 protected $fillable = ['ide','fullname', 'company', 'job', 'email', 'web', 'phone1','phone2','phone3','comments', 'address','referred','referred_others','image','status','income','debts','debts_amount','potencial','prima','formalization_date','reservation_date','option_date','expedient_date','credit','avaluo_date','documents','documents_text','fiador','fiador_text','project','bank','bank2','email2','cita','reservation_paid','cita_date','apellido1','apellido2','birthdate','gender','interesado'];
+	 protected $fillable = ['ide','fullname', 'company', 'job', 'email', 'web', 'phone1','phone2','phone3','comments', 'address','referred','referred_others','image','status','income','debts','debts_amount','potencial','prima','formalization_date','reservation_date','option_date','expedient_date','credit','avaluo_date','documents','documents_text','fiador','fiador_text','project','bank','bank2','email2','cita','reservation_paid','cita_date','apellido1','apellido2','birthdate','gender','interesado','estado_civil','conyuge','family_members','pets','profesion','residencia','motivo_compra'];
 
  	public function scopeSearch($query, $search)
     {
