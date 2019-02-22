@@ -71,7 +71,7 @@
                 <div class="col-sm-10">
                     <div class="row">
                         <div class="col-xs-3">
-                            {!! Form::select('estado_civil', ['' => '','Soltero' => 'Soltero','Casado' => 'Casado', 'Divorciado' => 'Divorciado', 'Viudo' => 'Viudo'], null,['class'=>'form-control'])!!}
+                            {!! Form::select('estado_civil', ['' => '','Soltero' => 'Soltero(a)','Casado' => 'Casado(a)', 'Divorciado' => 'Divorciado(a)', 'Viudo' => 'Viudo(a)'], null,['class'=>'form-control'])!!}
                             {!! errors_for('estado_civil',$errors) !!}
                         </div>
                         <div class="col-xs-9">

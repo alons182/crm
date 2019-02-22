@@ -75,7 +75,14 @@ return [
         'gender' => 'Sexo',
         'interesado' => 'Interesado',
         'phone3' => 'Telefono 3',
-        'cita_date' => 'Fecha de cita',
+        'estado_civil' => 'Estado Civil',
+        'pets' => 'Mascotas',
+        'motivo_compra' => 'Mótivo de compra',
+        'conyuge' => 'Conyuge',
+        'profesion' => 'Profesión',
+        'family_members' => 'Hijos o miembros de la familia',
+        'residencia' => 'Lugar de Residencia',
+        
         
     ],
     'gender' => [
