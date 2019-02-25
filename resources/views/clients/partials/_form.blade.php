@@ -43,7 +43,7 @@
                 <div class="col-sm-10">
 
 
-                    <input type="text" class="form-control datepicker" name="birthdate" value="{{ isset($client) && ($client->birthdate != '0000-00-00 00:00:00') ? $client->birthdate : '' }}">
+                    <input type="text" class="form-control birthdate" name="birthdate" value="{{ isset($client) && ($client->birthdate != '0000-00-00 00:00:00') ? $client->birthdate : '' }}" placeholder="YYYY-MM-DD">
 
                     {!! errors_for('birthdate',$errors) !!}
                 </div>
@@ -71,7 +71,7 @@
                 <div class="col-sm-10">
                     <div class="row">
                         <div class="col-xs-3">
-                            {!! Form::select('estado_civil', ['' => '','Soltero' => 'Soltero(a)','Casado' => 'Casado(a)', 'Divorciado' => 'Divorciado(a)', 'Viudo' => 'Viudo(a)'], null,['class'=>'form-control'])!!}
+                            {!! Form::select('estado_civil', ['' => '','Soltero' => 'Soltero(a)','Casado' => 'Casado(a)', 'Divorciado' => 'Divorciado(a)', 'Viudo' => 'Viudo(a)', 'Unión Libre' => 'Unión Libre'], null,['class'=>'form-control'])!!}
                             {!! errors_for('estado_civil',$errors) !!}
                         </div>
                         <div class="col-xs-9">
@@ -143,7 +143,7 @@
 
 
             </div>
-            
+
             <div class="form-group">
                 {!! Form::label('motivo_compra','Mótivo de compra:',['class'=>'col-sm-2 control-label']) !!}
                 <div class="col-sm-10">
@@ -475,7 +475,7 @@
             </div>
 
 
-            
+
             <div class="form-group">
                 {!! Form::label('bank','Banco 1:',['class'=>'col-sm-2 control-label'])!!}
                 <div class="col-sm-10">

@@ -1,7 +1,6 @@
 (function($){
 
     console.log('msg');
-    
     $(".btn-print").on('click',function (e) {
          e.preventDefault();
          
