@@ -208,7 +208,7 @@
                 <div class="col-sm-10">
                     <div class="row">
                         <div class="col-xs-3">
-                            {!! Form::select('referred', ['mail' => 'Correo','facebook' => 'Facebook','instagram' => 'Instagram','website' => 'Sitio Web','vallas' => 'Vallas','others' => 'Otros'], null,['class'=>'form-control'])!!}
+                            {!! Form::select('referred', ['mail' => 'Correo','facebook' => 'Facebook','instagram' => 'Instagram','website' => 'Sitio Web','vallas' => 'Vallas','expo' => 'Expo','others' => 'Otros'], null,['class'=>'form-control'])!!}
                             {!! errors_for('referred',$errors) !!}
                         </div>
                         <div class="col-xs-9">
